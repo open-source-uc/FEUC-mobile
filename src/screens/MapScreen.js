@@ -1,24 +1,31 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-  InteractionManager,
-} from 'react-native';
+import { Dimensions, InteractionManager } from 'react-native';
 import MapView from 'react-native-maps';
 import styled from 'styled-components/native';
 
-import { Loading } from '../components';
+import { Loading, ErrorBar } from '../components';
+import Themed from '../styles';
 
 
 const Container = styled.View`
   flex: 1;
-  justify-content: center;
-  align-items: center;
 `;
 
+const StyledMap = styled(MapView)`
+  flex: 1;
+`;
 
-export default class Events extends Component {
+const Button = styled.Button``;
+
+
+export default class MapScreen extends Component {
+  static navigationOptions = {
+    title: 'FEUC',
+    header: ({ goBack }) => ({
+      right: <Button title="Volver" onPress={() => goBack()} />,
+    }),
+  }
+
   state = {
     loading: true,
   }
@@ -30,6 +37,8 @@ export default class Events extends Component {
   }
 
   render() {
+    const { loading, error } = this.state;
+
     const { width, height } = Dimensions.get('window');
     const ratio = width / height;
 
@@ -41,24 +50,16 @@ export default class Events extends Component {
     };
 
     return (
-      <Container>
-        <View>
-          {this.state.loading ? (
-            <Loading />
-          ) : (
-            <MapView
-              style={styles.map}
+      <Themed>
+        <Container>
+          <ErrorBar error={error} />
+          {loading ? <Loading /> : (
+            <StyledMap
               initialRegion={coordinates}
             />
           )}
-        </View>
-      </Container>
+        </Container>
+      </Themed>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  },
-});

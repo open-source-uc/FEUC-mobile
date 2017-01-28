@@ -6,7 +6,7 @@ export { default as More } from './More';
 export { default as Benefits } from './Benefits';
 
 // Other
-export { default as Events } from './Events';
+export { default as MapScreen } from './MapScreen';
 
 export { default as Notifications } from './Notifications';
 export { default as FilterInfo } from './FilterInfo';

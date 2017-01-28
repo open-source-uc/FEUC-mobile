@@ -2,6 +2,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import {
   Home, Community, About, Benefits, More,
+  MapScreen,
   Notifications, FilterInfo, MyEvents, Contact,
   Council, SpeakerOffices, Transparence, WhoAreWe,
 } from './screens/';
@@ -12,8 +13,12 @@ const HomeScreen = StackNavigator({
   Root: {
     screen: Home,
   },
+  MapScreen: {
+    screen: MapScreen,
+  },
 }, {
   initialRouteName: 'Root',
+  mode: 'modal',
 });
 
 const CommunityScreen = StackNavigator({
@@ -75,11 +80,11 @@ const MoreScreen = StackNavigator({
 
 // https://reactnavigation.org/docs/navigators/tab
 export default TabNavigator({
-  Community: {
-    screen: CommunityScreen,
-  },
   Home: {
     screen: HomeScreen,
+  },
+  Community: {
+    screen: CommunityScreen,
   },
   About: {
     screen: AboutScreen,

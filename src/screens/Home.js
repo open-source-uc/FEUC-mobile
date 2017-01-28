@@ -10,6 +10,8 @@ const Container = styled.View`
 const Text = styled.Text`
 `;
 
+const Button = styled.Button``;
+
 
 export default class Home extends Component {
   static navigationOptions = {
@@ -18,6 +20,9 @@ export default class Home extends Component {
       label: 'Home',
       icon: props => <TabBarIcon.Home {...props} />,
     },
+    header: ({ navigate }) => ({
+      right: <Button title="Mapa" onPress={() => navigate('MapScreen')} />,
+    }),
   }
 
   render() {
