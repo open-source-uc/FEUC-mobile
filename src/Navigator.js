@@ -1,6 +1,7 @@
 import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import { Home, Community, About, Benefits, More } from './screens/';
+import { colors } from './styles';
 
 
 const HomeScreen = StackNavigator({
@@ -45,11 +46,11 @@ const MoreScreen = StackNavigator({
 
 // https://reactnavigation.org/docs/navigators/tab
 export default TabNavigator({
-  Home: {
-    screen: HomeScreen,
-  },
   Community: {
     screen: CommunityScreen,
+  },
+  Home: {
+    screen: HomeScreen,
   },
   About: {
     screen: AboutScreen,
@@ -64,7 +65,7 @@ export default TabNavigator({
   tabBarOptions: {
     // tabBarComponent: TabView.TabBarBottom,
     tabBarPosition: 'bottom', // 'top' 'bottom'
-    activeTintColor: '#e91e63',
+    activeTintColor: colors.main,
     // swipeEnabled: false,
     // animationEnabled: true,
     lazyLoad: true,
