@@ -1,6 +1,9 @@
 import { TabNavigator, StackNavigator } from 'react-navigation';
 
-import { Home, Community, About, Benefits, More } from './screens/';
+import {
+  Home, Community, About, Benefits, More,
+  Notifications, FilterInfo, MyEvents, Contact,
+} from './screens/';
 import { colors } from './styles';
 
 
@@ -39,6 +42,18 @@ const BenefitsScreen = StackNavigator({
 const MoreScreen = StackNavigator({
   Root: {
     screen: More,
+  },
+  Notifications: {
+    screen: Notifications,
+  },
+  FilterInfo: {
+    screen: FilterInfo,
+  },
+  MyEvents: {
+    screen: MyEvents,
+  },
+  Contact: {
+    screen: Contact,
   },
 }, {
   initialRouteName: 'Root',

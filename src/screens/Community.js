@@ -76,7 +76,7 @@ export default class Community extends Component {
             dataSource={items}
             enableEmptySections
             renderRow={item => (
-              <ListViewRow button onPress={() => this.handlePress(item)}>
+              <ListViewRow onPress={() => this.handlePress(item)}>
                 <Text>{item.text}</Text>
               </ListViewRow>
             )}
