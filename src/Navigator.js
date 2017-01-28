@@ -3,6 +3,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import {
   Home, Community, About, Benefits, More,
   Notifications, FilterInfo, MyEvents, Contact,
+  Council, SpeakerOffices, Transparence, WhoAreWe,
 } from './screens/';
 import { colors } from './styles';
 
@@ -26,6 +27,18 @@ const CommunityScreen = StackNavigator({
 const AboutScreen = StackNavigator({
   Root: {
     screen: About,
+  },
+  Council: {
+    screen: Council,
+  },
+  SpeakerOffices: {
+    screen: SpeakerOffices,
+  },
+  Transparence: {
+    screen: Transparence,
+  },
+  WhoAreWe: {
+    screen: WhoAreWe,
   },
 }, {
   initialRouteName: 'Root',
@@ -58,6 +71,7 @@ const MoreScreen = StackNavigator({
 }, {
   initialRouteName: 'Root',
 });
+
 
 // https://reactnavigation.org/docs/navigators/tab
 export default TabNavigator({
