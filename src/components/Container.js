@@ -1,14 +1,15 @@
 import React from 'react';
-import { Container } from 'native-base';
-import light from '../themes/light';
+import styled from 'styled-components/native';
 
-const ThemedContainer = props => (
-  <Container {...props} />
-);
+const View = styled.View`
+`;
 
-ThemedContainer.propTypes = Container.propTypes;
-ThemedContainer.defaultProps = {
-  theme: light,
-};
+export default class Container extends React.Component {
 
-export default ThemedContainer;
+  render() {
+    return (
+      <View />
+    );
+  }
+
+}

@@ -1,50 +1,32 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
-import {
-  Header,
-  Footer,
-  Title,
-} from 'native-base';
 import styled from 'styled-components/native';
 
-import { Container, TabBar } from '../components';
+import { TabBarIcon } from '../components/';
 
 
-const Content = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
+const Container = styled.View`
 `;
 
 const Text = styled.Text`
-
 `;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 
 export default class Community extends Component {
+  static navigationOptions = {
+    title: 'FEUC',
+    tabBar: {
+      label: 'Comunidad',
+      icon: props => <TabBarIcon.Community {...props} />,
+    },
+  }
+
   render() {
     return (
       <Container>
-        <Header>
-          <Title>Community</Title>
-        </Header>
-
-        <Content>
-          <Text>Hola</Text>
-        </Content>
-        {/* <View style={styles.container}>
-          <Text>Hola</Text>
-        </View> */}
-
-        <Footer>
-          <TabBar selected="community" />
-        </Footer>
+        <Text>
+          Press Cmd+R to reload,{'\n'}
+          Cmd+D or shake for dev menu
+        </Text>
       </Container>
     );
   }

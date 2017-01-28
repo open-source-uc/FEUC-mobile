@@ -11,12 +11,12 @@ const Text = styled.Text`
 `;
 
 
-export default class Home extends Component {
+export default class Benefits extends Component {
   static navigationOptions = {
     title: 'FEUC',
     tabBar: {
-      label: 'Home',
-      icon: props => <TabBarIcon.Home {...props} />,
+      label: 'Beneficios',
+      icon: props => <TabBarIcon.Benefits {...props} />,
     },
   }
 

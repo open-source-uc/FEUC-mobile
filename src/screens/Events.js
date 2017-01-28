@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
-  Text,
   Dimensions,
   InteractionManager,
 } from 'react-native';
-import {
-  Header,
-  Title,
-  Footer,
-  Button,
-  Icon,
-} from 'native-base';
 import MapView from 'react-native-maps';
+import styled from 'styled-components/native';
 
-import { Container, Loading, TabBar } from '../components';
+import { Loading } from '../components';
+
+
+const Container = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
 
 
 export default class Events extends Component {
@@ -42,14 +42,7 @@ export default class Events extends Component {
 
     return (
       <Container>
-        <Header>
-          <Title>Map</Title>
-          <Button transparent>
-            <Icon name="ios-menu" />
-          </Button>
-        </Header>
-
-        <View style={styles.container}>
+        <View>
           {this.state.loading ? (
             <Loading />
           ) : (
@@ -59,23 +52,13 @@ export default class Events extends Component {
             />
           )}
         </View>
-
-        <Footer>
-          <TabBar selected="events" />
-        </Footer>
       </Container>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   map: {
-    marginTop: 1.5,
     ...StyleSheet.absoluteFillObject,
   },
 });
