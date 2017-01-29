@@ -1,6 +1,8 @@
 'use strict';
 
 import defaults from 'lodash/defaults';
+import trim from 'lodash/trim';
+import orderBy from 'lodash/orderBy';
 import stringify from 'qs/lib/stringify';
 
 const DEFAULT = {
@@ -12,7 +14,7 @@ const DEFAULT = {
 };
 
 
-export default async function fetcher(uri, options) {
+export async function fetcher(uri, options) {
   const opts = defaults({}, options, DEFAULT);
   const url = opts.qs ? `${uri}?${stringify(opts.qs)}` : uri;
 
@@ -34,3 +36,16 @@ export default async function fetcher(uri, options) {
     throw err;
   }
 }
+
+export class Client {
+  constructor(baseURL) {
+    this.baseURL = trim(baseURL, '/');
+  }
+
+  async communities(options) {
+    const items = await fetcher(`${this.baseURL}/api/v1/communities`, options);
+    return orderBy(items, ['sortOrder'], ['desc']);
+  }
+}
+
+export default new Client('http://localhost:3000');

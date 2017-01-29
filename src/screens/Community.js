@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { ListView } from 'react-native';
 import styled from 'styled-components/native';
 
-import fetcher from '../utils/fetcher';
+import client from '../utils/fetcher';
 import { ListViewRow, ListViewSeparator, ErrorBar, RefreshControl, TabBarIcon } from '../components/';
 import Themed from '../styles';
 
@@ -19,6 +19,12 @@ const Text = styled.Text`
 
 `;
 
+const Image = styled.Image`
+  height: 30;
+  width: 30;
+  margin-right: 12;
+`;
+
 
 export default class Community extends Component {
   static navigationOptions = {
@@ -30,7 +36,7 @@ export default class Community extends Component {
   }
 
   static DataSource = new ListView.DataSource({
-    rowHasChanged: (r1, r2) => r1.id !== r2.id,
+    rowHasChanged: (r1, r2) => r1._id !== r2._id,
   })
 
   static propTypes = {
@@ -54,15 +60,16 @@ export default class Community extends Component {
   fetchContent = () => {
     this.setState({ refreshing: true });
 
-    const url = '';
-    return fetcher(url).then(
-      items => this.setState({ refreshing: false, error: null, items }),
-      error => this.setState({ refreshing: false, error }),
-    );
+    return client.communities()
+      .then(items => Community.DataSource.cloneWithRows(items))
+      .then(
+        items => this.setState({ refreshing: false, error: null, items }),
+        error => this.setState({ refreshing: false, error }),
+      );
   }
 
   handlePress = (item) => {
-    alert(item.id) // eslint-disable-line
+    alert(item._id) // eslint-disable-line
   }
 
   render() {
@@ -77,7 +84,8 @@ export default class Community extends Component {
             enableEmptySections
             renderRow={item => (
               <ListViewRow onPress={() => this.handlePress(item)}>
-                <Text>{item.text}</Text>
+                <Image source={{ uri: item.image.secure_url }} />
+                <Text>{item.name}</Text>
               </ListViewRow>
             )}
             renderSeparator={(section, row) => (

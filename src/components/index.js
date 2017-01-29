@@ -5,5 +5,6 @@ export { default as Content } from './Content';
 export { default as TabBarIcon } from './TabBarIcon';
 export { default as ListViewSeparator } from './ListViewSeparator';
 export { default as ListViewRow } from './ListViewRow';
+export { default as HTML } from './HTML';
 export { default as ErrorBar } from './ErrorBar';
 export { default as RefreshControl } from './RefreshControl';

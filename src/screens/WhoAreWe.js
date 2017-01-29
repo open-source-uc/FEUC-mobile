@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
 
-import { ErrorBar } from '../components/';
+import { ErrorBar, HTML } from '../components/';
 import Themed from '../styles';
 
 
@@ -20,18 +20,26 @@ export default class WhoAreWe extends Component {
 
   state = {
     error: null,
+    content: `
+    <h1>Contenido</h1>
+    <p>Somos la <em>FEUC</em> y hacemos cosas</p>
+    <p>Esto es una lista:
+      <ul>
+        <li>Primer item</li>
+        <li>Segundo <a href="http://google.cl">item</a></li>
+      </ul>
+    </p>
+    `,
   }
 
   render() {
-    const { error } = this.state;
+    const { error, content } = this.state;
 
     return (
       <Themed>
         <Container>
           <ErrorBar error={error} />
-          <Text>
-            Lorem Ipsum
-          </Text>
+          <HTML>{content}</HTML>
         </Container>
       </Themed>
     );
