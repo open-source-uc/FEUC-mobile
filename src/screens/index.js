@@ -13,9 +13,5 @@ export { default as FilterInfo } from './FilterInfo';
 export { default as MyEvents } from './MyEvents';
 export { default as Contact } from './Contact';
 
-export { default as Council } from './Council';
-export { default as SpeakerOffices } from './SpeakerOffices';
 export { default as Transparence } from './Transparence';
-export { default as WhoAreWe } from './WhoAreWe';
-
 export { default as AboutDetail } from './AboutDetail';

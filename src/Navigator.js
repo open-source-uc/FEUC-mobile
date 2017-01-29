@@ -4,7 +4,7 @@ import {
   Home, Community, About, Benefits, More,
   MapScreen,
   Notifications, FilterInfo, MyEvents, Contact,
-  AboutDetail, Council, SpeakerOffices, Transparence, WhoAreWe,
+  AboutDetail, Transparence,
 } from './screens/';
 import { colors } from './styles';
 
@@ -36,17 +36,8 @@ const AboutScreen = StackNavigator({
   AboutDetail: {
     screen: AboutDetail,
   },
-  Council: {
-    screen: Council,
-  },
-  SpeakerOffices: {
-    screen: SpeakerOffices,
-  },
   Transparence: {
     screen: Transparence,
-  },
-  WhoAreWe: {
-    screen: WhoAreWe,
   },
 }, {
   initialRouteName: 'Root',
