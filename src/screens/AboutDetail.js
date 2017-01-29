@@ -9,13 +9,10 @@ const Container = styled.View`
   flex: 1;
 `;
 
-const Text = styled.Text`
-`;
 
-
-export default class WhoAreWe extends Component {
+export default class AboutDetail extends Component {
   static navigationOptions = {
-    title: '¿Quiénes somos?',
+    title: ({ state }) => `${state.params.title}`,
   }
 
   static propTypes = {

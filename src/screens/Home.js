@@ -5,6 +5,7 @@ import { TabBarIcon } from '../components/';
 
 
 const Container = styled.View`
+  flex: 1;
 `;
 
 const Text = styled.Text`

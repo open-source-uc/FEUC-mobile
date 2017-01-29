@@ -43,8 +43,13 @@ export class Client {
   }
 
   async communities(options) {
-    const items = await fetcher(`${this.baseURL}/api/v1/communities`, options);
-    return orderBy(items, ['sortOrder'], ['desc']);
+    const response = await fetcher(`${this.baseURL}/api/v1/communities`, options);
+    return orderBy(response, ['sortOrder'], ['desc']);
+  }
+
+  async information(path = '', options) {
+    const response = await fetcher(`${this.baseURL}/api/v1/information/${path}`, options);
+    return response;
   }
 }
 
