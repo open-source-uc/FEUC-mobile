@@ -30,8 +30,7 @@ export default class Home extends Component {
     return (
       <Container>
         <Text>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
+          Lorem Ipsum
         </Text>
       </Container>
     );
