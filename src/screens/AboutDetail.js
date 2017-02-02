@@ -1,12 +1,16 @@
 import React, { PropTypes, Component } from 'react';
 import styled from 'styled-components/native';
 
-import { ErrorBar, HTML } from '../components/';
+import { ErrorBar, RichText } from '../components/';
 import Themed from '../styles';
 
 
 const Container = styled.View`
   flex: 1;
+`;
+
+const ScrollView = styled.ScrollView`
+  padding: 18;
 `;
 
 
@@ -40,7 +44,9 @@ export default class AboutDetail extends Component {
         <Container>
           <ErrorBar error={error} />
           {content && (
-            <HTML>{content}</HTML>
+            <ScrollView>
+              <RichText>{content}</RichText>
+            </ScrollView>
           )}
         </Container>
       </Themed>

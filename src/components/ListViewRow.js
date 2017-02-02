@@ -10,7 +10,7 @@ const TouchableHighlight = styled.TouchableOpacity`
   align-items: center;
   background-color: white;
   padding: 0 15;
-  height: 44;
+  min-height: 44;
 `;
 
 const TouchableNativeFeedback = styled.TouchableNativeFeedback`
@@ -19,7 +19,7 @@ const TouchableNativeFeedback = styled.TouchableNativeFeedback`
   align-items: center;
   background-color: white;
   padding: 0 15;
-  height: 48;
+  min-height: 48;
 `;
 
 const View = styled.View`

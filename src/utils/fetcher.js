@@ -51,6 +51,11 @@ export class Client {
     const response = await fetcher(`${this.baseURL}/api/v1/information/${path}`, options);
     return response;
   }
+
+  async benefits(options) {
+    const response = await fetcher(`${this.baseURL}/api/v1/benefits`, options);
+    return response;
+  }
 }
 
 export default new Client('http://localhost:3000');
