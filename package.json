@@ -7,6 +7,7 @@
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios # --simulator=\"iPhone 5\"",
     "android": "node node_modules/react-native/local-cli/cli.js run-android",
     "test": "jest",
+    "lint": "eslint src",
     "clean": "watchman watch-del-all && rm -fr $TMPDIR/react-* && rm -rf node_modules && yarn install"
   },
   "dependencies": {
@@ -20,13 +21,13 @@
     "react-native-simple-markdown": "^1.0.60-rc.3",
     "react-native-vector-icons": "^4.0.0",
     "react-navigation": "^1.0.0-beta.1",
-    "styled-components": "^1.4.2"
+    "styled-components": "^1.4.3"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
     "babel-jest": "18.0.0",
     "babel-preset-react-native": "1.9.1",
-    "eslint": "^3.14.0",
+    "eslint": "^3.15.0",
     "eslint-config-airbnb": "^14.0.0",
     "eslint-config-airbnb-base": "^11.0.0",
     "eslint-plugin-flowtype": "^2.30.0",

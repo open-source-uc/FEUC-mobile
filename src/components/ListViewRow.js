@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes, PureComponent } from 'react';
 import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 import isArray from 'lodash/fp/isArray';
@@ -29,20 +29,30 @@ const View = styled.View`
 `;
 
 
-const ListViewRow = ({ children, ...props }) => {
-  if (Platform.OS === 'ios') {
-    return (
-      <TouchableHighlight {...props}>
-        {isArray(children) ? <View>{children}</View> : children}
-      </TouchableHighlight>
-    );
-  } else {
-    return (
-      <TouchableNativeFeedback {...props}>
-        {isArray(children) ? <View>{children}</View> : children}
-      </TouchableNativeFeedback>
-    );
+export default class ListViewRow extends PureComponent {
+  static propTypes = {
+    children: PropTypes.any,
   }
-};
 
-export default ListViewRow;
+  static defaultProps = {
+    children: null,
+  }
+
+  render() {
+    const { children, ...props } = this.props;
+
+    if (Platform.OS === 'ios') {
+      return (
+        <TouchableHighlight {...props}>
+          {isArray(children) ? <View>{children}</View> : children}
+        </TouchableHighlight>
+      );
+    } else {
+      return (
+        <TouchableNativeFeedback {...props}>
+          {isArray(children) ? <View>{children}</View> : children}
+        </TouchableNativeFeedback>
+      );
+    }
+  }
+}
