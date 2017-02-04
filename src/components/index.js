@@ -7,3 +7,4 @@ export { default as ListViewRow } from './ListViewRow';
 export { default as RichText } from './RichText';
 export { default as ErrorBar } from './ErrorBar';
 export { default as RefreshControl } from './RefreshControl';
+export { default as NavbarButton } from './NavbarButton';

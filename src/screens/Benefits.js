@@ -5,10 +5,12 @@ import styled from 'styled-components/native';
 import client from '../utils/fetcher';
 import { ListViewRow, ListViewSeparator, ErrorBar, RefreshControl, TabBarIcon, RichText } from '../components/';
 import Themed from '../styles';
+import { defaults } from '../Navigator';
 
 
 const Container = styled.View`
   flex: 1;
+  background-color: ${props => props.theme.colors.background};
 `;
 
 const StyledListView = styled.ListView`
@@ -39,6 +41,9 @@ export default class Benefits extends Component {
       label: 'Beneficios',
       icon: props => <TabBarIcon.Benefits {...props} />,
     },
+    header: () => ({
+      ...defaults.navigator.header,
+    }),
   }
 
   static DataSource = new ListView.DataSource({
@@ -82,7 +87,7 @@ export default class Benefits extends Component {
     const { items, error, refreshing } = this.state;
 
     return (
-      <Themed>
+      <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
           <StyledListView

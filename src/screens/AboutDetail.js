@@ -3,10 +3,12 @@ import styled from 'styled-components/native';
 
 import { ErrorBar, RichText } from '../components/';
 import Themed from '../styles';
+import { defaults } from '../Navigator';
 
 
 const Container = styled.View`
   flex: 1;
+  background-color: ${props => props.theme.colors.background};
 `;
 
 const ScrollView = styled.ScrollView`
@@ -16,7 +18,11 @@ const ScrollView = styled.ScrollView`
 
 export default class AboutDetail extends Component {
   static navigationOptions = {
-    title: ({ state }) => `${state.params.title}`,
+    title: 'FEUC',
+    header: ({ state }) => ({
+      ...defaults.navigator.header,
+      title: state.params.title,
+    }),
   }
 
   static propTypes = {
@@ -40,7 +46,7 @@ export default class AboutDetail extends Component {
     const { error, content } = this.state;
 
     return (
-      <Themed>
+      <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
           {content && (

@@ -4,8 +4,10 @@ import styled, { ThemeProvider } from 'styled-components/native';
 import isArray from 'lodash/fp/isArray';
 
 export const colors = {
-  main: '#e91f63',
+  main: '#0da5a5',
   error: '#e91f63',
+  white: 'white',
+  background: '#EFF1F3',
 };
 
 export const fonts = {

@@ -6,10 +6,12 @@ import pick from 'lodash/pick';
 import client from '../utils/fetcher';
 import { ListViewRow, ListViewSeparator, ErrorBar, TabBarIcon } from '../components/';
 import Themed from '../styles';
+import { defaults } from '../Navigator';
 
 
 const Container = styled.View`
   flex: 1;
+  background-color: ${props => props.theme.colors.background};
 `;
 
 const StyledListView = styled.ListView`
@@ -28,6 +30,9 @@ export default class About extends Component {
       label: 'FEUC',
       icon: props => <TabBarIcon.About {...props} />,
     },
+    header: () => ({
+      ...defaults.navigator.header,
+    }),
   }
   static DataSource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1.key !== r2.key,
@@ -88,7 +93,7 @@ export default class About extends Component {
     const { items, error } = this.state;
 
     return (
-      <Themed>
+      <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
           <StyledListView

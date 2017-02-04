@@ -4,10 +4,12 @@ import styled from 'styled-components/native';
 
 import { ListViewRow, ListViewSeparator, ErrorBar, TabBarIcon } from '../components/';
 import Themed from '../styles';
+import { defaults } from '../Navigator';
 
 
 const Container = styled.View`
   flex: 1;
+  background-color: ${props => props.theme.colors.background};
 `;
 
 const StyledListView = styled.ListView`
@@ -26,6 +28,9 @@ export default class More extends Component {
       label: 'Más',
       icon: props => <TabBarIcon.More {...props} />,
     },
+    header: () => ({
+      ...defaults.navigator.header,
+    }),
   }
 
   static DataSource = new ListView.DataSource({
@@ -64,7 +69,7 @@ export default class More extends Component {
     const { items, error } = this.state;
 
     return (
-      <Themed>
+      <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
           <StyledListView

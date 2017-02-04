@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "ios": "node node_modules/react-native/local-cli/cli.js run-ios # --simulator=\"iPhone 5\"",
+    "ios": "node node_modules/react-native/local-cli/cli.js run-ios --simulator=\"iPhone 5\"",
     "android": "node node_modules/react-native/local-cli/cli.js run-android",
     "test": "jest",
     "lint": "eslint src",
@@ -20,7 +20,7 @@
     "react-native-maps": "0.13.0",
     "react-native-simple-markdown": "^1.0.60-rc.3",
     "react-native-vector-icons": "^4.0.0",
-    "react-navigation": "^1.0.0-beta.1",
+    "react-navigation": "react-community/react-navigation#8d722f43e920b413df911fa9b7a7b5193ef91c4b",
     "styled-components": "^1.4.3"
   },
   "devDependencies": {

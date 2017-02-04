@@ -3,19 +3,23 @@ import { Dimensions, InteractionManager } from 'react-native';
 import MapView from 'react-native-maps';
 import styled from 'styled-components/native';
 
-import { Loading, ErrorBar } from '../components';
+import { Loading, ErrorBar, NavbarButton } from '../components';
 import Themed from '../styles';
+import { defaults } from '../Navigator';
 
 
 const Container = styled.View`
   flex: 1;
+  background-color: ${props => props.theme.colors.background};
 `;
 
 const StyledMap = styled(MapView)`
   flex: 1;
 `;
 
-const Button = styled.Button``;
+const Button = styled.Button`
+  color: white;
+`;
 
 
 export default class MapScreen extends Component {
@@ -23,6 +27,7 @@ export default class MapScreen extends Component {
     title: 'FEUC',
     header: ({ goBack }) => ({
       right: <Button title="Volver" onPress={() => goBack()} />,
+      ...defaults.navigator.header,
     }),
   }
 
@@ -50,7 +55,7 @@ export default class MapScreen extends Component {
     };
 
     return (
-      <Themed>
+      <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
           {loading ? <Loading /> : (

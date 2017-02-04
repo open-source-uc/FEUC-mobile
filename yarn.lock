@@ -3576,6 +3576,10 @@ react-native-tab-view@^0.0.52:
   version "0.0.52"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.52.tgz#61655f93974ff4f26f02bd739566848984ad53c7"
 
+react-native-tab-view@^0.0.54:
+  version "0.0.54"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.54.tgz#838e2de5a791488353786e2fe7e8f77a72f03b87"
+
 react-native-vector-icons@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.0.0.tgz#6a2f8f4c6ace613aed7748cd530809283e5b1538"
@@ -3674,6 +3678,16 @@ react-navigation@^1.0.0-beta.1:
     react-addons-shallow-compare "15.4.1"
     react-native-drawer-layout "^1.1.0"
     react-native-tab-view "^0.0.52"
+
+react-navigation@react-community/react-navigation#8d722f43e920b413df911fa9b7a7b5193ef91c4b:
+  version "1.0.0-beta.1"
+  resolved "https://codeload.github.com/react-community/react-navigation/tar.gz/8d722f43e920b413df911fa9b7a7b5193ef91c4b"
+  dependencies:
+    clamp "^1.0.1"
+    fbjs "^0.8.5"
+    path-to-regexp "^1.7.0"
+    react-native-drawer-layout "^1.1.0"
+    react-native-tab-view "^0.0.54"
 
 react-proxy@^1.1.7:
   version "1.1.8"

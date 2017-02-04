@@ -3,10 +3,11 @@ import styled from 'styled-components/native';
 
 import { ErrorBar } from '../components/';
 import Themed from '../styles';
-
+import { defaults } from '../Navigator';
 
 const Container = styled.View`
   flex: 1;
+  background-color: ${props => props.theme.colors.background};
 `;
 
 const Text = styled.Text`
@@ -15,7 +16,11 @@ const Text = styled.Text`
 
 export default class FilterInfo extends Component {
   static navigationOptions = {
-    title: 'Filtrar Información',
+    title: 'Más',
+    header: () => ({
+      ...defaults.navigator.header,
+      title: 'Filtrar Información',
+    }),
   }
 
   state = {
@@ -26,7 +31,7 @@ export default class FilterInfo extends Component {
     const { error } = this.state;
 
     return (
-      <Themed>
+      <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
           <Text>

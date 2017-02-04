@@ -1,3 +1,4 @@
+import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import {
@@ -6,8 +7,21 @@ import {
   Notifications, FilterInfo, MyEvents, Contact,
   AboutDetail, Transparence,
 } from './screens/';
+import Logo from './components/Logo';
 import { colors } from './styles';
 
+
+export const defaults = {
+  navigator: {
+    header: {
+      tintColor: colors.white,
+      title: <Logo transparent />,
+      style: {
+        backgroundColor: colors.main,
+      },
+    },
+  },
+};
 
 const HomeScreen = StackNavigator({
   Root: {

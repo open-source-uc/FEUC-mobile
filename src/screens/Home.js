@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
 
-import { TabBarIcon } from '../components/';
+import { TabBarIcon, NavbarButton } from '../components/';
+import Themed from '../styles';
+import { defaults } from '../Navigator';
 
 
 const Container = styled.View`
   flex: 1;
+  background-color: ${props => props.theme.colors.background};
 `;
 
 const Text = styled.Text`
 `;
-
-const Button = styled.Button``;
 
 
 export default class Home extends Component {
@@ -22,17 +23,20 @@ export default class Home extends Component {
       icon: props => <TabBarIcon.Home {...props} />,
     },
     header: ({ navigate }) => ({
-      right: <Button title="Mapa" onPress={() => navigate('MapScreen')} />,
+      right: <NavbarButton name="ios-map" onPress={() => navigate('MapScreen')} />,
+      ...defaults.navigator.header,
     }),
   }
 
   render() {
     return (
-      <Container>
-        <Text>
-          Lorem Ipsum
-        </Text>
-      </Container>
+      <Themed content="dark">
+        <Container>
+          <Text>
+            Lorem Ipsum
+          </Text>
+        </Container>
+      </Themed>
     );
   }
 }
