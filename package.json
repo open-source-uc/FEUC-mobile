@@ -6,6 +6,9 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios --simulator=\"iPhone 5\"",
     "android": "node node_modules/react-native/local-cli/cli.js run-android",
+    "icon": "yarn run icon:android && yarn run icon:ios",
+    "icon:android": "yo rn-toolbox:assets --ios --icon resources/icon/android.png",
+    "icon:ios": "yo rn-toolbox:assets --android --icon resources/icon/ios.png",
     "test": "jest",
     "lint": "eslint src",
     "clean": "watchman watch-del-all && rm -fr $TMPDIR/react-* && rm -rf node_modules && yarn install"
@@ -34,8 +37,10 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-react": "^6.9.0",
+    "generator-rn-toolbox": "^1.1.0",
     "jest": "18.1.0",
-    "react-test-renderer": "~15.4.0-rc.4"
+    "react-test-renderer": "~15.4.0-rc.4",
+    "yo": "^1.8.5"
   },
   "jest": {
     "preset": "react-native"
