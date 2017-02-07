@@ -1,4 +1,4 @@
-package com.feuc;
+package cl.feuc.app;
 
 import com.facebook.react.ReactActivity;
 

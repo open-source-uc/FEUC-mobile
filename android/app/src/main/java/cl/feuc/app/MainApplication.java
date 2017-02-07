@@ -1,4 +1,4 @@
-package com.feuc;
+package cl.feuc.app;
 
 import android.app.Application;
 import android.util.Log;

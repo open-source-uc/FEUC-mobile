@@ -18,7 +18,8 @@ const StyledListView = styled.ListView`
 `;
 
 const Text = styled.Text`
-
+  text-align: left;
+  flex: 1;
 `;
 
 const Image = styled.Image`

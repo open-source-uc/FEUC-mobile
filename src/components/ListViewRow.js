@@ -13,19 +13,22 @@ const TouchableHighlight = styled.TouchableOpacity`
   min-height: 44;
 `;
 
-const TouchableNativeFeedback = styled.TouchableNativeFeedback`
+const TouchableHighlightInner = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+
+const TouchableNativeFeedback = styled.TouchableNativeFeedback``;
+
+const TouchableNativeFeedbackInner = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   background-color: white;
-  padding: 0 15;
+  padding: 0 18;
   min-height: 48;
-`;
-
-const View = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
 `;
 
 
@@ -44,13 +47,17 @@ export default class ListViewRow extends PureComponent {
     if (Platform.OS === 'ios') {
       return (
         <TouchableHighlight {...props}>
-          {isArray(children) ? <View>{children}</View> : children}
+          {isArray(children) ? (
+            <TouchableHighlightInner>{children}</TouchableHighlightInner>
+          ) : children}
         </TouchableHighlight>
       );
     } else {
       return (
         <TouchableNativeFeedback {...props}>
-          {isArray(children) ? <View>{children}</View> : children}
+          <TouchableNativeFeedbackInner>
+            {children}
+          </TouchableNativeFeedbackInner>
         </TouchableNativeFeedback>
       );
     }

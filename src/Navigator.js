@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import {
@@ -16,6 +17,35 @@ export const defaults = {
     header: {
       tintColor: colors.white,
       title: <Logo transparent />,
+      style: {
+        backgroundColor: colors.main,
+      },
+    },
+  },
+  tabbar: {
+    ios: {
+      activeTintColor: colors.main,
+      // activeBackgroundColor: colors.white,
+      // inactiveTintColor
+      // labelStyle
+      // style
+    },
+    android: {
+      activeTintColor: colors.white,
+      // inactiveTintColor: colors.inactive,
+      showIcon: true,
+      showLabel: false,
+      // pressColor
+      // pressOpacity
+      scrollEnabled: false,
+      upperCaseLabel: false,
+      // tabStyle
+      // indicatorStyle
+      labelStyle: {
+        margin: 0,
+        marginTop: 3,
+        fontSize: 12,
+      },
       style: {
         backgroundColor: colors.main,
       },
@@ -104,25 +134,12 @@ export default TabNavigator({
     screen: MoreScreen,
   },
 }, {
-  tabBarOptions: {
-    // tabBarComponent: TabView.TabBarBottom,
-    tabBarPosition: 'bottom', // 'top' 'bottom'
-    activeTintColor: colors.main,
-    // swipeEnabled: false,
-    // animationEnabled: true,
-    lazyLoad: true,
-    initialTab: 'Home',
-    order: ['Home', 'Community', 'About', 'Benefits', 'More'],
-  //   activeBackgroundColor,
-  //   inactiveTintColor,
-  //   inactiveBackgroundColor,
-  //   inactiveBackgroundColor,
-  //   style: {
-  //     backgroundColor: 'blue',
-  //   },
-  //   showIcon
-  //   showLabel
-  //   upperCaseLabel
-  //   scrollEnabled
-  },
+  // tabBarComponent: TabView.TabBarBottom,
+  tabBarPosition: 'bottom', // 'top' 'bottom'
+  lazyLoad: true,
+  swipeEnabled: false,
+  animationEnabled: false,
+  initialTab: 'Home',
+  order: ['Home', 'Community', 'About', 'Benefits', 'More'],
+  tabBarOptions: defaults.tabbar[Platform.OS],
 });

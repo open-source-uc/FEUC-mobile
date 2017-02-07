@@ -1,20 +1,23 @@
 import React, { PropTypes, PureComponent } from 'react';
-import { Image } from 'react-native';
+import { Platform, Image } from 'react-native';
 import styled from 'styled-components/native';
 
 import { images } from '../assets';
 
 
-const Logo = styled.Image`
-  height: 38;
-  background-color: transparent;
-  margin-bottom: 4;
-`;
-
 const View = styled.View`
   flex: 1;
-  justify-content: center;
+  justify-content: ${Platform.OS === 'ios' ? 'center' : 'flex-start'};
+  padding-left: ${Platform.OS === 'ios' ? 0 : 18};
+  flex-direction: row;
   align-items: center;
+`;
+
+const Logo = styled.Image`
+  height: 38;
+  width: 60;
+  background-color: transparent;
+  margin-bottom: 4;
 `;
 
 
@@ -33,7 +36,7 @@ export default class Loading extends PureComponent {
     const { source, transparent, ...props } = this.props;
     return (
       <View {...props}>
-        <Logo resizeMode={Image.resizeMode.contain} source={source} transparent={transparent} />
+        <Logo source={source} transparent={transparent} />
       </View>
     );
   }
