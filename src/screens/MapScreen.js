@@ -5,6 +5,7 @@ import styled from 'styled-components/native';
 
 import { Loading, ErrorBar } from '../components';
 import Themed from '../styles';
+import { mapStyle } from '../assets';
 import { defaults } from '../Navigator';
 
 
@@ -48,10 +49,10 @@ export default class MapScreen extends Component {
     const ratio = width / height;
 
     const coordinates = {
-      latitude: 37.78825,
-      longitude: -122.4324,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0922 * ratio,
+      latitude: -33.498395,
+      longitude: -70.611303,
+      latitudeDelta: 0.010,
+      longitudeDelta: 0.010 * ratio,
     };
 
     return (
@@ -62,6 +63,7 @@ export default class MapScreen extends Component {
             <StyledMap
               initialRegion={coordinates}
               provider={MapView.PROVIDER_GOOGLE}
+              customMapStyle={mapStyle}
             />
           )}
         </Container>
