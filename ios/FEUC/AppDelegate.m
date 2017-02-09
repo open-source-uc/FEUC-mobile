@@ -13,6 +13,8 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+@import GoogleMaps;
+
 @implementation AppDelegate
 
 @synthesize oneSignal = _oneSignal;
@@ -23,6 +25,11 @@
    * See: https://github.com/geektimecoil/react-native-onesignal
    */
   self.oneSignal = [[RCTOneSignal alloc] initWithLaunchOptions:launchOptions appId:@"SIGNAL_APP_ID"];
+
+  /**
+   * See: https://github.com/airbnb/react-native-maps/blob/master/docs/installation.md#option-1-cocoapods---same-as-the-included-airmapsexplorer-example
+   */
+  [GMSServices provideAPIKey:@"GOOGLE_API_KEY"];
 
   NSURL *jsCodeLocation;
 

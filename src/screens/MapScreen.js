@@ -3,7 +3,7 @@ import { Dimensions, InteractionManager } from 'react-native';
 import MapView from 'react-native-maps';
 import styled from 'styled-components/native';
 
-import { Loading, ErrorBar, NavbarButton } from '../components';
+import { Loading, ErrorBar } from '../components';
 import Themed from '../styles';
 import { defaults } from '../Navigator';
 
@@ -61,6 +61,7 @@ export default class MapScreen extends Component {
           {loading ? <Loading /> : (
             <StyledMap
               initialRegion={coordinates}
+              provider={MapView.PROVIDER_GOOGLE}
             />
           )}
         </Container>
