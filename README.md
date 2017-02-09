@@ -33,16 +33,60 @@ yarn start
 
 ### iOS
 
-Launch an iOS emulator with:
+Run an iOS emulator with:
 
 ```sh
 yarn run ios
 ```
 
+Run on device with:
+
+```sh
+yarn run ios -- --device
+```
+
+> Add the `--configuration Release` flag to run a production build.
+
+#### Troubleshooting
+
+Make sure to have enabled:
+
+```diff
+...
+  <key>NSAppTransportSecurity</key>
+  <dict>
+-   <key>NSExceptionDomains</key>
+-   <dict>
+-     <key>localhost</key>
+-     <dict>
+-       <key>NSExceptionAllowsInsecureHTTPLoads</key>
+-       <true/>
+-     </dict>
+-   </dict>
++   <key>NSAllowsArbitraryLoads</key>
++   <true/>
+  </dict>
+...
+```
+
 ### Android
 
-Launch an Android emulator with:
+Run an Android emulator with:
 
 ```sh
 yarn run android
+```
+
+#### Troubleshooting
+
+See the console on a device with:
+
+```sh
+adb logcat *:S ReactNative:V ReactNativeJS:V
+```
+
+To show every log:
+
+```sh
+adb logcat
 ```

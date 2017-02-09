@@ -8,6 +8,7 @@
  */
 
 #import "AppDelegate.h"
+#import "RCTOneSignal.h"
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>

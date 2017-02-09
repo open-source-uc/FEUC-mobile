@@ -2,6 +2,7 @@
   "name": "FEUC",
   "version": "0.1.0",
   "private": true,
+  "description": "FEUC mobile app",
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios --simulator=\"iPhone 5\"",
@@ -9,22 +10,33 @@
     "icon": "yarn run icon:android && yarn run icon:ios",
     "icon:android": "yo rn-toolbox:assets --ios --icon resources/icon/android.png",
     "icon:ios": "yo rn-toolbox:assets --android --icon resources/icon/ios.png",
+    "upgrade": "yarn upgrade-interactive",
     "test": "jest",
     "lint": "eslint src",
     "clean": "watchman watch-del-all && rm -fr $TMPDIR/react-* && rm -rf node_modules && yarn install"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrpatiwi/FEUC-api.git"
+  },
+  "author": {
+    "name": "Patricio López Juri",
+    "email": "patricio@lopezjuri.com",
+    "url": "lopezjuri.com"
+  },
+  "license": "UNLICENCED",
   "dependencies": {
     "lodash": "^4.17.4",
     "moment": "^2.17.1",
-    "native-base": "^0.5.22",
+    "native-base": "^2.0.4",
     "qs": "^6.3.0",
     "react": "~15.4.2",
-    "react-native": "0.40.0",
+    "react-native": "^0.41.2",
     "react-native-maps": "0.13.0",
-    "react-native-onesignal": "^3.0.2",
+    "react-native-onesignal": "git://github.com/jkasten2/react-native-onesignal#ios_linking_and_header_fix",
     "react-native-simple-markdown": "^1.0.60-rc.3",
     "react-native-vector-icons": "^4.0.0",
-    "react-navigation": "react-community/react-navigation#8d722f43e920b413df911fa9b7a7b5193ef91c4b",
+    "react-navigation": "^1.0.0-beta.2",
     "styled-components": "^1.4.3"
   },
   "devDependencies": {
@@ -36,7 +48,7 @@
     "eslint-config-airbnb-base": "^11.1.0",
     "eslint-plugin-flowtype": "^2.30.0",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.9.0",
     "generator-rn-toolbox": "^1.1.0",
     "jest": "18.1.0",
