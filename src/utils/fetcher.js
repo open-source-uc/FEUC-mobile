@@ -1,5 +1,4 @@
-'use strict';
-
+import Config from 'react-native-config';
 import defaults from 'lodash/defaults';
 import trim from 'lodash/trim';
 import orderBy from 'lodash/orderBy';
@@ -58,4 +57,5 @@ export class Client {
   }
 }
 
-export default new Client('http://localhost:3000');
+const url = Config.FEUC_API_URL || 'http://localhost:3000';
+export default new Client(url);

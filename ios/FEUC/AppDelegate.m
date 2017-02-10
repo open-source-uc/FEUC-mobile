@@ -9,6 +9,7 @@
 
 #import "AppDelegate.h"
 #import "RCTOneSignal.h"
+#import <ReactNativeConfig/ReactNativeConfig.h>
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -24,12 +25,12 @@
   /**
    * See: https://github.com/geektimecoil/react-native-onesignal
    */
-  self.oneSignal = [[RCTOneSignal alloc] initWithLaunchOptions:launchOptions appId:@"SIGNAL_APP_ID"];
+  self.oneSignal = [[RCTOneSignal alloc] initWithLaunchOptions:launchOptions appId:[ReactNativeConfig envFor:@"SIGNAL_APP_ID"]];
 
   /**
    * See: https://github.com/airbnb/react-native-maps/blob/master/docs/installation.md#option-1-cocoapods---same-as-the-included-airmapsexplorer-example
    */
-  [GMSServices provideAPIKey:@"GOOGLE_API_KEY"];
+  [GMSServices provideAPIKey:[ReactNativeConfig envFor:@"GOOGLE_MAPS_API_KEY"]];
 
   NSURL *jsCodeLocation;
 

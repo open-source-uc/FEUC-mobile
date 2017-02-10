@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile
 
@@ -95,7 +96,7 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
-        manifestPlaceholders = [onesignal_app_id: "SIGNAL_APP_ID",
+        manifestPlaceholders = [onesignal_app_id: project.env.get("SIGNAL_APP_ID"),
                                 onesignal_google_project_number: "REMOTE"]
     }
     splits {
@@ -128,6 +129,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-config')
     compile project(':react-native-onesignal')
     compile project(':react-native-vector-icons')
     compile fileTree(dir: "libs", include: ["*.jar"])

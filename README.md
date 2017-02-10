@@ -25,6 +25,15 @@ Install dependencies:
 yarn install
 ```
 
+Create `.env` file for the following configuration variables:
+
+```sh
+SIGNAL_APP_ID=...
+GOOGLE_MAPS_API_KEY=...
+```
+
+> This file is ignored by default on git, but it's included on the builds and can be reversed engineered.
+
 Create development server:
 
 ```sh

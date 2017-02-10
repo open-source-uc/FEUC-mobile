@@ -8,8 +8,8 @@
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios --simulator=\"iPhone 5\"",
     "android": "node node_modules/react-native/local-cli/cli.js run-android",
     "icon": "yarn run icon:android && yarn run icon:ios",
-    "icon:android": "yo rn-toolbox:assets --ios --icon resources/icon/android.png",
-    "icon:ios": "yo rn-toolbox:assets --android --icon resources/icon/ios.png",
+    "icon:android": "yo rn-toolbox:assets --ios --icon resources/icons/android.png",
+    "icon:ios": "yo rn-toolbox:assets --android --icon resources/icons/ios.png",
     "upgrade": "yarn upgrade-interactive",
     "test": "jest",
     "lint": "eslint src",
@@ -22,21 +22,22 @@
   "author": {
     "name": "Patricio López Juri",
     "email": "patricio@lopezjuri.com",
-    "url": "lopezjuri.com"
+    "url": "https://lopezjuri.com"
   },
   "license": "UNLICENCED",
   "dependencies": {
     "lodash": "^4.17.4",
     "moment": "^2.17.1",
-    "native-base": "^2.0.4",
+    "native-base": "^2.0.5",
     "qs": "^6.3.0",
     "react": "~15.4.2",
     "react-native": "^0.41.2",
+    "react-native-config": "^0.3.1",
     "react-native-maps": "0.13.0",
     "react-native-onesignal": "git://github.com/jkasten2/react-native-onesignal#ios_linking_and_header_fix",
     "react-native-simple-markdown": "^1.0.60-rc.3",
     "react-native-vector-icons": "^4.0.0",
-    "react-navigation": "^1.0.0-beta.2",
+    "react-navigation": "^1.0.0-beta.3",
     "styled-components": "^1.4.3"
   },
   "devDependencies": {
@@ -50,7 +51,7 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.9.0",
-    "generator-rn-toolbox": "^1.1.0",
+    "generator-rn-toolbox": "^1.4.0",
     "jest": "18.1.0",
     "react-test-renderer": "~15.4.0-rc.4",
     "yo": "^1.8.5"
