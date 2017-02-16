@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
 
-import { TabBarIcon, NavbarButton } from '../components/';
+import { MapView, TabBarIcon, NavbarButton } from '../components/';
 import Themed from '../styles';
 import { defaults } from '../Navigator';
 
@@ -9,9 +9,6 @@ import { defaults } from '../Navigator';
 const Container = styled.View`
   flex: 1;
   background-color: ${props => props.theme.colors.background};
-`;
-
-const Text = styled.Text`
 `;
 
 
@@ -23,7 +20,7 @@ export default class Home extends Component {
       icon: props => <TabBarIcon.Home {...props} />,
     },
     header: ({ navigate }) => ({
-      right: <NavbarButton name="ios-map" onPress={() => navigate('MapScreen')} />,
+      right: <NavbarButton name="ios-more" onPress={() => navigate('MapScreen')} />,
       ...defaults.navigator.header,
     }),
   }
@@ -32,9 +29,7 @@ export default class Home extends Component {
     return (
       <Themed content="dark">
         <Container>
-          <Text>
-            Lorem Ipsum
-          </Text>
+          <MapView />
         </Container>
       </Themed>
     );

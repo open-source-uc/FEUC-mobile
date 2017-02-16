@@ -31,7 +31,7 @@ TabBarIcon.Benefits = props => (
   <TabBarIcon icon="pricetags" {...props} />
 );
 
-TabBarIcon.More = props => (
+TabBarIcon.Enviorement = props => (
   <TabBarIcon icon="more" {...props} />
 );
 

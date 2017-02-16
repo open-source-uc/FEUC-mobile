@@ -8,3 +8,4 @@ export { default as RichText } from './RichText';
 export { default as ErrorBar } from './ErrorBar';
 export { default as RefreshControl } from './RefreshControl';
 export { default as NavbarButton } from './NavbarButton';
+export { default as MapView } from './MapView';

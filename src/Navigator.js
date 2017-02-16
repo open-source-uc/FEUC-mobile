@@ -1,10 +1,10 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
+import defaultsDeep from 'lodash/defaultsDeep';
 
 import {
-  Home, Community, About, Benefits, More,
-  MapScreen,
+  Home, Community, About, Benefits, Enviorement,
   Notifications, FilterInfo, MyEvents, Contact,
   AboutDetail, Transparence,
 } from './screens/';
@@ -18,36 +18,39 @@ export const defaults = {
       tintColor: colors.white,
       title: <Logo transparent />,
       style: {
-        backgroundColor: colors.main,
+        backgroundColor: colors.black,
       },
     },
   },
   tabbar: {
+    common: {
+      activeTintColor: colors.lightGray,
+      inactiveTintColor: colors.gray,
+      activeBackgroundColor: colors.lightBlack,
+      inactiveBackgroundColor: colors.black,
+      style: {
+        backgroundColor: colors.black,
+      },
+    },
     ios: {
-      activeTintColor: colors.main,
-      // activeBackgroundColor: colors.white,
-      // inactiveTintColor
       // labelStyle
       // style
     },
     android: {
-      activeTintColor: colors.white,
-      // inactiveTintColor: colors.inactive,
       showIcon: true,
-      showLabel: false,
+      showLabel: true,
       // pressColor
       // pressOpacity
       scrollEnabled: false,
       upperCaseLabel: false,
       // tabStyle
-      // indicatorStyle
+      indicatorStyle: {
+        backgroundColor: colors.white,
+      },
       labelStyle: {
         margin: 0,
         marginTop: 3,
         fontSize: 12,
-      },
-      style: {
-        backgroundColor: colors.main,
       },
     },
   },
@@ -56,9 +59,6 @@ export const defaults = {
 const HomeScreen = StackNavigator({
   Root: {
     screen: Home,
-  },
-  MapScreen: {
-    screen: MapScreen,
   },
 }, {
   initialRouteName: 'Root',
@@ -95,9 +95,9 @@ const BenefitsScreen = StackNavigator({
   initialRouteName: 'Root',
 });
 
-const MoreScreen = StackNavigator({
+const EnviorementScreen = StackNavigator({
   Root: {
-    screen: More,
+    screen: Enviorement,
   },
   Notifications: {
     screen: Notifications,
@@ -130,8 +130,8 @@ export default TabNavigator({
   Benefits: {
     screen: BenefitsScreen,
   },
-  More: {
-    screen: MoreScreen,
+  Enviorement: {
+    screen: EnviorementScreen,
   },
 }, {
   // tabBarComponent: TabView.TabBarBottom,
@@ -139,7 +139,7 @@ export default TabNavigator({
   lazyLoad: true,
   swipeEnabled: false,
   animationEnabled: false,
-  initialTab: 'Home',
-  order: ['Home', 'Community', 'About', 'Benefits', 'More'],
-  tabBarOptions: defaults.tabbar[Platform.OS],
+  initialRouteName: 'Home',
+  order: ['Enviorement', 'Community', 'Home', 'Benefits', 'About'],
+  tabBarOptions: defaultsDeep({}, defaults.tabbar[Platform.OS], defaults.tabbar.common),
 });

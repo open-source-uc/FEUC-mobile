@@ -5,21 +5,30 @@ import isArray from 'lodash/fp/isArray';
 
 export const colors = {
   main: '#0da5a5',
+  lightMain: '#0ff2e7',
+  black: '#243332',
+  lightBlack: '#2c3f3e',
+  gray: '#48605f',
+  lightGray: '#8aa8a7',
+  white: '#c7d3d2',
+  lightWhite: '#edefef',
   error: '#e91f63',
-  white: 'white',
-  background: '#EFF1F3',
+  get background() {
+    return this.lightWhite;
+  },
 };
 
 export const fonts = {
-
+  main: 'Roboto',
 };
+
+export const map = require('./map.json'); // eslint-disable-line
 
 
 const Screen = styled.View`
   flex: 1;
   background-color: transparent;
 `;
-// background-color: ${props => (props.content === 'dark' ? 'black' : 'white')};
 
 const View = styled.View`
   flex: 1;

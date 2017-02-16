@@ -2,12 +2,10 @@
 export { default as Home } from './Home';
 export { default as Community } from './Community';
 export { default as About } from './About';
-export { default as More } from './More';
+export { default as Enviorement } from './Enviorement';
 export { default as Benefits } from './Benefits';
 
 // Other
-export { default as MapScreen } from './MapScreen';
-
 export { default as Notifications } from './Notifications';
 export { default as FilterInfo } from './FilterInfo';
 export { default as MyEvents } from './MyEvents';

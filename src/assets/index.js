@@ -9,5 +9,3 @@ export const images = {
 export const fonts = {
 
 };
-
-export const mapStyle = require('./mapStyle.json');

@@ -1198,6 +1198,10 @@ color-convert@^1.3.0:
   dependencies:
     color-name "^1.1.1"
 
+color-js@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/color-js/-/color-js-1.0.4.tgz#97d77af4188ba8e1957ba0d512e6465f321e8f82"
+
 color-name@^1.0.0, color-name@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.1.tgz#4b1415304cf50028ea81643643bd82ea05803689"
@@ -1208,7 +1212,7 @@ color-string@^0.3.0:
   dependencies:
     color-name "^1.0.0"
 
-color@~0.11.1:
+color@^0.11.1, color@~0.11.1:
   version "0.11.4"
   resolved "https://registry.yarnpkg.com/color/-/color-0.11.4.tgz#6d7b5c74fb65e841cd48792ad1ed5e07b904d764"
   dependencies:
@@ -1884,13 +1888,15 @@ eslint-plugin-jsx-a11y@^4.0.0:
     jsx-ast-utils "^1.0.0"
     object-assign "^4.0.1"
 
-eslint-plugin-react@^6.9.0:
-  version "6.9.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-6.9.0.tgz#54c2e9906b76f9d10142030bdc34e9d6840a0bb2"
+eslint-plugin-react@^6.10.0:
+  version "6.10.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-6.10.0.tgz#9c48b48d101554b5355413e7c64238abde6ef1ef"
   dependencies:
     array.prototype.find "^2.0.1"
     doctrine "^1.2.2"
+    has "^1.0.1"
     jsx-ast-utils "^1.3.4"
+    object.assign "^4.0.4"
 
 eslint@^3.15.0:
   version "3.15.0"
@@ -2266,10 +2272,11 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-generator-rn-toolbox@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/generator-rn-toolbox/-/generator-rn-toolbox-1.4.0.tgz#938495ea1be7ab7c14bdcf07dc0101a13e02298e"
+generator-rn-toolbox@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/generator-rn-toolbox/-/generator-rn-toolbox-1.4.3.tgz#a186164e400fba61fa4d2317daecc89ec9bdf6d3"
   dependencies:
+    color-js "^1.0.4"
     colors "^1.1.2"
     compare-version "^0.1.2"
     download-file-sync "^1.0.4"
@@ -3797,9 +3804,9 @@ mute-stream@0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.6.tgz#48962b19e169fd1dfc240b3f1e7317627bbc47db"
 
-native-base@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/native-base/-/native-base-2.0.5.tgz#b255a6e8012554cb9a77808800a0e5eb5645f4e5"
+native-base@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/native-base/-/native-base-2.0.7.tgz#de708a0fbdc3cbb711cf5f4f7031e86e30da3a50"
   dependencies:
     "@shoutem/animation" "^0.8.9"
     "@shoutem/theme" "git+https://github.com/GeekyAnts/theme.git"
@@ -3811,7 +3818,7 @@ native-base@^2.0.5:
     print-message "^2.1.0"
     react-native-drawer "^2.3.0"
     react-native-easy-grid "0.1.7"
-    react-native-keyboard-aware-scroll-view "0.2.0"
+    react-native-keyboard-aware-scroll-view "0.2.7"
     react-native-scrollable-tab-view "^0.7.1"
     react-native-vector-icons "~4.0.0"
     react-tween-state "^0.1.5"
@@ -3955,13 +3962,21 @@ object-assign@^4.0.1, object-assign@^4.1.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
-object-keys@^1.0.8:
+object-keys@^1.0.10, object-keys@^1.0.8:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.0.11.tgz#c54601778ad560f1142ce0e01bcca8b56d13426d"
 
 object-values@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/object-values/-/object-values-1.0.0.tgz#72af839630119e5b98c3b02bb8c27e3237158105"
+
+object.assign@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/object.assign/-/object.assign-4.0.4.tgz#b1c9cc044ef1b9fe63606fc141abbb32e14730cc"
+  dependencies:
+    define-properties "^1.1.2"
+    function-bind "^1.1.0"
+    object-keys "^1.0.10"
 
 object.omit@^2.0.0:
   version "2.0.1"
@@ -4324,6 +4339,10 @@ react-native-config@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.3.1.tgz#981d98eee2c4e467397cd9306f5b6958c501c6e8"
 
+react-native-device-info@^0.9.9:
+  version "0.9.9"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.9.9.tgz#42490719b8be2b8ffe689f3c74d56884ca05c0d7"
+
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-dismiss-keyboard/-/react-native-dismiss-keyboard-1.0.0.tgz#32886242b3f2317e121f3aeb9b0a585e2b879b49"
@@ -4347,9 +4366,9 @@ react-native-easy-grid@0.1.7:
   dependencies:
     lodash "^4.11.1"
 
-react-native-keyboard-aware-scroll-view@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.2.0.tgz#d9a94b358cbf92693750b16b4364d64d70060f20"
+react-native-keyboard-aware-scroll-view@0.2.7:
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.2.7.tgz#dd344cec25284b6314f1cc9d1b75ba267483c6b6"
   dependencies:
     react-timer-mixin "^0.13.3"
 
@@ -4375,6 +4394,13 @@ react-native-simple-markdown@^1.0.60-rc.3:
   dependencies:
     lodash "^4.15.0"
     simple-markdown "git://github.com/CharlesMangwa/simple-markdown.git"
+
+react-native-svg@^5.1.5:
+  version "5.1.5"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-5.1.5.tgz#1925aa4c400ee7c190e510bbadbca96ceb0751d5"
+  dependencies:
+    color "^0.11.1"
+    lodash "^4.16.6"
 
 react-native-tab-view@^0.0.55:
   version "0.0.55"
