@@ -13,7 +13,11 @@ const Container = styled.View`
 `;
 
 const StyledMap = styled(MapView)`
-  flex: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 `;
 
 
@@ -29,6 +33,7 @@ export default class MapViewComponent extends Component {
   }
 
   render() {
+    const { children } = this.props;
     const { loading } = this.state;
 
     const { width, height } = Dimensions.get('window');
@@ -50,6 +55,7 @@ export default class MapViewComponent extends Component {
             customMapStyle={mapStyle}
           />
         )}
+        {Loading && children}
       </Container>
     );
   }

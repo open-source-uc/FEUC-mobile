@@ -6,20 +6,27 @@ import isArray from 'lodash/fp/isArray';
 export const colors = {
   main: '#0da5a5',
   lightMain: '#0ff2e7',
-  black: '#243332',
+  black: 'black',
   lightBlack: '#2c3f3e',
   gray: '#48605f',
   lightGray: '#8aa8a7',
-  white: '#c7d3d2',
-  lightWhite: '#edefef',
+  clear: '#c7d3d2',
+  lightClear: '#edefef',
   error: '#e91f63',
+  white: '#ffffff',
   get background() {
-    return this.lightWhite;
+    return this.lightClear;
   },
+  facebook: '#3b5999',
+  twitter: '#55acee',
+  youtube: '#cd201f',
 };
 
 export const fonts = {
   main: 'Roboto',
+  get headers() {
+    return this.main;
+  },
 };
 
 export const map = require('./map.json'); // eslint-disable-line

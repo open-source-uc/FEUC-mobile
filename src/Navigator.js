@@ -5,7 +5,7 @@ import defaultsDeep from 'lodash/defaultsDeep';
 
 import {
   Home, Community, About, Benefits, Enviorement,
-  Notifications, FilterInfo, MyEvents, Contact,
+  Notifications, FilterInfo, MyEvents, Contact, Event,
   AboutDetail, Transparence,
 } from './screens/';
 import Logo from './components/Logo';
@@ -15,21 +15,21 @@ import { colors } from './styles';
 export const defaults = {
   navigator: {
     header: {
-      tintColor: colors.white,
+      tintColor: colors.clear,
       title: <Logo transparent />,
       style: {
-        backgroundColor: colors.black,
+        backgroundColor: colors.gray,
       },
     },
   },
   tabbar: {
     common: {
-      activeTintColor: colors.lightGray,
-      inactiveTintColor: colors.gray,
-      activeBackgroundColor: colors.lightBlack,
-      inactiveBackgroundColor: colors.black,
+      activeTintColor: colors.lightBlack,
+      inactiveTintColor: colors.lightGray,
+      activeBackgroundColor: colors.white,
+      inactiveBackgroundColor: colors.white,
       style: {
-        backgroundColor: colors.black,
+        backgroundColor: colors.white,
       },
     },
     ios: {
@@ -45,7 +45,7 @@ export const defaults = {
       upperCaseLabel: false,
       // tabStyle
       indicatorStyle: {
-        backgroundColor: colors.white,
+        backgroundColor: colors.clear,
       },
       labelStyle: {
         margin: 0,
@@ -58,7 +58,7 @@ export const defaults = {
 
 const HomeScreen = StackNavigator({
   Root: {
-    screen: Home,
+    screen: Event,
   },
 }, {
   initialRouteName: 'Root',
