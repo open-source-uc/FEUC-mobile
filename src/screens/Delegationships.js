@@ -29,11 +29,11 @@ const Image = styled.Image`
 `;
 
 
-export default class Community extends Component {
+export default class Delegationships extends Component {
   static navigationOptions = {
     title: 'FEUC',
     tabBar: {
-      label: 'Comunidad',
+      label: 'Vocalías'.toUpperCase(),
       icon: props => <TabBarIcon.Community {...props} />,
     },
     header: () => ({
@@ -56,7 +56,7 @@ export default class Community extends Component {
   state = {
     refreshing: false,
     error: false,
-    items: Community.DataSource.cloneWithRows(this.props.items),
+    items: Delegationships.DataSource.cloneWithRows(this.props.items),
   }
 
   componentDidMount = () => {
@@ -67,7 +67,7 @@ export default class Community extends Component {
     this.setState({ refreshing: true });
 
     return client.communities()
-      .then(items => Community.DataSource.cloneWithRows(items))
+      .then(items => Delegationships.DataSource.cloneWithRows(items))
       .then(
         items => this.setState({ refreshing: false, error: null, items }),
         error => this.setState({ refreshing: false, error }),
