@@ -5,7 +5,9 @@ import styled from 'styled-components/native';
 import { colors } from '../styles';
 
 
-const MD = styled(Markdown)``;
+const MD = styled(Markdown)`
+  margin: 0;
+`;
 
 const styles = {
   listItemBullet: {
@@ -14,11 +16,14 @@ const styles = {
   a: {
     color: colors.main,
   },
+  paragraph: {
+    margin: 0,
+  },
 };
 
 
-const RichText = ({ children, ...props }) => (
-  <MD styles={styles} {...props}>{children.md || children}</MD>
+const RichText = ({ children, style: text, ...props }) => (
+  <MD styles={{ ...styles, text }} {...props}>{children.md || children}</MD>
 );
 
 RichText.propTypes = {
@@ -26,10 +31,12 @@ RichText.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]),
+  style: PropTypes.any,
 };
 
 RichText.defaultProps = {
   children: '',
+  style: undefined,
 };
 
 export default RichText;

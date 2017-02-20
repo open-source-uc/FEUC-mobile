@@ -4,6 +4,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
 import isArray from 'lodash/fp/isArray';
 
+import RichText from './RichText';
+
 
 const ContainerIOS = styled.TouchableOpacity`
   flex-direction: row;
@@ -48,7 +50,7 @@ Title.defaultProps = {
   numberOfLines: 1,
 };
 
-const Body = styled.Text`
+const Body = styled(RichText)`
   background-color: transparent;
   color: ${props => props.theme.colors.gray};
   font-family: ${props => props.theme.fonts.headers};
