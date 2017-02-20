@@ -4,12 +4,12 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import defaultsDeep from 'lodash/defaultsDeep';
 
 import {
-  Home, Community, About, Benefits, Enviorement,
+  Home, Delegationships, Initiatives, About, Benefits, Enviorement,
   Notifications, FilterInfo, MyEvents, Contact, Event,
   AboutDetail, Transparence,
 } from './screens/';
 import Logo from './components/Logo';
-import { colors } from './styles';
+import { colors, fonts } from './styles';
 
 
 export const defaults = {
@@ -58,7 +58,7 @@ export const defaults = {
 
 const HomeScreen = StackNavigator({
   Root: {
-    screen: Event,
+    screen: Home,
   },
 }, {
   initialRouteName: 'Root',
@@ -67,10 +67,49 @@ const HomeScreen = StackNavigator({
 
 const CommunityScreen = StackNavigator({
   Root: {
-    screen: Community,
+    screen: TabNavigator({
+      Initiatives: {
+        screen: Initiatives,
+      },
+      Delegationships: {
+        screen: Delegationships,
+      },
+    }, {
+      initialRouteName: 'Initiatives',
+      tabBarPosition: 'top',
+      lazyLoad: true,
+      swipeEnabled: true,
+      animationEnabled: true,
+      order: ['Initiatives', 'Delegationships'],
+      tabBarOptions: {
+        showIcon: false,
+        showLabel: true,
+        activeTintColor: colors.lightMain,
+        inactiveTintColor: colors.clear,
+        activeBackgroundColor: colors.gray,
+        inactiveBackgroundColor: colors.gray,
+        style: {
+          backgroundColor: colors.gray,
+        },
+        labelStyle: {
+          fontFamily: fonts.main,
+          fontSize: 13,
+          fontWeight: '600',
+        },
+      },
+    }),
   },
 }, {
   initialRouteName: 'Root',
+  navigationOptions: {
+    // header: {
+    //   style: {
+    //     backgroundColor: colors.gray,
+    //     borderWidth: 0,
+    //     borderColor: 'transparent',
+    //   },
+    // },
+  },
 });
 
 const AboutScreen = StackNavigator({
@@ -139,7 +178,7 @@ export default TabNavigator({
   lazyLoad: true,
   swipeEnabled: false,
   animationEnabled: false,
-  initialRouteName: 'Home',
+  initialRouteName: 'Community',
   order: ['Enviorement', 'Community', 'Home', 'Benefits', 'About'],
   tabBarOptions: defaultsDeep({}, defaults.tabbar[Platform.OS], defaults.tabbar.common),
 });
