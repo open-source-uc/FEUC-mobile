@@ -3,9 +3,8 @@ import { ListView } from 'react-native';
 import styled from 'styled-components/native';
 
 import client from '../utils/fetcher';
-import { ListViewRow, ErrorBar, RefreshControl, TabBarIcon } from '../components/';
+import { ListViewRow, ErrorBar, RefreshControl } from '../components/';
 import Themed from '../styles';
-import { defaults } from '../Navigator';
 
 
 const Container = styled.View`
@@ -19,26 +18,17 @@ const StyledListView = styled.ListView`
 
 
 export default class Initiatives extends Component {
-  static navigationOptions = {
-    title: 'FEUC',
-    tabBar: {
-      label: 'Iniciativas UC'.toUpperCase(),
-      icon: props => <TabBarIcon.Community {...props} />,
-    },
-    header: () => ({
-      ...defaults.navigator.header,
-    }),
-  }
-
   static DataSource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1._id !== r2._id,
   })
 
   static propTypes = {
+    navigation: PropTypes.object,
     items: PropTypes.array,
   }
 
   static defaultProps = {
+    navigation: null,
     items: [],
   }
 
@@ -64,7 +54,11 @@ export default class Initiatives extends Component {
   }
 
   handlePress = (item) => {
-    alert(item._id) // eslint-disable-line
+    const { navigation } = this.props;
+
+    if (navigation) {
+      navigation.navigate('Community', { title: item.name });
+    }
   }
 
   renderRow = (item, section, row, highlight) => (

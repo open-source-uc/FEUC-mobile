@@ -5,7 +5,6 @@ import styled from 'styled-components/native';
 
 import { Button, Tag, EventDate } from '../components/';
 import Themed, { colors } from '../styles';
-import { defaults } from '../Navigator';
 
 const temp = {
   default: 'http://www.joblo.com/posters/images/full/1982-pink-floyd-the-wall-poster1.jpg',
@@ -126,12 +125,8 @@ const ActionText = styled.Text`
 
 export default class Event extends Component {
   static navigationOptions = {
-    title: 'Huella de carbono',
-    tabBar: {
-      visible: false,
-    },
-    header: ({ state }) => ({
-      ...defaults.navigator.header,
+    header: ({ state }, defaultHeader) => ({
+      ...defaultHeader,
       title: state.params ? state.params.title : 'EVENTO',
       style: {
         backgroundColor: 'transparent',
@@ -153,9 +148,10 @@ export default class Event extends Component {
   }
 
   render() {
-    const { addded, title, subtitle, date, tags } = {
+    const { addded, title, subtitle, description, date, tags } = {
       title: 'Fiesta de bienvenida',
       subtitle: 'Semana novata',
+      description: '',
       addded: false,
       tags: [
         { _id: '1', name: 'Categoria 2' },
@@ -228,7 +224,7 @@ export default class Event extends Component {
               </Row>
               <Row>
                 <AboutText>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  {description}
                 </AboutText>
               </Row>
               <Row>

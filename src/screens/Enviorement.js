@@ -1,9 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import styled from 'styled-components/native';
 
-import { ErrorBar, TabBarIcon } from '../components/';
+import { ErrorBar } from '../components/';
 import Themed from '../styles';
-import { defaults } from '../Navigator';
 
 
 const Container = styled.View`
@@ -13,17 +12,6 @@ const Container = styled.View`
 
 
 export default class Enviorement extends Component {
-  static navigationOptions = {
-    title: 'Huella de carbono',
-    tabBar: {
-      label: 'Huella',
-      icon: props => <TabBarIcon.Enviorement {...props} />,
-    },
-    header: () => ({
-      ...defaults.navigator.header,
-    }),
-  }
-
   static propTypes = {
     navigation: PropTypes.any,
   }
