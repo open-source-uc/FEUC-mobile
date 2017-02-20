@@ -1,5 +1,5 @@
 import React, { PropTypes, PureComponent } from 'react';
-import { Platform } from 'react-native';
+import { View, Platform } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
 import isArray from 'lodash/fp/isArray';
@@ -60,28 +60,52 @@ Body.defaultProps = {
   numberOfLines: 3,
 };
 
-const Thumbnail = styled.Image`
-  background-color: ${props => props.theme.colors.white};
-  width: ${props => props.size};
-  height: ${props => props.size};
-  border-radius: ${props => props.size / 2};
-`;
-
-Thumbnail.defaultProps = {
-  size: 60,
-  elevation: 5,
-};
-
 const Disclosure = styled(Ionicons)`
   width: ${props => props.size};
   height: ${props => props.size};
   color: ${props => props.theme.colors.main};
   text-align: right;
+  margin-right: 2;
+  width: 8;
 `;
 
 Disclosure.defaultProps = {
   size: 15,
   name: 'ios-arrow-forward',
+};
+
+const ThumbnailContainer = styled.View`
+  background-color: ${props => props.theme.colors.white};
+  width: ${props => props.size};
+  height: ${props => props.size};
+  border-radius: ${props => props.size / 2};
+  shadow-color: ${props => props.theme.colors.black};
+  shadow-offset: 1 0;
+  shadow-opacity: 0.5;
+  shadow-radius: 1.5;
+`;
+
+const ThumbnailImage = styled.Image`
+  width: ${props => props.size};
+  height: ${props => props.size};
+  border-radius: ${props => props.size / 2};
+`;
+
+const Thumbnail = ({ size, source, ...props }) => (
+  <ThumbnailContainer size={size} {...props}>
+    <ThumbnailImage size={size} source={source} />
+  </ThumbnailContainer>
+);
+
+Thumbnail.propTypes = {
+  size: PropTypes.number,
+  source: PropTypes.any.isRequired,
+  ...View.propTypes,
+};
+
+Thumbnail.defaultProps = {
+  size: 65,
+  elevation: 5,
 };
 
 
