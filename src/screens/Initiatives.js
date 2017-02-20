@@ -56,7 +56,7 @@ export default class Initiatives extends Component {
     this.setState({ refreshing: options.showRefresh });
 
     return client.communities()
-      .then(items => Initiatives.DataSource.cloneWithRows([...items, ...items, ...items]))
+      .then(items => Initiatives.DataSource.cloneWithRows(items))
       .then(
         items => this.setState({ refreshing: false, error: null, items }),
         error => this.setState({ refreshing: false, error }),
@@ -77,7 +77,7 @@ export default class Initiatives extends Component {
       <ListViewRow.Content>
         <ListViewRow.Title>{item.name}</ListViewRow.Title>
         <ListViewRow.Body>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Unc et augue porttitor sodales diam.
+          {item.description}
         </ListViewRow.Body>
       </ListViewRow.Content>
       <ListViewRow.Disclosure />
