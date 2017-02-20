@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import OneSignal from 'react-native-onesignal';
 import DeviceInfo from 'react-native-device-info';
 
-import Navigator from './Navigator';
+import Navigator from './navigation/Navigator';
 
 
 export default class App extends Component {

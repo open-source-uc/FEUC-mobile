@@ -3,7 +3,6 @@ import styled from 'styled-components/native';
 
 import { ErrorBar } from '../components/';
 import Themed from '../styles';
-import { defaults } from '../Navigator';
 
 const Container = styled.View`
   flex: 1;
@@ -15,14 +14,6 @@ const Text = styled.Text`
 
 
 export default class MyEvents extends Component {
-  static navigationOptions = {
-    title: 'Más',
-    header: () => ({
-      ...defaults.navigator.header,
-      title: 'Mis Eventos',
-    }),
-  }
-
   state = {
     error: null,
   }

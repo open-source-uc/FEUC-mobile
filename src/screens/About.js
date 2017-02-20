@@ -4,9 +4,8 @@ import styled from 'styled-components/native';
 import pick from 'lodash/pick';
 
 import client from '../utils/fetcher';
-import { ListViewRow, ListViewSeparator, ErrorBar, TabBarIcon } from '../components/';
+import { ListViewRow, ListViewSeparator, ErrorBar } from '../components/';
 import Themed from '../styles';
-import { defaults } from '../Navigator';
 
 
 const Container = styled.View`
@@ -24,16 +23,6 @@ const Text = styled.Text`
 
 
 export default class About extends Component {
-  static navigationOptions = {
-    title: 'FEUC',
-    tabBar: {
-      label: 'FEUC',
-      icon: props => <TabBarIcon.About {...props} />,
-    },
-    header: () => ({
-      ...defaults.navigator.header,
-    }),
-  }
   static DataSource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1.key !== r2.key,
   })

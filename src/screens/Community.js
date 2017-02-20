@@ -15,16 +15,21 @@ const ScrollView = styled.ScrollView`
 `;
 
 
-export default class AboutDetail extends Component {
+export default class Community extends Component {
   static navigationOptions = {
+    title: 'FEUC',
     header: ({ state }, defaultHeader) => ({
       ...defaultHeader,
-      title: state.params.title,
+      title: state.params ? state.params.title : 'Community',
     }),
   }
 
   static propTypes = {
-    navigation: PropTypes.object.isRequired,
+    navigation: PropTypes.object,
+  }
+
+  static defaultProps = {
+    navigation: null,
   }
 
   state = {

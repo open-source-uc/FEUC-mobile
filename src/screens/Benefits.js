@@ -3,9 +3,8 @@ import { ListView } from 'react-native';
 import styled from 'styled-components/native';
 
 import client from '../utils/fetcher';
-import { ListViewRow, ListViewSeparator, ErrorBar, RefreshControl, TabBarIcon, RichText } from '../components/';
+import { ListViewRow, ListViewSeparator, ErrorBar, RefreshControl, RichText } from '../components/';
 import Themed from '../styles';
-import { defaults } from '../Navigator';
 
 
 const Container = styled.View`
@@ -35,17 +34,6 @@ const RowContent = styled.View`
 
 
 export default class Benefits extends Component {
-  static navigationOptions = {
-    title: 'FEUC',
-    tabBar: {
-      label: 'Beneficios',
-      icon: props => <TabBarIcon.Benefits {...props} />,
-    },
-    header: () => ({
-      ...defaults.navigator.header,
-    }),
-  }
-
   static DataSource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1._id !== r2._id,
   })
@@ -65,11 +53,11 @@ export default class Benefits extends Component {
   }
 
   componentDidMount = () => {
-    this.fetchContent();
+    this.fetchContent({ showRefresh: false });
   }
 
-  fetchContent = () => {
-    this.setState({ refreshing: true });
+  fetchContent = (options = { showRefresh: true }) => {
+    this.setState({ refreshing: options.showRefresh });
 
     return client.benefits()
       .then(items => Benefits.DataSource.cloneWithRows(items))

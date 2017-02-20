@@ -3,9 +3,8 @@ import { ListView } from 'react-native';
 import styled from 'styled-components/native';
 
 import client from '../utils/fetcher';
-import { ListViewRow, ListViewSeparator, ErrorBar, RefreshControl, TabBarIcon } from '../components/';
+import { ListViewRow, ListViewSeparator, ErrorBar, RefreshControl } from '../components/';
 import Themed from '../styles';
-import { defaults } from '../Navigator';
 
 
 const Container = styled.View`
@@ -30,26 +29,17 @@ const Image = styled.Image`
 
 
 export default class Delegationships extends Component {
-  static navigationOptions = {
-    title: 'FEUC',
-    tabBar: {
-      label: 'Vocalías'.toUpperCase(),
-      icon: props => <TabBarIcon.Community {...props} />,
-    },
-    header: () => ({
-      ...defaults.navigator.header,
-    }),
-  }
-
   static DataSource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1._id !== r2._id,
   })
 
   static propTypes = {
+    navigation: PropTypes.object,
     items: PropTypes.array,
   }
 
   static defaultProps = {
+    navigation: null,
     items: [],
   }
 
@@ -75,7 +65,11 @@ export default class Delegationships extends Component {
   }
 
   handlePress = (item) => {
-    alert(item._id) // eslint-disable-line
+    const { navigation } = this.props;
+
+    if (navigation) {
+      alert(item._id) // eslint-disable-line
+    }
   }
 
   render() {

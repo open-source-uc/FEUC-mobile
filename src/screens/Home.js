@@ -4,9 +4,8 @@ import { Dimensions } from 'react-native';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 import Carousel from 'react-native-snap-carousel';
 
-import { MapView, TabBarIcon, NavbarButton } from '../components/';
+import { MapView, NavbarButton } from '../components/';
 import Themed, { colors } from '../styles';
-import { defaults } from '../Navigator';
 
 
 const Container = styled.View`
@@ -36,14 +35,9 @@ const Wrap = styled.View`
 
 export default class Home extends Component {
   static navigationOptions = {
-    title: 'FEUC',
-    tabBar: {
-      label: 'Home',
-      icon: props => <TabBarIcon.Home {...props} />,
-    },
-    header: ({ navigate }) => ({
+    header: ({ navigate }, defaultHeader) => ({
+      ...defaultHeader,
       right: <NavbarButton name="ios-more" onPress={() => navigate('MapScreen')} />,
-      ...defaults.navigator.header,
     }),
   }
 

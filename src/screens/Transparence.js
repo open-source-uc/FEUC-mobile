@@ -3,7 +3,6 @@ import styled from 'styled-components/native';
 
 import { ErrorBar } from '../components/';
 import Themed from '../styles';
-import { defaults } from '../Navigator';
 
 
 const Container = styled.View`
@@ -16,14 +15,6 @@ const Text = styled.Text`
 
 
 export default class Transparence extends Component {
-  static navigationOptions = {
-    title: 'FEUC',
-    header: () => ({
-      ...defaults.navigator.header,
-      title: 'Transparencia',
-    }),
-  }
-
   state = {
     error: null,
   }

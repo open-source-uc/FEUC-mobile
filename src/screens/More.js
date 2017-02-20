@@ -2,9 +2,8 @@ import React, { PropTypes, Component } from 'react';
 import { ListView } from 'react-native';
 import styled from 'styled-components/native';
 
-import { ListViewRow, ListViewSeparator, ErrorBar, TabBarIcon } from '../components/';
+import { ListViewRow, ListViewSeparator, ErrorBar } from '../components/';
 import Themed from '../styles';
-import { defaults } from '../Navigator';
 
 
 const Container = styled.View`
@@ -22,17 +21,6 @@ const Text = styled.Text`
 
 
 export default class More extends Component {
-  static navigationOptions = {
-    title: 'FEUC',
-    tabBar: {
-      label: 'Más',
-      icon: props => <TabBarIcon.More {...props} />,
-    },
-    header: () => ({
-      ...defaults.navigator.header,
-    }),
-  }
-
   static DataSource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1.id !== r2.id,
   })
@@ -47,7 +35,6 @@ export default class More extends Component {
     items: [
       { text: 'Notificaciones', screen: 'Notifications' },
       { text: 'Mis Eventos', screen: 'MyEvents' },
-      { text: 'Filtrar info', screen: 'FilterInfo' },
       { text: 'Contacto', screen: 'Contact' },
     ],
   }
