@@ -19,6 +19,10 @@ TabBarIcon.Home = props => (
   <TabBarIcon icon="home" {...props} />
 );
 
+TabBarIcon.Events = props => (
+  <TabBarIcon icon="home" {...props} />
+);
+
 TabBarIcon.Community = props => (
   <TabBarIcon icon="people" {...props} />
 );

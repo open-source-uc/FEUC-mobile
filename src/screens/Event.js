@@ -1,9 +1,11 @@
 import React, { PropTypes, Component } from 'react';
-import { Dimensions } from 'react-native';
+import { Linking, Dimensions } from 'react-native';
 import { Svg as SVG, Polygon } from 'react-native-svg';
 import styled from 'styled-components/native';
+import moment from 'moment';
 
-import { Button, Tag, EventDate } from '../components/';
+import client from '../api-client';
+import { Button, Tag, EventDate, RichText, Loading } from '../components/';
 import Themed, { colors } from '../styles';
 
 const temp = {
@@ -101,7 +103,7 @@ const AboutTitle = styled.Text`
   margin: 8 0 2;
 `;
 
-const AboutText = styled.Text`
+const AboutText = styled(RichText)`
   font-family: ${props => props.theme.fonts.main};
   color: ${props => props.theme.colors.gray};
   font-size: 12;
@@ -144,22 +146,74 @@ export default class Event extends Component {
   }
 
   state = {
-    error: false,
+    event: null,
+    refreshing: true,
+    error: null,
+  }
+
+  componentDidMount() {
+    const { navigation } = this.props;
+    if (navigation && navigation.state.params) {
+      this.fetchContent(navigation.state.params._id, { showRefresh: false });
+    }
+  }
+
+  fetchContent = (identifier, options = { showRefresh: true }) => {
+    this.setState({ refreshing: options.showRefresh });
+
+    return client.event(identifier).then(
+      event => this.setState({ refreshing: false, error: null, event }),
+      error => this.setState({ refreshing: false, error }),
+    );
+  }
+
+  handleToogleCalendar = () => {
+    alert('Calendar');
+  }
+
+  handleFacebookPress = async () => {
+    const url = this.state.event.facebook;
+    try {
+      Linking.openURL(url);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  handleTwitterPress = async () => {
+    const url = this.state.event.twitter;
+    try {
+      Linking.openURL(url);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  handleAdmissionPress = async () => {
+    const url = this.state.event.admission.url;
+    try {
+      Linking.openURL(url);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  handleLocationPress = () => {
+    alert(this.state.event.location.street1);
   }
 
   render() {
-    const { addded, title, subtitle, description, date, tags } = {
-      title: 'Fiesta de bienvenida',
-      subtitle: 'Semana novata',
-      description: '',
-      addded: false,
-      tags: [
-        { _id: '1', name: 'Categoria 2' },
-        { _id: '2', name: 'Categoria 2' },
-        { _id: '3', name: 'Categoria 2' },
-      ],
-      date: new Date(),
-    };
+    const { event, addded } = this.state;
+
+    if (!event) {
+      return (
+        <Themed content="dark">
+          <Container>
+            <Loading />
+          </Container>
+        </Themed>
+      );
+    }
 
     // Triangle dimensions
     const width = Dimensions.get('window').width;
@@ -184,24 +238,24 @@ export default class Event extends Component {
                     fill={colors.white}
                   />
                 </StyledSVG>
-                <EventDate date={date} />
+                <EventDate date={new Date(event.temporality.start)} />
               </BannerContent>
             </Banner>
             <Content>
               <Row>
                 <View>
-                  <Ttile>{title.toUpperCase()}</Ttile>
-                  <SubTitle>{subtitle}</SubTitle>
+                  <Ttile>{event.title.toUpperCase()}</Ttile>
+                  <SubTitle>{event.subtitle}</SubTitle>
                 </View>
               </Row>
               <Row fluid vertical="fit">
                 <Button color="white">
                   <Button.Icon color="main" name="ios-time-outline" />
                   <Button.Text color="gray">
-                    19:00 - 22:00
+                    {moment(event.temporality.start).format('HH:mm')} - {moment(event.temporality.end).format('HH:mm')}
                   </Button.Text>
                 </Button>
-                <Button color={addded ? 'white' : 'main'}>
+                <Button color={addded ? 'white' : 'main'} onPress={this.handleToogleCalendar}>
                   <Button.Icon color={addded ? 'main' : 'white'} name="ios-calendar" />
                   <Button.Text color={addded ? 'main' : 'white'}>
                     Agregar a agenda
@@ -209,19 +263,19 @@ export default class Event extends Component {
                 </Button>
               </Row>
               <Row fluid vertical="fit">
-                <Button color="white">
+                <Button color="white" onPress={this.handleLocationPress}>
                   <Button.Icon color="main" name="ios-map-outline" />
                   <Button.Text color="gray">
-                    Concha Acústica, Campus San Joaquín
+                    {event.location.street1}, {event.location.suburb}
                   </Button.Text>
                   <Button.Icon color="main" position="right" name="ios-arrow-forward" />
                 </Button>
               </Row>
               <Row fluid vertical="fit">
-                <Button color="white">
+                <Button color="white" onPress={this.handleAdmissionPress}>
                   <Button.Icon color="main" name="ios-barcode-outline" />
                   <Button.Text color="gray">
-                    Entrada liberada
+                    {event.admission.note}
                   </Button.Text>
                   <Button.Icon color="main" position="right" name="ios-arrow-forward" />
                 </Button>
@@ -233,25 +287,27 @@ export default class Event extends Component {
               </Row>
               <Row>
                 <AboutText>
-                  {description}
+                  {event.description}
                 </AboutText>
               </Row>
               <Row>
-                {tags.map(tag => (
+                {event.tags.map(tag => (
                   <Tag key={tag._id} name={tag.name} />
                 ))}
               </Row>
               <Row fluid>
                 <View>
+                  {/*
                   <ActionContainer>
                     <ActionText>Entrada liberada</ActionText>
                   </ActionContainer>
-                  <ActionContainer background="facebook">
+                   */}
+                  {event.facebook && (<ActionContainer background="facebook" onPress={this.handleFacebookPress}>
                     <ActionText color="white">Facebook</ActionText>
-                  </ActionContainer>
-                  <ActionContainer background="twitter">
+                  </ActionContainer>)}
+                  {event.twitter && (<ActionContainer background="twitter" onPress={this.handleTwitterPress}>
                     <ActionText color="white">Twitter</ActionText>
-                  </ActionContainer>
+                  </ActionContainer>)}
                 </View>
               </Row>
             </Content>

@@ -4,6 +4,7 @@ import { TabNavigator } from 'react-navigation';
 import defaultsDeep from 'lodash/defaultsDeep';
 
 import HomeTab from './tabs/Home';
+import EventsTab from './tabs/Events';
 import CommunityTab from './tabs/Community';
 import AboutTab from './tabs/About';
 import BenefitsTab from './tabs/Benefits';
@@ -57,6 +58,22 @@ export default TabNavigator({
       header: ({ state }, defaultHeader) => ({ // FIXME: not working
         ...defaultHeader,
         title: 'Home',
+        visible: true,
+      }),
+    },
+  },
+  EventsTab: {
+    screen: EventsTab,
+    path: '/home',
+    navigationOptions: {
+      tabBar: (navigation, defaultTabBar) => ({
+        ...defaultTabBar,
+        label: 'Eventos',
+        icon: props => <TabBarIcon.Events {...props} />,
+      }),
+      header: ({ state }, defaultHeader) => ({ // FIXME: not working
+        ...defaultHeader,
+        title: 'Eventos',
         visible: true,
       }),
     },
@@ -130,7 +147,7 @@ export default TabNavigator({
   lazyLoad: true,
   swipeEnabled: false,
   animationEnabled: false,
-  initialRouteName: 'CommunityTab',
-  order: ['EnviorementTab', 'CommunityTab', 'HomeTab', 'BenefitsTab', 'AboutTab'],
+  initialRouteName: 'EventsTab',
+  order: ['EnviorementTab', 'CommunityTab', 'EventsTab', 'BenefitsTab', 'AboutTab'],
   tabBarOptions: defaultsDeep({}, options[Platform.OS], options.common),
 });
