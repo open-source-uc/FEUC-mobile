@@ -3,7 +3,7 @@ import { ListView } from 'react-native';
 import styled from 'styled-components/native';
 import pick from 'lodash/pick';
 
-import client from '../utils/fetcher';
+import client from '../api-client';
 import { ListViewRow, ListViewSeparator, ErrorBar } from '../components/';
 import Themed from '../styles';
 
