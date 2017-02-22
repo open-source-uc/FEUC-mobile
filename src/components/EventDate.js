@@ -14,7 +14,7 @@ const Container = styled.Image`
 `;
 
 Container.defaultProps = {
-  source: images.eventDate,
+  source: images.eventBookmark,
 };
 
 const Content = styled.View`
