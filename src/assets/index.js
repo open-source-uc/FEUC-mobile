@@ -4,7 +4,7 @@ export const images = {
   logo: {
     transparent: require('./images/logo-transparent-rect.png'),
   },
-  eventDate: require('./images/event-date.png'),
+  eventBookmark: require('./images/event-bookmark.png'),
 };
 
 export const fonts = {
