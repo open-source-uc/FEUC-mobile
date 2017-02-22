@@ -45,6 +45,16 @@ export default class Client {
     return orderBy(response, ['sortOrder'], ['desc']);
   }
 
+  async events(options) {
+    const response = await fetcher(`${this.baseURL}/api/v1/events`, options);
+    return orderBy(response, ['sortOrder'], ['desc']);
+  }
+
+  async event(identifier, options) {
+    const response = await fetcher(`${this.baseURL}/api/v1/events/${identifier}`, options);
+    return response;
+  }
+
   async delegationships(options) {
     const response = await fetcher(`${this.baseURL}/api/v1/delegationships`, options);
     return orderBy(response, ['sortOrder'], ['desc']);
