@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import Markdown from 'react-native-simple-markdown';
 import styled from 'styled-components/native';
+import has from 'lodash/has';
+
 
 import { colors } from '../styles';
 
@@ -22,9 +24,17 @@ const styles = {
 };
 
 
-const RichText = ({ children, style: text, ...props }) => (
-  <MD styles={{ ...styles, text }} {...props}>{children.md || children}</MD>
-);
+const RichText = ({ children, style: text, ...props }) => {
+  if (has(children, 'md')) {
+    return (
+      <MD styles={{ ...styles, text }} {...props}>{children.md}</MD>
+    );
+  } else {
+    return (
+      <MD styles={{ ...styles, text }} {...props}>{children}</MD>
+    );
+  }
+};
 
 RichText.propTypes = {
   children: PropTypes.oneOfType([
