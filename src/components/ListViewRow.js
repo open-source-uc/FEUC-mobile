@@ -80,33 +80,37 @@ const ThumbnailContainer = styled.View`
   background-color: ${props => props.theme.colors.white};
   width: ${props => props.size};
   height: ${props => props.size};
-  border-radius: ${props => props.size / 2};
+  border-radius: ${props => (props.circle ? props.size / 2 : 0)};
   shadow-color: ${props => props.theme.colors.black};
   shadow-offset: 1 0;
-  shadow-opacity: 0.5;
+  shadow-opacity: ${props => (props.shadow ? 0.5 : 0)};
   shadow-radius: 1.5;
 `;
 
 const ThumbnailImage = styled.Image`
   width: ${props => props.size};
   height: ${props => props.size};
-  border-radius: ${props => props.size / 2};
+  border-radius: ${props => (props.circle ? props.size / 2 : 0)};
 `;
 
-const Thumbnail = ({ size, source, ...props }) => (
-  <ThumbnailContainer size={size} {...props}>
-    <ThumbnailImage size={size} source={source} />
+const Thumbnail = ({ size, circle, shadow, source, ...props }) => (
+  <ThumbnailContainer size={size} circle={circle} shadow={shadow} {...props}>
+    <ThumbnailImage size={size} circle={circle} shadow={shadow} source={source} />
   </ThumbnailContainer>
 );
 
 Thumbnail.propTypes = {
   size: PropTypes.number,
+  circle: PropTypes.bool,
+  shadow: PropTypes.bool,
   source: PropTypes.any.isRequired,
   ...View.propTypes,
 };
 
 Thumbnail.defaultProps = {
   size: 65,
+  circle: false,
+  shadow: false,
   elevation: 5,
 };
 

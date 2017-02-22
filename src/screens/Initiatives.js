@@ -1,8 +1,9 @@
 import React, { PropTypes, Component } from 'react';
 import { ListView } from 'react-native';
 import styled from 'styled-components/native';
+import get from 'lodash/get';
 
-import client from '../utils/fetcher';
+import client from '../api-client';
 import { ListViewRow, ErrorBar, RefreshControl } from '../components/';
 import Themed from '../styles';
 
@@ -35,7 +36,7 @@ export default class Initiatives extends Component {
   state = {
     refreshing: false,
     error: false,
-    items: Initiatives.DataSource.cloneWithRows(this.props.items),
+    items: this.constructor.DataSource.cloneWithRows(this.props.items),
   }
 
   componentDidMount = () => {
@@ -45,8 +46,8 @@ export default class Initiatives extends Component {
   fetchContent = (options = { showRefresh: true }) => {
     this.setState({ refreshing: options.showRefresh });
 
-    return client.communities()
-      .then(items => Initiatives.DataSource.cloneWithRows(items))
+    return client.initiatives()
+      .then(items => this.constructor.DataSource.cloneWithRows(items))
       .then(
         items => this.setState({ refreshing: false, error: null, items }),
         error => this.setState({ refreshing: false, error }),
@@ -56,8 +57,8 @@ export default class Initiatives extends Component {
   handlePress = (item) => {
     const { navigation } = this.props;
 
-    if (navigation) {
-      navigation.navigate('Community', { title: item.name });
+    if (item && navigation) {
+      navigation.navigate('Community', { _id: item._id, title: item.name });
     }
   }
 
@@ -67,7 +68,7 @@ export default class Initiatives extends Component {
       onPress={() => this.handlePress(item)}
       highlight={highlight}
     >
-      <ListViewRow.Thumbnail source={{ uri: item.image.secure_url }} />
+      <ListViewRow.Thumbnail shadow circle source={{ uri: get(item, 'image.secure_url') }} />
       <ListViewRow.Content>
         <ListViewRow.Title>{item.name}</ListViewRow.Title>
         <ListViewRow.Body>

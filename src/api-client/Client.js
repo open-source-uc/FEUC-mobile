@@ -1,4 +1,3 @@
-import Config from 'react-native-config';
 import defaults from 'lodash/defaults';
 import trim from 'lodash/trim';
 import orderBy from 'lodash/orderBy';
@@ -36,18 +35,23 @@ export async function fetcher(uri, options) {
   }
 }
 
-export class Client {
+export default class Client {
   constructor(baseURL) {
     this.baseURL = trim(baseURL, '/');
   }
 
-  async communities(options) {
-    const response = await fetcher(`${this.baseURL}/api/v1/communities`, options);
+  async initiatives(options) {
+    const response = await fetcher(`${this.baseURL}/api/v1/initiatives`, options);
+    return orderBy(response, ['sortOrder'], ['desc']);
+  }
+
+  async delegationships(options) {
+    const response = await fetcher(`${this.baseURL}/api/v1/delegationships`, options);
     return orderBy(response, ['sortOrder'], ['desc']);
   }
 
   async information(path = '', options) {
-    const response = await fetcher(`${this.baseURL}/api/v1/information/${path}`, options);
+    const response = await fetcher(`${this.baseURL}/api/v1/informations/${path}`, options);
     return response;
   }
 
@@ -56,6 +60,3 @@ export class Client {
     return response;
   }
 }
-
-const url = Config.FEUC_API_URL || 'http://localhost:3000';
-export default new Client(url);

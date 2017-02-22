@@ -1,9 +1,10 @@
 import React, { PropTypes, Component } from 'react';
 import { ListView } from 'react-native';
 import styled from 'styled-components/native';
+import get from 'lodash/get';
 
-import client from '../utils/fetcher';
-import { ListViewRow, ListViewSeparator, ErrorBar, RefreshControl } from '../components/';
+import client from '../api-client';
+import { ListViewRow, ErrorBar, RefreshControl } from '../components/';
 import Themed from '../styles';
 
 
@@ -13,18 +14,7 @@ const Container = styled.View`
 `;
 
 const StyledListView = styled.ListView`
-  padding-top: 18;
-`;
 
-const Text = styled.Text`
-  text-align: left;
-  flex: 1;
-`;
-
-const Image = styled.Image`
-  height: 30;
-  width: 30;
-  margin-right: 12;
 `;
 
 
@@ -46,18 +36,18 @@ export default class Delegationships extends Component {
   state = {
     refreshing: false,
     error: false,
-    items: Delegationships.DataSource.cloneWithRows(this.props.items),
+    items: this.constructor.DataSource.cloneWithRows(this.props.items),
   }
 
   componentDidMount = () => {
-    this.fetchContent();
+    this.fetchContent({ showRefresh: false });
   }
 
-  fetchContent = () => {
-    this.setState({ refreshing: true });
+  fetchContent = (options = { showRefresh: true }) => {
+    this.setState({ refreshing: options.showRefresh });
 
-    return client.communities()
-      .then(items => Delegationships.DataSource.cloneWithRows(items))
+    return client.delegationships()
+      .then(items => this.constructor.DataSource.cloneWithRows(items))
       .then(
         items => this.setState({ refreshing: false, error: null, items }),
         error => this.setState({ refreshing: false, error }),
@@ -67,12 +57,29 @@ export default class Delegationships extends Component {
   handlePress = (item) => {
     const { navigation } = this.props;
 
-    if (navigation) {
-      alert(item._id) // eslint-disable-line
+    if (item && navigation) {
+      navigation.navigate('Delegationship', { _id: item._id, title: item.name });
     }
   }
 
-  render() {
+  renderRow = (item, section, row, highlight) => (
+    <ListViewRow
+      background={row % 2 === 0 ? 'lightClear' : 'white'}
+      onPress={() => this.handlePress(item)}
+      highlight={highlight}
+    >
+      <ListViewRow.Thumbnail source={{ uri: get(item, 'image.secure_url') }} />
+      <ListViewRow.Content>
+        <ListViewRow.Title>{item.name}</ListViewRow.Title>
+        <ListViewRow.Body>
+          {item.description}
+        </ListViewRow.Body>
+      </ListViewRow.Content>
+      <ListViewRow.Disclosure />
+    </ListViewRow>
+  )
+
+  render = () => {
     const { items, error, refreshing } = this.state;
 
     return (
@@ -82,15 +89,7 @@ export default class Delegationships extends Component {
           <StyledListView
             dataSource={items}
             enableEmptySections
-            renderRow={item => (
-              <ListViewRow onPress={() => this.handlePress(item)}>
-                <Image source={{ uri: item.image.secure_url }} />
-                <Text>{item.name}</Text>
-              </ListViewRow>
-            )}
-            renderSeparator={(section, row) => (
-              <ListViewSeparator key={row} />
-            )}
+            renderRow={this.renderRow}
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}

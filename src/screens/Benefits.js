@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { ListView } from 'react-native';
 import styled from 'styled-components/native';
 
-import client from '../utils/fetcher';
+import client from '../api-client';
 import { ListViewRow, ListViewSeparator, ErrorBar, RefreshControl, RichText } from '../components/';
 import Themed from '../styles';
 

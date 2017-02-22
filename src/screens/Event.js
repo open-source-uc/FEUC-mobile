@@ -208,11 +208,20 @@ export default class Event extends Component {
                   </Button.Text>
                 </Button>
               </Row>
-              <Row fluid>
+              <Row fluid vertical="fit">
                 <Button color="white">
                   <Button.Icon color="main" name="ios-map-outline" />
                   <Button.Text color="gray">
                     Concha Acústica, Campus San Joaquín
+                  </Button.Text>
+                  <Button.Icon color="main" position="right" name="ios-arrow-forward" />
+                </Button>
+              </Row>
+              <Row fluid vertical="fit">
+                <Button color="white">
+                  <Button.Icon color="main" name="ios-barcode-outline" />
+                  <Button.Text color="gray">
+                    Entrada liberada
                   </Button.Text>
                   <Button.Icon color="main" position="right" name="ios-arrow-forward" />
                 </Button>
