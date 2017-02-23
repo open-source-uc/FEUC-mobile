@@ -12,7 +12,7 @@ const ContainerIOS = styled.TouchableOpacity`
   justify-content: space-between;
   align-items: center;
   background-color: ${props => props.theme.colors[props.background]};
-  padding: 0 15;
+  padding: 15 15;
   min-height: 44;
 `;
 
@@ -21,7 +21,7 @@ const ContainerAndroid = styled.TouchableNativeFeedback`
   justify-content: space-between;
   align-items: center;
   background-color: ${props => props.theme.colors[props.background]};
-  padding: 0 18;
+  padding: 15 18;
   min-height: 48;
 `;
 
@@ -34,8 +34,8 @@ const Children = styled.View`
 
 const Content = styled.View`
   flex: 1;
-  padding: 10 10;
-  margin: 8 0 12 2;
+  padding: 0 15 0 17;
+  margin: 4 0 8 0;
 `;
 
 const Title = styled.Text`
@@ -50,10 +50,18 @@ Title.defaultProps = {
   numberOfLines: 1,
 };
 
+const Footer = styled.Text`
+  background-color: transparent;
+  color: ${props => props.theme.colors.lightGray};
+  font-family: ${props => props.theme.fonts.main};
+  font-size: 9;
+  margin: 4 0 2;
+`;
+
 const Body = styled(RichText)`
   background-color: transparent;
   color: ${props => props.theme.colors.gray};
-  font-family: ${props => props.theme.fonts.headers};
+  font-family: ${props => props.theme.fonts.main};
   font-size: 11;
   line-height: 16;
 `;
@@ -128,6 +136,7 @@ export default class ListViewRow extends PureComponent {
   static Content = Content
   static Thumbnail = Thumbnail
   static Title = Title
+  static Footer = Footer
   static Body = Body
   static Disclosure = Disclosure
 

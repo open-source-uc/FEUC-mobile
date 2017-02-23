@@ -17,7 +17,7 @@ const StyledListView = styled.ListView`
 `;
 
 
-export default class Benefits extends Component {
+export default class MyBenefits extends Component {
   static DataSource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1._id !== r2._id,
   })
