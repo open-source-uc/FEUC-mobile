@@ -1,5 +1,5 @@
 import React, { PropTypes, PureComponent } from 'react';
-import { View, Platform } from 'react-native';
+import { View, Platform, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
 import isArray from 'lodash/fp/isArray';
@@ -77,7 +77,7 @@ Disclosure.defaultProps = {
 };
 
 const ThumbnailContainer = styled.View`
-  background-color: ${props => props.theme.colors.white};
+  background-color: ${props => props.theme.colors[props.background] || props.theme.colors.white};
   width: ${props => props.size};
   height: ${props => props.size};
   border-radius: ${props => (props.circle ? props.size / 2 : 0)};
@@ -91,11 +91,18 @@ const ThumbnailImage = styled.Image`
   width: ${props => props.size};
   height: ${props => props.size};
   border-radius: ${props => (props.circle ? props.size / 2 : 0)};
+  resize-mode: ${Image.resizeMode.contain};
 `;
 
-const Thumbnail = ({ size, circle, shadow, source, ...props }) => (
+const Thumbnail = ({ size, circle, shadow, tint, source, ...props }) => (
   <ThumbnailContainer size={size} circle={circle} shadow={shadow} {...props}>
-    <ThumbnailImage size={size} circle={circle} shadow={shadow} source={source} />
+    <ThumbnailImage
+      size={size}
+      circle={circle}
+      shadow={shadow}
+      source={source}
+      style={{ tintColor: tint }} // undefined is disabled
+    />
   </ThumbnailContainer>
 );
 
@@ -104,6 +111,7 @@ Thumbnail.propTypes = {
   circle: PropTypes.bool,
   shadow: PropTypes.bool,
   source: PropTypes.any.isRequired,
+  tint: PropTypes.string,
   ...View.propTypes,
 };
 
@@ -111,6 +119,7 @@ Thumbnail.defaultProps = {
   size: 65,
   circle: false,
   shadow: false,
+  tint: undefined,
   elevation: 5,
 };
 

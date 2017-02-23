@@ -1,11 +1,12 @@
 import React, { PropTypes, Component } from 'react';
 import { ListView } from 'react-native';
 import styled from 'styled-components/native';
-import get from 'lodash/get';
+import has from 'lodash/has';
 
 import client from '../api-client';
 import { ListViewRow, ErrorBar, RefreshControl } from '../components/';
 import Themed from '../styles';
+import { images } from '../assets/';
 
 
 const Container = styled.View`
@@ -68,7 +69,11 @@ export default class Initiatives extends Component {
       onPress={() => this.handlePress(item)}
       highlight={highlight}
     >
-      <ListViewRow.Thumbnail shadow circle source={{ uri: get(item, 'image.secure_url') }} />
+      <ListViewRow.Thumbnail
+        shadow
+        circle
+        source={has(item, 'image.secure_url') ? { uri: item.image.secure_url } : images.default.initiative}
+      />
       <ListViewRow.Content>
         <ListViewRow.Title>{item.name}</ListViewRow.Title>
         <ListViewRow.Body>
