@@ -7,6 +7,7 @@ export { default as SavedEvents } from './Events'; // TODO
 export { default as About } from './About';
 export { default as Enviorement } from './Enviorement';
 export { default as Benefits } from './Benefits';
+export { default as MyBenefits } from './MyBenefits';
 
 // Other
 export { default as Notifications } from './Notifications';

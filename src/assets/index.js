@@ -6,6 +6,7 @@ export const images = {
   },
   default: {
     initiative: require('./images/default-initiative.png'),
+    benefit: require('./images/default-benefit.png'),
   },
   eventBookmark: require('./images/event-bookmark.png'),
 };
