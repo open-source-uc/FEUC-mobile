@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import moment from 'moment';
 
 import client from '../api-client';
-import { Button, Tag, EventDate, RichText, Loading } from '../components/';
+import { Button, ErrorBar, Tag, EventDate, RichText, Loading } from '../components/';
 import Themed, { colors } from '../styles';
 
 const temp = {
@@ -186,12 +186,13 @@ export default class Event extends Component {
   }
 
   render() {
-    const { event, addded } = this.state;
+    const { event, addded, error } = this.state;
 
     if (!event) {
       return (
         <Themed content="dark">
           <Container>
+            <ErrorBar error={error} />
             <Loading />
           </Container>
         </Themed>
@@ -211,7 +212,9 @@ export default class Event extends Component {
     return (
       <Themed content="dark">
         <Container>
+          <ErrorBar error={error} />
           <ScrollView>
+            <ErrorBar error={error} />
             <Banner source={{ uri: temp.default }}>
               <BannerContent>
                 <StyledSVG height={height}>
