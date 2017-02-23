@@ -1,11 +1,11 @@
 import React, { PropTypes, Component } from 'react';
 import { ListView } from 'react-native';
 import styled from 'styled-components/native';
-import get from 'lodash/get';
 
 import client from '../api-client';
 import { ListViewRow, ErrorBar, RefreshControl } from '../components/';
 import Themed from '../styles';
+import { images } from '../assets/';
 
 
 const Container = styled.View`
@@ -26,11 +26,13 @@ export default class Delegationships extends Component {
   static propTypes = {
     navigation: PropTypes.object,
     items: PropTypes.array,
+    image: PropTypes.any,
   }
 
   static defaultProps = {
     navigation: null,
     items: [],
+    image: images.logo.transparent,
   }
 
   state = {
@@ -68,7 +70,7 @@ export default class Delegationships extends Component {
       onPress={() => this.handlePress(item)}
       highlight={highlight}
     >
-      <ListViewRow.Thumbnail source={{ uri: get(item, 'image.secure_url') }} />
+      <ListViewRow.Thumbnail source={this.props.image} tint={item.color} background="transparent" />
       <ListViewRow.Content>
         <ListViewRow.Title>{item.name}</ListViewRow.Title>
         <ListViewRow.Body>
