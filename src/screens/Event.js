@@ -15,22 +15,7 @@ const temp = {
 
 const Container = styled.View`
   background-color: ${props => props.theme.colors.black};
-  position: absolute;
-  top: -64;
-  right: 0;
-  bottom: 0;
-  left: 0;
-`;
-
-const Header = styled.View`
-  background-color: ${props => props.theme.colors.black};
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 64;
-  opacity: 0.7;
-  z-index: 8192;
+  flex: 1;
 `;
 
 const Banner = styled.Image`
@@ -42,7 +27,6 @@ const Banner = styled.Image`
   right: 0;
   left: 0;
   height: 256;
-  z-index: 2048;
 `;
 
 const BannerContent = styled.View`
@@ -58,8 +42,11 @@ const StyledSVG = styled(SVG)`
 
 const ScrollView = styled.ScrollView`
   flex: 1;
-  z-index: 4096;
 `;
+
+ScrollView.defaultProps = {
+  contentContainerStyle: { paddingBottom: 24 },
+};
 
 const Content = styled.View`
   background-color: ${props => props.theme.colors.white};
@@ -130,10 +117,6 @@ export default class Event extends Component {
     header: ({ state }, defaultHeader) => ({
       ...defaultHeader,
       title: state.params ? state.params.title : 'EVENTO',
-      style: {
-        backgroundColor: 'transparent',
-        zIndex: 16384, // Some high number, Infinity does not work.
-      },
     }),
   }
 
@@ -228,7 +211,6 @@ export default class Event extends Component {
     return (
       <Themed content="dark">
         <Container>
-          <Header />
           <ScrollView>
             <Banner source={{ uri: temp.default }}>
               <BannerContent>

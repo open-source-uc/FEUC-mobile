@@ -20,6 +20,7 @@ export const colors = {
   facebook: '#3b5999',
   twitter: '#55acee',
   youtube: '#cd201f',
+  transparent: 'transparent',
 };
 
 export const fonts = {
