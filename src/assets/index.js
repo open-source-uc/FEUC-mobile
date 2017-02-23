@@ -4,6 +4,9 @@ export const images = {
   logo: {
     transparent: require('./images/logo-transparent-rect.png'),
   },
+  default: {
+    initiative: require('./images/default-initiative.png'),
+  },
   eventBookmark: require('./images/event-bookmark.png'),
 };
 
