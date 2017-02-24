@@ -1,6 +1,6 @@
 import { TabNavigator } from 'react-navigation';
 
-import { Events, SavedEvents } from '../../../screens/';
+import { Events, EventsSaved } from '../../../screens/';
 import { colors, fonts } from '../../../styles';
 
 
@@ -15,8 +15,8 @@ export default TabNavigator({
       }),
     },
   },
-  SavedEvents: {
-    screen: SavedEvents,
+  EventsSaved: {
+    screen: EventsSaved,
     path: '/saved-events',
     navigationOptions: {
       tabBar: (navigation, defaultTabBar) => ({
@@ -31,7 +31,7 @@ export default TabNavigator({
   lazyLoad: true,
   swipeEnabled: true,
   animationEnabled: true,
-  order: ['Events', 'SavedEvents'],
+  order: ['Events', 'EventsSaved'],
   tabBarOptions: {
     showIcon: false,
     showLabel: true,

@@ -17,6 +17,10 @@ const ContainerIOS = styled.TouchableOpacity`
   min-height: 44;
 `;
 
+ContainerIOS.defaultProps = {
+  background: 'white',
+};
+
 const ContainerAndroid = styled.TouchableNativeFeedback`
   flex-direction: row;
   justify-content: space-between;
@@ -25,6 +29,10 @@ const ContainerAndroid = styled.TouchableNativeFeedback`
   padding: 15 18;
   min-height: 48;
 `;
+
+ContainerAndroid.defaultProps = {
+  background: 'white',
+};
 
 const Children = styled.View`
   flex: 1;

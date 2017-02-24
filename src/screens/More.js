@@ -34,7 +34,7 @@ export default class More extends Component {
     navigation: null,
     items: [
       { text: 'Notificaciones', screen: 'Notifications' },
-      { text: 'Mis Eventos', screen: 'MyEvents' },
+      { text: 'Mis Eventos', screen: 'EventsSaved' },
       { text: 'Contacto', screen: 'Contact' },
     ],
   }
