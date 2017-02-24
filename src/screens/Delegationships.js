@@ -74,7 +74,7 @@ export default class Delegationships extends Component {
       <ListViewRow.Content>
         <ListViewRow.Title>{item.name}</ListViewRow.Title>
         <ListViewRow.Body>
-          {item.description}
+          {item.description.brief}
         </ListViewRow.Body>
       </ListViewRow.Content>
       <ListViewRow.Disclosure />

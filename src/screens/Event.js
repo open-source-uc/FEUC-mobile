@@ -3,6 +3,7 @@ import { StyleSheet, Linking, Dimensions } from 'react-native';
 import { Svg as SVG, Polygon } from 'react-native-svg';
 import styled from 'styled-components/native';
 import moment from 'moment';
+import get from 'lodash/get';
 
 import client from '../api-client';
 import { Button, ErrorBar, Tag, EventDate, RichText, Loading } from '../components/';
@@ -276,7 +277,7 @@ export default class Event extends Component {
               </Row>
               <Row>
                 <AboutText>
-                  {event.description}
+                  {get(event, 'description.full.md') || event.description.brief}
                 </AboutText>
               </Row>
               <Row>
