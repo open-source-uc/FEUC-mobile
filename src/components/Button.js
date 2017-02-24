@@ -14,10 +14,16 @@ const Container = styled.TouchableOpacity`
 
 const Text = styled.Text`
   color: ${props => (props.theme.colors[props.color] || props.theme.colors.E)};
+  background-color: transparent;
+  text-align: ${props => props.align};
   font-size: 12;
   flex: 1;
   letter-spacing: 0.4;
 `;
+
+Text.defaultProps = {
+  align: 'left',
+};
 
 const Icon = styled(Ionicons)`
   color: ${props => (props.theme.colors[props.color] || props.theme.colors.E)};
