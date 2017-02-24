@@ -40,7 +40,7 @@ const Content = styled.View`
 
 const Title = styled.Text`
   background-color: transparent;
-  color: ${props => props.theme.colors.lightBlack};
+  color: ${props => props.theme.colors.G};
   font-family: ${props => props.theme.fonts.headers};
   font-size: 14;
   margin-bottom: 2;
@@ -52,7 +52,7 @@ Title.defaultProps = {
 
 const Footer = styled.Text`
   background-color: transparent;
-  color: ${props => props.theme.colors.lightGray};
+  color: ${props => props.theme.colors.B};
   font-family: ${props => props.theme.fonts.main};
   font-size: 9;
   margin: 4 0 2;
@@ -60,7 +60,7 @@ const Footer = styled.Text`
 
 const Body = styled(RichText)`
   background-color: transparent;
-  color: ${props => props.theme.colors.gray};
+  color: ${props => props.theme.colors.F};
   font-family: ${props => props.theme.fonts.main};
   font-size: 11;
   line-height: 16;
@@ -73,7 +73,7 @@ Body.defaultProps = {
 const Disclosure = styled(Ionicons)`
   width: ${props => props.size};
   height: ${props => props.size};
-  color: ${props => props.theme.colors.main};
+  color: ${props => props.theme.colors.G};
   text-align: right;
   margin-right: 2;
   width: 8;
@@ -85,11 +85,11 @@ Disclosure.defaultProps = {
 };
 
 const ThumbnailContainer = styled.View`
-  background-color: ${props => props.theme.colors[props.background] || props.theme.colors.white};
+  background-color: ${props => props.theme.colors[props.background] || props.theme.colors.D};
   width: ${props => props.size};
   height: ${props => props.size};
   border-radius: ${props => (props.circle ? props.size / 2 : 0)};
-  shadow-color: ${props => props.theme.colors.black};
+  shadow-color: ${props => props.theme.colors.G};
   shadow-offset: 1 0;
   shadow-opacity: ${props => (props.shadow ? 0.5 : 0)};
   shadow-radius: 1.5;

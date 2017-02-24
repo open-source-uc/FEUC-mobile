@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 
 const Container = styled.TouchableOpacity`
   flex: 1;
-  background-color: ${props => (props.theme.colors[props.color] || props.theme.colors.gray)};
+  background-color: ${props => (props.theme.colors[props.color] || props.theme.colors.E)};
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -13,14 +13,14 @@ const Container = styled.TouchableOpacity`
 `;
 
 const Text = styled.Text`
-  color: ${props => (props.theme.colors[props.color] || props.theme.colors.gray)};
+  color: ${props => (props.theme.colors[props.color] || props.theme.colors.E)};
   font-size: 12;
   flex: 1;
   letter-spacing: 0.4;
 `;
 
 const Icon = styled(Ionicons)`
-  color: ${props => (props.theme.colors[props.color] || props.theme.colors.gray)};
+  color: ${props => (props.theme.colors[props.color] || props.theme.colors.E)};
   font-size: ${12 + 4};
   padding-top: 1;
   margin: ${props => (props.position === 'right' ? '0 8 0 18' : '0 18 0 8')};

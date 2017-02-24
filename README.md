@@ -54,6 +54,12 @@ Run on device with:
 yarn run ios -- --device
 ```
 
+It's possible that you will need to install `ios-deploy` globally:
+
+```sh
+yarn global add ios-deploy
+```
+
 > Add the `--configuration Release` flag to run a production build.
 
 #### Troubleshooting

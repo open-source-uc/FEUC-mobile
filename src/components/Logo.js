@@ -24,19 +24,17 @@ const Logo = styled.Image`
 export default class Loading extends PureComponent {
   static propTypes = {
     source: PropTypes.any,
-    transparent: PropTypes.bool,
   }
 
   static defaultProps = {
     source: images.logo.transparent,
-    transparent: false,
   }
 
   render() {
-    const { source, transparent, ...props } = this.props;
+    const { source, ...props } = this.props;
     return (
       <View {...props}>
-        <Logo source={source} transparent={transparent} />
+        <Logo source={source} />
       </View>
     );
   }

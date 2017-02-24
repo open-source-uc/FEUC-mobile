@@ -9,8 +9,8 @@ const RefreshControl = styled.RefreshControl`
 `;
 
 RefreshControl.defaultProps = {
-  tintColor: colors.main,
-  colors: [colors.main], // Android
+  tintColor: colors.A,
+  colors: [colors.A], // Android
 };
 
 export default RefreshControl;

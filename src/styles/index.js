@@ -4,30 +4,44 @@ import styled, { ThemeProvider } from 'styled-components/native';
 import isArray from 'lodash/fp/isArray';
 
 export const colors = {
-  main: '#0da5a5',
-  lightMain: '#0ff2e7',
-  black: 'black',
-  lightBlack: '#2c3f3e',
-  gray: '#48605f',
-  lightGray: '#8aa8a7',
-  clear: '#c7d3d2',
-  lightClear: '#edefef',
-  error: '#e91f63',
-  white: '#ffffff',
-  get background() {
-    return this.lightClear;
+  X: '#F2F2F2',
+  Z: '#FFFFFF',
+  A: '#43D1C0',
+  B: '#34A79D',
+  C: '#2E8E82',
+  D: '#F2F2F2',
+  E: '#8E8E8E',
+  F: '#282828',
+  G: '#191919',
+
+  get black() {
+    return this.G;
   },
+
+  get white() {
+    return this.Z;
+  },
+
+  error: '#e91f63',
+  transparent: 'transparent',
+  get background() {
+    return '#F7F7F7';
+  },
+
   facebook: '#3b5999',
   twitter: '#55acee',
   youtube: '#cd201f',
-  transparent: 'transparent',
+  tumblr: '#34465d',
+  medium: '#02b875',
+  instagram: '#e4405f',
+  snapchat: '#FFFC00',
 };
 
 export const fonts = {
-  main: 'Roboto',
-  get headers() {
-    return this.main;
-  },
+  main: 'Muli',
+  headers: 'Muli',
+  navbar: 'Muli',
+  body: 'Roboto',
 };
 
 export const map = require('./map.json'); // eslint-disable-line

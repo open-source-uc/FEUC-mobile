@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import { colors } from '../styles';
+
+
 const TabBarIcon = ({ tintColor, focused, icon }) => (
   <Ionicons
     name={focused ? `ios-${icon}` : `ios-${icon}-outline`}
@@ -13,6 +16,10 @@ TabBarIcon.propTypes = {
   tintColor: PropTypes.any.isRequired,
   focused: PropTypes.bool.isRequired,
   icon: PropTypes.string.isRequired,
+};
+
+TabBarIcon.defaultProps = {
+  tintColor: colors.A,
 };
 
 TabBarIcon.Home = props => (

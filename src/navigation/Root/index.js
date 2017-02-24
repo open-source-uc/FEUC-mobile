@@ -16,12 +16,12 @@ import { colors } from '../../styles';
 // See: https://reactnavigation.org/docs/navigators/tab
 const options = {
   common: {
-    activeTintColor: colors.lightBlack,
-    inactiveTintColor: colors.lightGray,
-    activeBackgroundColor: colors.white,
-    inactiveBackgroundColor: colors.white,
+    activeTintColor: colors.G,
+    inactiveTintColor: colors.E,
+    activeBackgroundColor: colors.Z,
+    inactiveBackgroundColor: colors.Z,
     style: {
-      backgroundColor: colors.white,
+      backgroundColor: colors.Z,
     },
   },
   ios: {
@@ -33,7 +33,7 @@ const options = {
     scrollEnabled: false,
     upperCaseLabel: false,
     indicatorStyle: {
-      backgroundColor: colors.clear,
+      backgroundColor: colors.B,
     },
     labelStyle: {
       margin: 0,
@@ -147,7 +147,7 @@ export default TabNavigator({
   lazyLoad: true,
   swipeEnabled: false,
   animationEnabled: false,
-  initialRouteName: 'EventsTab',
+  initialRouteName: 'BenefitsTab',
   order: ['EnviorementTab', 'CommunityTab', 'EventsTab', 'BenefitsTab', 'AboutTab'],
   tabBarOptions: defaultsDeep({}, options[Platform.OS], options.common),
 });

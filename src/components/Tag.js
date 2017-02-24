@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 
 
 const Container = styled.TouchableOpacity`
-  background-color: ${props => props.theme.colors.lightGray};
+  background-color: ${props => props.theme.colors.E};
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -13,7 +13,7 @@ const Container = styled.TouchableOpacity`
 `;
 
 const Name = styled.Text`
-  color: ${props => props.theme.colors.lightClear};
+  color: ${props => props.theme.colors.D};
   font-size: 7;
   font-weight: bold;
 `;

@@ -16,7 +16,7 @@ const FooterRow = styled.View`
 
 const ListViewRowBenefit = ({ item, row, ...props }) => (
   <ListViewRow
-    background={row % 2 === 0 ? 'lightClear' : 'white'}
+    background={row % 2 === 0 ? 'Z' : 'Z'}
     {...props}
   >
     <ListViewRow.Thumbnail

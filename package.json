@@ -10,6 +10,7 @@
     "icon": "yarn run icon:android && yarn run icon:ios",
     "icon:android": "yo rn-toolbox:assets --ios --icon resources/icons/android.png",
     "icon:ios": "yo rn-toolbox:assets --android --icon resources/icons/ios.png",
+    "link-fonts": "rnpm link assets",
     "upgrade": "yarn upgrade-interactive",
     "test": "jest",
     "lint": "eslint src",
@@ -23,6 +24,11 @@
     "name": "Patricio López Juri",
     "email": "patricio@lopezjuri.com",
     "url": "https://lopezjuri.com"
+  },
+  "rnpm": {
+    "assets": [
+      "src/assets/fonts"
+    ]
   },
   "license": "UNLICENCED",
   "dependencies": {
@@ -57,8 +63,9 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.0",
     "generator-rn-toolbox": "^2.0.1",
-    "jest": "^19.0.1",
+    "jest": "^19.0.2",
     "react-test-renderer": "~15.4.0-rc.4",
+    "rnpm": "^1.9.0",
     "yo": "^1.8.5"
   },
   "jest": {

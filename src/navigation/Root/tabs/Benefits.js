@@ -1,6 +1,7 @@
 import { TabNavigator } from 'react-navigation';
+import { StyleSheet, Platform } from 'react-native';
 
-import { Benefits, MyBenefits } from '../../../screens/';
+import { Benefits, BenefitsSaved } from '../../../screens/';
 import { colors, fonts } from '../../../styles';
 
 
@@ -15,8 +16,8 @@ export default TabNavigator({
       }),
     },
   },
-  MyBenefits: {
-    screen: MyBenefits,
+  BenefitsSaved: {
+    screen: BenefitsSaved,
     path: '/my-benefits',
     navigationOptions: {
       tabBar: (navigation, defaultTabBar) => ({
@@ -31,22 +32,28 @@ export default TabNavigator({
   lazyLoad: true,
   swipeEnabled: true,
   animationEnabled: true,
-  order: ['Benefits', 'MyBenefits'],
+  order: ['Benefits', 'BenefitsSaved'],
   tabBarOptions: {
     showIcon: false,
     showLabel: true,
-    activeTintColor: colors.lightMain,
-    inactiveTintColor: colors.clear,
-    activeBackgroundColor: colors.gray,
-    inactiveBackgroundColor: colors.gray,
+    activeTintColor: colors.B,
+    inactiveTintColor: colors.E,
+    activeBackgroundColor: colors.Z,
+    inactiveBackgroundColor: colors.Z,
     style: {
-      backgroundColor: colors.gray,
+      backgroundColor: colors.Z,
+      borderBottomWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
+      borderBottomColor: colors.E,
     },
     labelStyle: {
-      fontFamily: fonts.main,
+      fontFamily: fonts.navbar,
       fontSize: 13,
       fontWeight: '600',
     },
+    // indicatorStyle: {
+    //   height: 10,
+    //   backgroundColor: colors.B,
+    // },
   },
   navigationOptions: {
     title: 'Comunidad',
