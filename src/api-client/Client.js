@@ -6,7 +6,10 @@ import stringify from 'qs/lib/stringify';
 const DEFAULT = {
   method: 'GET',
   body: undefined,
-  headers: undefined,
+  headers: {
+    'Accept': 'application/json', // eslint-disable-line
+    'Content-Type': 'application/json',
+  },
   qs: undefined,
   json: true,
 };
@@ -40,8 +43,11 @@ export default class Client {
     this.baseURL = trim(baseURL, '/');
   }
 
-  async initiatives(options) {
-    const response = await fetcher(`${this.baseURL}/api/v1/initiatives`, options);
+  async register(data) {
+    const response = await fetcher(`${this.baseURL}/api/v1/devices`, {
+      method: 'POST',
+      body: data,
+    });
     return response;
   }
 
@@ -55,8 +61,8 @@ export default class Client {
     return response;
   }
 
-  async benefit(identifier, options) {
-    const response = await fetcher(`${this.baseURL}/api/v1/benefits/${identifier}`, options);
+  async initiatives(options) {
+    const response = await fetcher(`${this.baseURL}/api/v1/initiatives`, options);
     return response;
   }
 
@@ -72,6 +78,11 @@ export default class Client {
 
   async benefits(options) {
     const response = await fetcher(`${this.baseURL}/api/v1/benefits`, options);
+    return response;
+  }
+
+  async benefit(identifier, options) {
+    const response = await fetcher(`${this.baseURL}/api/v1/benefits/${identifier}`, options);
     return response;
   }
 }
