@@ -232,7 +232,7 @@ export default class Benefit extends Component {
                   Sobre el descuento
                 </AboutTitle>
                 <AboutText>
-                  {benefit.description}
+                  {get(benefit, 'description.full.md') || benefit.description.brief}
                 </AboutText>
               </Content>
             </StyledParallaxScrollView>

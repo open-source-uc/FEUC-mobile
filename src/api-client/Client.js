@@ -1,6 +1,6 @@
 import defaults from 'lodash/defaults';
 import trim from 'lodash/trim';
-import orderBy from 'lodash/orderBy';
+// import orderBy from 'lodash/orderBy';
 import stringify from 'qs/lib/stringify';
 
 const DEFAULT = {
@@ -42,12 +42,12 @@ export default class Client {
 
   async initiatives(options) {
     const response = await fetcher(`${this.baseURL}/api/v1/initiatives`, options);
-    return orderBy(response, ['sortOrder'], ['desc']);
+    return response;
   }
 
   async events(options) {
     const response = await fetcher(`${this.baseURL}/api/v1/events`, options);
-    return orderBy(response, ['sortOrder'], ['desc']);
+    return response;
   }
 
   async event(identifier, options) {
@@ -62,7 +62,7 @@ export default class Client {
 
   async delegationships(options) {
     const response = await fetcher(`${this.baseURL}/api/v1/delegationships`, options);
-    return orderBy(response, ['sortOrder'], ['desc']);
+    return response;
   }
 
   async information(path = '', options) {

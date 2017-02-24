@@ -67,7 +67,7 @@ export default class Events extends Component {
       <ListViewRow.Content>
         <ListViewRow.Title>{item.title}</ListViewRow.Title>
         <ListViewRow.Body>
-          {item.description}
+          {item.description.brief}
         </ListViewRow.Body>
       </ListViewRow.Content>
       <ListViewRow.Disclosure />

@@ -41,7 +41,7 @@ export default class BenefitsSaved extends Component {
     this.setState({ refreshing: options.showRefresh });
 
     return client.benefits()
-      .then(items => this.constructor.DataSource.cloneWithRows([...items, ...items]))
+      .then(items => this.constructor.DataSource.cloneWithRows(items))
       .then(
         dataSource => this.setState({ refreshing: false, error: null, dataSource }),
         error => this.setState({ refreshing: false, error }),
