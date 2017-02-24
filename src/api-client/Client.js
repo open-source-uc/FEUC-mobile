@@ -55,6 +55,11 @@ export default class Client {
     return response;
   }
 
+  async benefit(identifier, options) {
+    const response = await fetcher(`${this.baseURL}/api/v1/benefits/${identifier}`, options);
+    return response;
+  }
+
   async delegationships(options) {
     const response = await fetcher(`${this.baseURL}/api/v1/delegationships`, options);
     return orderBy(response, ['sortOrder'], ['desc']);
