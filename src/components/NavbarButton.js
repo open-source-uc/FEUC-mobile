@@ -9,14 +9,9 @@ const Container = styled.TouchableOpacity`
   align-items: center;
   flex-direction: row;
 `;
-// background-color: red;
 
 const Icon = styled(Ionicons)`
   margin: 5 18;
-`;
-
-const Text = styled.Text`
-  color: white;
 `;
 
 

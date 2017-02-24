@@ -1,10 +1,9 @@
 import React, { PropTypes, Component } from 'react';
-import { ListView } from 'react-native';
 import styled from 'styled-components/native';
 import has from 'lodash/has';
 
 import client from '../api-client';
-import { ListViewRow, ErrorBar, RefreshControl } from '../components/';
+import { ListViewRow, ErrorBar, ListView } from '../components/';
 import Themed from '../styles';
 import { images } from '../assets/';
 
@@ -12,10 +11,6 @@ import { images } from '../assets/';
 const Container = styled.View`
   flex: 1;
   background-color: ${props => props.theme.colors.background};
-`;
-
-const StyledListView = styled.ListView`
-
 `;
 
 
@@ -37,7 +32,7 @@ export default class Initiatives extends Component {
   state = {
     refreshing: false,
     error: false,
-    items: this.constructor.DataSource.cloneWithRows(this.props.items),
+    dataSource: this.constructor.DataSource.cloneWithRows(this.props.items),
   }
 
   componentDidMount = () => {
@@ -50,7 +45,7 @@ export default class Initiatives extends Component {
     return client.initiatives()
       .then(items => this.constructor.DataSource.cloneWithRows(items))
       .then(
-        items => this.setState({ refreshing: false, error: null, items }),
+        dataSource => this.setState({ refreshing: false, error: null, dataSource }),
         error => this.setState({ refreshing: false, error }),
       );
   }
@@ -65,7 +60,7 @@ export default class Initiatives extends Component {
 
   renderRow = (item, section, row, highlight) => (
     <ListViewRow
-      background={row % 2 === 0 ? 'lightClear' : 'white'}
+      background={row % 2 === 0 ? 'Z' : 'X'}
       onPress={() => this.handlePress(item)}
       highlight={highlight}
     >
@@ -85,22 +80,17 @@ export default class Initiatives extends Component {
   )
 
   render = () => {
-    const { items, error, refreshing } = this.state;
+    const { dataSource, error, refreshing } = this.state;
 
     return (
       <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
-          <StyledListView
-            dataSource={items}
-            enableEmptySections
+          <ListView
+            dataSource={dataSource}
             renderRow={this.renderRow}
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={this.fetchContent}
-              />
-            }
+            refreshing={refreshing}
+            onRefresh={this.fetchContent}
           />
         </Container>
       </Themed>

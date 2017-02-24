@@ -26,12 +26,12 @@ const Content = styled.View`
 `;
 
 const Common = styled.Text`
-  color: ${props => props.theme.colors.lightGray};
+  color: ${props => props.theme.colors.A};
   background-color: transparent;
   text-align: center;
   font-family: ${props => props.theme.fonts.headers};
-  font-weight: 900;
-  font-size: 14;
+  font-weight: 500;
+  font-size: 13;
   height: 12;
   line-height: 15;
   margin: 2 0;
@@ -42,7 +42,7 @@ const DayName = styled(Common)`
 `;
 
 const DayNumber = styled(Common)`
-  color: ${props => props.theme.colors.lightBlack};
+  color: ${props => props.theme.colors.G};
   font-size: 25;
   font-weight: 200;
   height: 20;

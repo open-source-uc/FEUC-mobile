@@ -35,12 +35,12 @@ export default TabNavigator({
   tabBarOptions: {
     showIcon: false,
     showLabel: true,
-    activeTintColor: colors.lightMain,
-    inactiveTintColor: colors.clear,
-    activeBackgroundColor: colors.gray,
-    inactiveBackgroundColor: colors.gray,
+    activeTintColor: colors.B,
+    inactiveTintColor: colors.E,
+    activeBackgroundColor: colors.Z,
+    inactiveBackgroundColor: colors.Z,
     style: {
-      backgroundColor: colors.gray,
+      backgroundColor: colors.Z,
     },
     labelStyle: {
       fontFamily: fonts.main,

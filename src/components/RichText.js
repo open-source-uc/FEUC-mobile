@@ -16,7 +16,7 @@ const styles = {
     margin: 0,
   },
   a: {
-    color: colors.main,
+    color: colors.B,
   },
   paragraph: {
     margin: 0,

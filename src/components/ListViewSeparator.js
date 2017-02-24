@@ -3,9 +3,9 @@ import styled from 'styled-components/native';
 
 
 const ListViewSeparator = styled.View`
-  border-top-color: gray;
+  border-top-color: ${props => props.theme.colors.E};
   border-top-width: ${StyleSheet.hairlineWidth};
-  margin-left: 15;
+  margin-left: 18;
   height: 0;
 `;
 

@@ -3,7 +3,7 @@ import { StackNavigator } from 'react-navigation';
 
 import Tabs from './Root/';
 
-import { Event, Community, AboutDetail, Transparence } from '../screens/';
+import { Event, Community, Benefit, AboutDetail, Transparence } from '../screens/';
 // import { Logo } from '../components/';
 import { colors } from '../styles';
 
@@ -11,12 +11,12 @@ const options = {
   initialRouteName: 'Tabs',
   navigationOptions: {
     header: () => ({
-      tintColor: colors.lightClear,
+      tintColor: colors.Z,
       title: 'FEUC',
       visible: true,
       // title: () => <Logo transparent />,
       style: {
-        backgroundColor: colors.gray,
+        backgroundColor: colors.B,
       },
     }),
   },
@@ -61,6 +61,15 @@ const Navigator = StackNavigator({
   Event: {
     screen: Event,
     path: '/event',
+    navigationOptions: {
+      header: (navigation, defaultHeader) => ({
+        ...defaultHeader,
+      }),
+    },
+  },
+  Benefit: {
+    screen: Benefit,
+    path: '/benefit',
     navigationOptions: {
       header: (navigation, defaultHeader) => ({
         ...defaultHeader,
