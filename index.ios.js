@@ -2,7 +2,8 @@
 
 import { AppRegistry } from 'react-native';
 
-import App from './src/App';
+import FEUC from './src/FEUC';
 
 
-AppRegistry.registerComponent('FEUC', () => App);
+// Final registration
+AppRegistry.registerComponent('FEUC', () => FEUC);
