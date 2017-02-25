@@ -3787,9 +3787,9 @@ mute-stream@0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.6.tgz#48962b19e169fd1dfc240b3f1e7317627bbc47db"
 
-native-base@^2.0.9:
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/native-base/-/native-base-2.0.9.tgz#35de3f0fa209113e0dbacf98eb8ea6c6a0d62246"
+native-base@^2.0.10:
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/native-base/-/native-base-2.0.10.tgz#36535b86e3d091c4e2433f99a836d35c017a6313"
   dependencies:
     "@shoutem/animation" "^0.8.9"
     "@shoutem/theme" "git+https://github.com/GeekyAnts/theme.git"
