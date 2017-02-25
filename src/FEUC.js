@@ -20,7 +20,7 @@ const store = configureStore(initialState, { client });
 const options = {
   hydratation: {
     storage: AsyncStorage,
-    blacklist: ['hydratation', 'navigation'],
+    blacklist: ['hydratation', 'nav'],
   },
 };
 
