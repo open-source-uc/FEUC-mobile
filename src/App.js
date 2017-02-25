@@ -1,74 +1,55 @@
 /* eslint class-methods-use-this: 0, no-console: 0 */
 
-import React, { Component } from 'react';
-import OneSignal from 'react-native-onesignal';
-import DeviceInfo from 'react-native-device-info';
+import React, { PropTypes, Component } from 'react';
+import { Provider, connect } from 'react-redux';
+import noop from 'lodash/noop';
 
-import client from './api-client';
-import Navigator from './navigation/Navigator';
+import Navigator from './redux/Navigator';
+import Notifications from './Notifications';
+
+import * as hydratation from './redux/modules/hydratation';
 
 
-export default class App extends Component {
+const mapStateToProps = state => ({
+  hydratation: state.hydratation,
+  nav: state.nav,
+});
+
+const mapDispatchToProps = ({
+  hydrate: hydratation.hydrate,
+});
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class App extends Component { // eslint-disable-line
+  static propTypes = {
+    store: PropTypes.object.isRequired,
+    hydratation: PropTypes.object.isRequired,
+    hydrate: PropTypes.func.isRequired,
+    options: PropTypes.object,
+  }
+
+  static defaultProps = {
+    hydrate: noop,
+    options: {},
+  }
+
   componentWillMount = () => {
-    OneSignal.addEventListener('received', this.onReceived);
-    OneSignal.addEventListener('opened', this.onOpened);
-    OneSignal.addEventListener('registered', this.onRegistered);
-    OneSignal.addEventListener('ids', this.onIds);
-  }
+    const { store, hydrate, options } = this.props;
 
-  componentWillUnmount = () => {
-    OneSignal.removeEventListener('received', this.onReceived);
-    OneSignal.removeEventListener('opened', this.onOpened);
-    OneSignal.removeEventListener('registered', this.onRegistered);
-    OneSignal.removeEventListener('ids', this.onIds);
-  }
-
-  onReceived = (notification) => {
-    console.log('Notification received: ', notification);
-  }
-
-  onOpened(openResult) {
-    console.log('Message: ', openResult.notification.payload.body);
-    console.log('Data: ', openResult.notification.payload.additionalData);
-    console.log('isActive: ', openResult.notification.isAppInFocus);
-    console.log('openResult: ', openResult);
-  }
-
-  onRegistered(notifData) {
-    console.log('Device had been registered for push notifications!', notifData);
-  }
-
-  async onIds(device) {
-    const data = {
-      userId: device.userId,
-      uid: DeviceInfo.getUniqueID(),  // e.g. FCDBD8EF-62FC-4ECB-B2F5-92C9E79AC7F9
-      manufacturer: DeviceInfo.getManufacturer(),  // e.g. Apple
-      brand: DeviceInfo.getBrand(),  // e.g. Apple / htc / Xiaomi
-      model: DeviceInfo.getModel(),  // e.g. iPhone 6
-      deviceId: DeviceInfo.getDeviceId(),  // e.g. iPhone7,2 / or the board on Android e.g. goldfish
-      OS: DeviceInfo.getSystemName(),  // e.g. iPhone OS
-      system: DeviceInfo.getSystemVersion(),  // e.g. 9.0
-      // : DeviceInfo.getBundleId(),  // e.g. com.learnium.mobile
-      buildNumber: DeviceInfo.getBuildNumber(),  // e.g. 89
-      version: DeviceInfo.getVersion(),  // e.g. 1.1.0
-      // : DeviceInfo.getReadableVersion(),  // e.g. 1.1.0.89
-      name: DeviceInfo.getDeviceName(),  // e.g. Becca's iPhone 6
-      agent: DeviceInfo.getUserAgent(), // e.g. Dalvik/2.1.0 (Linux; Android 5.1)
-      locale: DeviceInfo.getDeviceLocale(), // e.g en-US
-      country: DeviceInfo.getDeviceCountry(), // e.g US
-      timezone: DeviceInfo.getTimezone(), // e.g America/Mexico_City
-    };
-
-    try {
-      await client.register(data);
-    } catch (err) {
-      console.log('Error registering:', err);
-    }
+    hydrate(store, options.hydratation);
   }
 
   render() {
-    return (
-      <Navigator />
-    );
+    if (this.props.hydratation && this.props.hydratation.done) {
+      return (
+        <Provider store={this.props.store}>
+          <Notifications>
+            <Navigator />
+          </Notifications>
+        </Provider>
+      );
+    } else {
+      return null;
+    }
   }
 }
