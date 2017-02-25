@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import noop from 'lodash/noop';
 
 import { ListViewRowBenefit, ErrorBar, ListView } from '../components/';
-import { fetchBenefits } from '../redux/modules/datastore';
+import { fetchBenefits } from '../redux/modules/benefits';
 import * as schemas from '../schemas';
 import Themed from '../styles';
 
@@ -16,7 +16,10 @@ const Container = styled.View`
 `;
 
 
-const mapStateToProps = state => state.datastore.benefits;
+const mapStateToProps = state => ({
+  benefits: state.benefits,
+  entities: state.entities,
+});
 
 const mapDispatchToProps = ({
   fetchBenefits,
@@ -25,28 +28,24 @@ const mapDispatchToProps = ({
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Benefits extends Component {
   static propTypes = {
-    result: PropTypes.array, // eslint-disable-line
+    benefits: PropTypes.object,
     entities: PropTypes.object, // eslint-disable-line
-    refreshing: PropTypes.bool,
-    error: PropTypes.object,
+    navigation: PropTypes.object,
 
     fetchBenefits: PropTypes.func,
-    navigation: PropTypes.object,
   }
 
   static defaultProps = {
-    result: [],
+    benefits: {},
     entities: {},
-    refreshing: false,
-    error: null,
+    navigation: null,
 
     fetchBenefits: noop,
-    navigation: null,
   }
 
-  static denormalize = ({ result, entities: benefits }) => {
-    const entities = { benefits };
-    return denormalize(result, [schemas.benefit], entities);
+  static denormalize = ({ benefits, entities }) => {
+    const schema = [schemas.benefit];
+    return denormalize(benefits.result, schema, entities);
   }
 
   static DataSource = new ListView.DataSource({
@@ -62,7 +61,7 @@ export default class Benefits extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.entities && nextProps.result) {
+    if (nextProps.entities && nextProps.benefits) {
       const items = this.constructor.denormalize(nextProps);
       this.setState({ dataSource: this.constructor.DataSource.cloneWithRows(items) });
     }
@@ -72,7 +71,7 @@ export default class Benefits extends Component {
     const { navigation } = this.props;
 
     if (item && navigation) {
-      navigation.navigate('Benefit', { _id: item._id, title: item.title });
+      navigation.navigate('Benefit', { benefitId: item._id, title: item.title });
     }
   }
 
@@ -86,7 +85,7 @@ export default class Benefits extends Component {
   )
 
   render = () => {
-    const { error, refreshing } = this.props;
+    const { error, refreshing } = this.props.benefits;
     const { dataSource } = this.state;
 
     return (
