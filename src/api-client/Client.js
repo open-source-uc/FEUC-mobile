@@ -1,7 +1,10 @@
+import { normalize } from 'normalizr';
 import defaults from 'lodash/defaults';
 import trim from 'lodash/trim';
 // import orderBy from 'lodash/orderBy';
 import stringify from 'qs/lib/stringify';
+
+import * as schemas from '../schemas';
 
 const DEFAULT = {
   method: 'GET',
@@ -78,7 +81,7 @@ export default class Client {
 
   async benefits(options) {
     const response = await fetcher(`${this.baseURL}/api/v1/benefits`, options);
-    return response;
+    return normalize(response, [schemas.benefit]);
   }
 
   async benefit(identifier, options) {

@@ -1,7 +1,4 @@
-/* eslint no-unused-vars: 0 */
-
 import { handleActions, createAction } from 'redux-actions';
-import { persistStore } from 'redux-persist';
 import { normalize } from 'normalizr';
 
 import * as schemas from '../../schemas';
@@ -31,8 +28,8 @@ export default handleActions({
   [NOTIFICATION_ADD]: (state, { payload }) => ({
     ...state,
     entities: {
-      ...state.entities.notifications,
-      ...payload.entities,
+      ...state.entities,
+      ...payload.entities.notifications,
     },
   }),
 }, initialState);

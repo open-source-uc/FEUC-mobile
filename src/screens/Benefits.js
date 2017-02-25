@@ -1,8 +1,12 @@
 import React, { PropTypes, Component } from 'react';
+import { connect } from 'react-redux';
+import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
+import noop from 'lodash/noop';
 
-import client from '../api-client';
 import { ListViewRowBenefit, ErrorBar, ListView } from '../components/';
+import { fetchBenefits } from '../redux/modules/datastore';
+import * as schemas from '../schemas';
 import Themed from '../styles';
 
 
@@ -12,40 +16,56 @@ const Container = styled.View`
 `;
 
 
+const mapStateToProps = state => state.datastore.benefits;
+
+const mapDispatchToProps = ({
+  fetchBenefits,
+});
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class Benefits extends Component {
+  static propTypes = {
+    result: PropTypes.array, // eslint-disable-line
+    entities: PropTypes.object, // eslint-disable-line
+    refreshing: PropTypes.bool,
+    error: PropTypes.object,
+
+    fetchBenefits: PropTypes.func,
+    navigation: PropTypes.object,
+  }
+
+  static defaultProps = {
+    result: [],
+    entities: {},
+    refreshing: false,
+    error: null,
+
+    fetchBenefits: noop,
+    navigation: null,
+  }
+
+  static denormalize = ({ result, entities: benefits }) => {
+    const entities = { benefits };
+    return denormalize(result, [schemas.benefit], entities);
+  }
+
   static DataSource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1._id !== r2._id,
   })
 
-  static propTypes = {
-    navigation: PropTypes.object,
-    items: PropTypes.array,
-  }
-
-  static defaultProps = {
-    navigation: null,
-    items: [],
-  }
-
   state = {
-    refreshing: false,
-    error: false,
-    dataSource: this.constructor.DataSource.cloneWithRows(this.props.items),
+    dataSource: this.constructor.DataSource.cloneWithRows(this.constructor.denormalize(this.props)),
   }
 
   componentDidMount = () => {
-    this.fetchContent({ showRefresh: false });
+    this.props.fetchBenefits();
   }
 
-  fetchContent = (options = { showRefresh: true }) => {
-    this.setState({ refreshing: options.showRefresh });
-
-    return client.benefits()
-      .then(items => this.constructor.DataSource.cloneWithRows(items))
-      .then(
-        dataSource => this.setState({ refreshing: false, error: null, dataSource }),
-        error => this.setState({ refreshing: false, error }),
-      );
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.entities && nextProps.result) {
+      const items = this.constructor.denormalize(nextProps);
+      this.setState({ dataSource: this.constructor.DataSource.cloneWithRows(items) });
+    }
   }
 
   handlePress = (item) => {
@@ -66,7 +86,8 @@ export default class Benefits extends Component {
   )
 
   render = () => {
-    const { dataSource, error, refreshing } = this.state;
+    const { error, refreshing } = this.props;
+    const { dataSource } = this.state;
 
     return (
       <Themed content="dark">
@@ -76,7 +97,7 @@ export default class Benefits extends Component {
             dataSource={dataSource}
             renderRow={this.renderRow}
             refreshing={refreshing}
-            onRefresh={this.fetchContent}
+            onRefresh={this.props.fetchBenefits}
           />
         </Container>
       </Themed>
