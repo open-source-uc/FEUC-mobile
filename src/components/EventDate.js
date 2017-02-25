@@ -1,4 +1,5 @@
 import React, { PropTypes, PureComponent } from 'react';
+import { Image } from 'react-native';
 import styled from 'styled-components/native';
 import moment from 'moment';
 
@@ -6,11 +7,9 @@ import { images } from '../assets/';
 
 
 const Container = styled.Image`
-  position: absolute;
-  right: 18;
-  bottom: 0;
   width: 56;
   height: 95;
+  resize-mode: ${Image.resizeMode.stretch};
 `;
 
 Container.defaultProps = {
@@ -22,7 +21,7 @@ const Content = styled.View`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 3 3 10;
+  padding: 0 3 10;
 `;
 
 const Common = styled.Text`

@@ -136,7 +136,7 @@ const mapDispatchToProps = null;
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Benefit extends Component {
   static navigationOptions = {
-    title: 'FEUC',
+    title: 'Beneficio',
     header: ({ state }, defaultHeader) => ({
       ...defaultHeader,
       title: 'Beneficio',
@@ -144,12 +144,14 @@ export default class Benefit extends Component {
   }
 
   static propTypes = {
+    navigation: PropTypes.object,
     benefit: PropTypes.object,
     error: PropTypes.object,
     bannerHeight: PropTypes.number,
   }
 
   static defaultProps = {
+    navigation: null,
     benefit: null,
     error: null,
     bannerHeight: 230,
@@ -166,7 +168,11 @@ export default class Benefit extends Component {
   }
 
   handleActivate = () => {
-    alert('ACTIVATE!');
+    const { benefit, navigation } = this.props;
+
+    if (benefit && navigation) {
+      navigation.navigate('BenefitActive', { benefitId: benefit._id, title: 'Activado' });
+    }
   }
 
   renderBackground = () => {

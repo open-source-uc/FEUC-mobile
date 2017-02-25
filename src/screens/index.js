@@ -18,3 +18,4 @@ export { default as Transparence } from './Transparence';
 export { default as AboutDetail } from './AboutDetail';
 export { default as Community } from './Community';
 export { default as Benefit } from './Benefit';
+export { default as BenefitActive } from './BenefitActive';

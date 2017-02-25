@@ -4506,6 +4506,10 @@ react-mixin@^3.0.5:
     object-assign "^4.0.1"
     smart-mixin "^2.0.0"
 
+react-native-blur@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-blur/-/react-native-blur-2.0.0.tgz#284b3abfb42c2d90924aa15f494ccb88d6055342"
+
 react-native-config@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.3.1.tgz#981d98eee2c4e467397cd9306f5b6958c501c6e8"
@@ -4836,9 +4840,9 @@ reduce-reducers@^0.1.0:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/reduce-reducers/-/reduce-reducers-0.1.2.tgz#fa1b4718bc5292a71ddd1e5d839c9bea9770f14b"
 
-redux-actions@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/redux-actions/-/redux-actions-1.2.1.tgz#649711d88f49f1dde5bc5a1cea8ceec5b54d9181"
+redux-actions@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/redux-actions/-/redux-actions-1.2.2.tgz#31f15ba494fe130f05c4a9f486c99cc8725f80cd"
   dependencies:
     invariant "^2.2.1"
     lodash "^4.13.1"
