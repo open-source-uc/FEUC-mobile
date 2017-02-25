@@ -1,11 +1,11 @@
 import React, { PropTypes, Component } from 'react';
 import { Image } from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
+import { connect } from 'react-redux';
 import styled from 'styled-components/native';
 import moment from 'moment';
 import get from 'lodash/get';
 
-import client from '../api-client';
 import { Thumbnail, Button, ErrorBar, RichText } from '../components/';
 import Themed, { colors } from '../styles';
 
@@ -122,6 +122,16 @@ const ButtonText = styled(Button.Text)`
 `;
 
 
+const mapStateToProps = ({ nav, datastore }) => {
+  const route = nav.routes[nav.index];
+  return {
+    benefit: route && route.params ? datastore.benefits.entities[route.params._id] : null,
+  };
+};
+
+const mapDispatchToProps = null;
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class Benefit extends Component {
   static navigationOptions = {
     title: 'FEUC',
@@ -132,44 +142,25 @@ export default class Benefit extends Component {
   }
 
   static propTypes = {
-    navigation: PropTypes.object,
+    benefit: PropTypes.object,
+    error: PropTypes.object,
     bannerHeight: PropTypes.number,
   }
 
   static defaultProps = {
-    navigation: null,
+    benefit: null,
+    error: null,
     bannerHeight: 230,
   }
 
   state = {
-    benefit: null,
-    refreshing: false,
-    error: null,
-    content: this.props.navigation.state.params.content,
+    benefit: this.props.benefit,
   }
 
-  componentDidMount() {
-    const { navigation } = this.props;
-    if (navigation && navigation.state.params) {
-      this.fetchContent(navigation.state.params._id, { showRefresh: false });
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.benefit) {
+      this.setState({ benefit: nextProps.benefit });
     }
-  }
-
-  componentWillReceiveProps = (nextProps) => {
-    const { navigation } = nextProps;
-
-    if (navigation && navigation.state.params.content) {
-      this.setState({ content: nextProps.navigation.state.params.content });
-    }
-  }
-
-  fetchContent = (identifier, options = { showRefresh: true }) => {
-    this.setState({ refreshing: options.showRefresh });
-
-    return client.benefit(identifier).then(
-      benefit => this.setState({ refreshing: false, error: null, benefit }),
-      error => this.setState({ refreshing: false, error }),
-    );
   }
 
   handleActivate = () => {
@@ -179,6 +170,7 @@ export default class Benefit extends Component {
   renderBackground = () => {
     const { bannerHeight } = this.props;
     const { benefit } = this.state;
+
     const brand = benefit.responsable[benefit.responsable.kind];
     return (
       <Banner height={bannerHeight} source={{ uri: temp.image }}>
@@ -190,8 +182,8 @@ export default class Benefit extends Component {
   }
 
   render() {
-    const { bannerHeight } = this.props;
-    const { benefit, error } = this.state;
+    const { bannerHeight, error } = this.props;
+    const { benefit } = this.state;
 
     return (
       <Themed content="dark">
