@@ -2,11 +2,13 @@ import React, { PropTypes, Component } from 'react';
 import { Image } from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { connect } from 'react-redux';
+import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
 import moment from 'moment';
 import get from 'lodash/get';
 
 import { Thumbnail, Button, ErrorBar, RichText } from '../components/';
+import * as schemas from '../schemas';
 import Themed, { colors } from '../styles';
 
 const temp = {
@@ -122,10 +124,10 @@ const ButtonText = styled(Button.Text)`
 `;
 
 
-const mapStateToProps = ({ nav, datastore }) => {
-  const route = nav.routes[nav.index];
+const mapStateToProps = ({ nav, entities }) => {
+  const id = get(nav, ['routes', nav.index, 'params', 'benefitId']);
   return {
-    benefit: route && route.params ? datastore.benefits.entities[route.params._id] : null,
+    benefit: id ? denormalize(id, schemas.benefit, entities) : null,
   };
 };
 

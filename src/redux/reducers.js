@@ -2,14 +2,16 @@ import { combineReducers } from 'redux';
 
 import hydratation from './modules/hydratation';
 import nav from './modules/nav';
+import entities from './modules/entities';
+import benefits from './modules/benefits';
 import notifications from './modules/notifications';
-import datastore from './modules/datastore';
 
 const reducer = combineReducers({
   hydratation,
   nav,
+  entities,
+  benefits,
   notifications,
-  datastore,
 });
 
 export default reducer;

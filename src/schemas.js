@@ -6,14 +6,15 @@ export const event = new schema.Entity('events', {}, {
   idAttribute: '_id',
 });
 
-export const benefit = new schema.Entity('benefits', {
-  // responsable: {
-  //   brand,
-  // },
-}, {
+
+export const brand = new schema.Entity('brands', {}, {
   idAttribute: '_id',
 });
 
-export const brand = new schema.Entity('brands', {}, {
+export const benefit = new schema.Entity('benefits', {
+  responsable: {
+    brand,
+  },
+}, {
   idAttribute: '_id',
 });
