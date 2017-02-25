@@ -3,7 +3,7 @@ import { StackNavigator } from 'react-navigation';
 
 import Tabs from './Root/';
 
-import { Event, Community, Benefit, AboutDetail, Transparence } from '../screens/';
+import { Event, Community, Benefit, AboutDetail, Transparence, BenefitActive } from '../screens/';
 // import { Logo } from '../components/';
 import { colors } from '../styles';
 
@@ -12,7 +12,7 @@ const options = {
   navigationOptions: {
     header: () => ({
       tintColor: colors.Z,
-      title: 'FEUC',
+      // title: 'FEUC',
       visible: true,
       // title: () => <Logo transparent />,
       style: {
@@ -25,7 +25,7 @@ const options = {
 function getTitle(state) {
   const route = state.routes[state.index];
   switch (route.routeName) {
-    case 'HomeTab': return 'Home';
+    case 'EventsTab': return 'Home';
     case 'BenefitsTab': return 'Beneficios';
     case 'CommunityTab': return 'Comunidad';
     case 'AboutTab': return 'FEUC';
@@ -67,9 +67,21 @@ const Navigator = StackNavigator({
       }),
     },
   },
-  Benefit: {
-    screen: Benefit,
-    path: '/benefit',
+  Benefits: {
+    screen: StackNavigator({
+      Benefit: {
+        screen: Benefit,
+        path: '/benefit',
+      },
+      BenefitActive: {
+        screen: BenefitActive,
+        path: '/benefit-active',
+      },
+    }, {
+      mode: 'modal',
+      initialRouteName: 'Benefit',
+      headerMode: 'none',
+    }),
     navigationOptions: {
       header: (navigation, defaultHeader) => ({
         ...defaultHeader,

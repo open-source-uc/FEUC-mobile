@@ -41,6 +41,12 @@ const StyledSVG = styled(SVG)`
   height: ${props => props.height};
 `;
 
+const AbsoluteEventDate = styled(EventDate)`
+  position: absolute;
+  right: 18;
+  bottom: 0;
+`;
+
 const ScrollView = styled.ScrollView`
   flex: 1;
 `;
@@ -228,7 +234,7 @@ export default class Event extends Component {
                     fill={colors.Z}
                   />
                 </StyledSVG>
-                <EventDate date={new Date(event.temporality.start)} />
+                <AbsoluteEventDate date={new Date(event.temporality.start)} />
               </BannerContent>
             </Banner>
             <Content>
