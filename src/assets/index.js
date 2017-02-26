@@ -3,6 +3,7 @@
 export const images = {
   logo: {
     transparent: require('./images/logo-transparent-rect.png'),
+    square: require('./images/logo-transparent.png'),
   },
   default: {
     initiative: require('./images/default-initiative.png'),

@@ -94,7 +94,7 @@ const DropText = styled.Text`
 `;
 
 const Content = styled.View`
-  padding: 18;
+  padding: 18 18 36;
 `;
 
 const Body = styled(RichText)`

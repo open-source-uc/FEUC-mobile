@@ -9,9 +9,9 @@ const ThumbnailContainer = styled.View`
   height: ${props => props.size};
   border-radius: ${props => (props.circle ? props.size / 2 : 0)};
   shadow-color: ${props => props.theme.colors.G};
-  shadow-offset: 1 0;
-  shadow-opacity: ${props => (props.shadow ? 0.5 : 0)};
-  shadow-radius: 1.5;
+  shadow-offset: 1 1;
+  shadow-opacity: ${props => (props.shadow ? 0.1 : 0)};
+  shadow-radius: 1.0;
 `;
 
 const ThumbnailImage = styled.Image`

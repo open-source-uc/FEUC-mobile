@@ -89,7 +89,7 @@ export default class Initiative extends Component {
           {initiative && (
             <Arc bannerSource={bannerSource} bannerHeight={bannerHeight}>
               <Arc.ArcLayout>
-                <Arc.BrandImage source={initiativeSource} />
+                <Arc.BrandImage shadow background="Z" source={initiativeSource} />
               </Arc.ArcLayout>
               <Arc.BrandTitle>
                 Iniciativa UC
@@ -108,7 +108,7 @@ export default class Initiative extends Component {
             </Arc>
           )}
           <Social.Bar>
-            {initiative && initiative.social && initiative.social.filter(Boolean).map(url => (
+            {initiative && get(initiative, 'social', []).filter(Boolean).map(url => (
               <Social key={url} url={url} onPress={this.handleSocialPress} />
             ))}
           </Social.Bar>

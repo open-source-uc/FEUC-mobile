@@ -1,21 +1,23 @@
 import React, { PropTypes, Component } from 'react';
+import { Linking } from 'react-native';
 import { connect } from 'react-redux';
 import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
 import get from 'lodash/get';
 
-import { ErrorBar, RichText } from '../components/';
+import { Arc, ErrorBar, Social } from '../components/';
 import * as schemas from '../schemas';
 import Themed from '../styles';
+import { images } from '../assets/';
 
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${props => props.theme.colors.background};
+  background-color: ${props => props.theme.colors.Z};
 `;
 
-const ScrollView = styled.ScrollView`
-  padding: 18;
+const ArcLead = styled(Arc.Lead)`
+  margin-bottom: 18;
 `;
 
 
@@ -42,12 +44,14 @@ export default class Delegationship extends Component {
     // navigation: PropTypes.object,
     delegationship: PropTypes.object,
     error: PropTypes.object,
+    bannerHeight: PropTypes.number,
   }
 
   static defaultProps = {
     // navigation: null,
     delegationship: null,
     error: null,
+    bannerHeight: 190,
   }
 
   state = {
@@ -60,19 +64,53 @@ export default class Delegationship extends Component {
     }
   }
 
+  handleSocialPress = ({ url }) => {
+    try {
+      Linking.openURL(url);
+    } catch (err) {
+      alert('Hubo un problema abriendo la URL.') // eslint-disable-line
+    }
+  }
+
   render() {
-    const { error } = this.props;
+    const { bannerHeight, error } = this.props;
     const { delegationship } = this.state;
+
+    const delegationshipSource = images.logo.square;
+    const bannerSource = {
+      uri: get(delegationship, 'banner.secure_url'),
+    };
 
     return (
       <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
           {delegationship && (
-            <ScrollView>
-              <RichText>{JSON.stringify(delegationship, 2, null)}</RichText>
-            </ScrollView>
+            <Arc bannerSource={bannerSource} bannerHeight={bannerHeight}>
+              <Arc.ArcLayout>
+                <Arc.BrandImage shadow background="Z" tint={delegationship.color} source={delegationshipSource} />
+              </Arc.ArcLayout>
+              <Arc.BrandTitle>
+                Vocalías
+              </Arc.BrandTitle>
+              <Arc.Title>
+                {delegationship.name}
+              </Arc.Title>
+              <ArcLead>
+                Somos ${342} participantes
+              </ArcLead>
+              <Arc.Content>
+                <Arc.Body>
+                  {get(delegationship, 'description.full.md') || delegationship.description.brief}
+                </Arc.Body>
+              </Arc.Content>
+            </Arc>
           )}
+          <Social.Bar>
+            {delegationship && get(delegationship, 'social', []).filter(Boolean).map(url => (
+              <Social key={url} url={url} onPress={this.handleSocialPress} />
+            ))}
+          </Social.Bar>
         </Container>
       </Themed>
     );

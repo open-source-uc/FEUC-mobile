@@ -6,14 +6,6 @@ import ListViewRow from './ListViewRow';
 import { images } from '../assets/';
 
 
-function selectImage(item) {
-  const uri = get(item, 'image.secure_url');
-  if (uri) return { uri };
-
-  return images.default.benefit;
-}
-
-
 const ListViewRowDelegationship = ({ item, row, ...props }) => (
   <ListViewRow
     background="Z"
