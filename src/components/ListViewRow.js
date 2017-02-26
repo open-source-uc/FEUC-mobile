@@ -1,5 +1,5 @@
 import React, { PropTypes, PureComponent } from 'react';
-import { Platform } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
 import isArray from 'lodash/fp/isArray';
@@ -15,6 +15,10 @@ const ContainerIOS = styled.TouchableOpacity`
   background-color: ${props => props.theme.colors[props.background]};
   padding: 15 15;
   min-height: 44;
+  border-top-width: ${props => (props.first ? StyleSheet.hairlineWidth : 0)};
+  border-top-color: ${props => props.theme.colors.separator};
+  border-bottom-width: ${props => (props.last ? StyleSheet.hairlineWidth : 0)};
+  border-bottom-color: ${props => props.theme.colors.separator};
 `;
 
 ContainerIOS.defaultProps = {

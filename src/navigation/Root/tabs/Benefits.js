@@ -43,7 +43,7 @@ export default TabNavigator({
     style: {
       backgroundColor: colors.Z,
       borderBottomWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
-      borderBottomColor: colors.E,
+      borderBottomColor: colors.separator,
     },
     labelStyle: {
       fontFamily: fonts.navbar,

@@ -81,6 +81,8 @@ export default class Benefits extends Component {
       row={row}
       highlight={highlight}
       onPress={() => this.handlePress(item)}
+      first={Number(row) === 0}
+      last={this.state.dataSource.getRowCount() - 1 === Number(row)}
     />
   )
 

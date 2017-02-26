@@ -13,7 +13,7 @@ export const Separator = styled.View`
 `;
 
 const StyledListView = styled.ListView`
-  padding-top: 16;
+  padding-top: 28;
   background-color: ${props => props.theme.colors.transparent};
 `;
 

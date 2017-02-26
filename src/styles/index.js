@@ -14,6 +14,8 @@ export const colors = {
   F: '#282828',
   G: '#191919',
 
+  separator: '#C8C7CC',
+
   get black() {
     return this.G;
   },
