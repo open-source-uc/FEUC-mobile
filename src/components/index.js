@@ -1,6 +1,7 @@
 export { default as Button } from './Button';
 export { default as Tag } from './Tag';
 export { default as EventDate } from './EventDate';
+export { default as Bookmark } from './Bookmark';
 export { default as Loading } from './Loading';
 export { default as TabBarIcon } from './TabBarIcon';
 export { default as Thumbnail } from './Thumbnail';

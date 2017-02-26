@@ -4,11 +4,12 @@ import { BlurView } from 'react-native-blur';
 import { connect } from 'react-redux';
 import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
-// import moment from 'moment';
 import get from 'lodash/get';
 import max from 'lodash/max';
+import moment from 'moment';
+import 'moment-duration-format';
 
-import { ErrorBar, EventDate } from '../components/';
+import { ErrorBar, Bookmark } from '../components/';
 import * as schemas from '../schemas';
 import Themed from '../styles';
 
@@ -61,7 +62,7 @@ const Cover = styled.Image`
   border-top-right-radius: 10;
 `;
 
-const AbsoluteEventDate = styled(EventDate)`
+const AbsoluteBookmark = styled(Bookmark)`
   position: absolute;
   right: 12;
   top: -4;
@@ -87,6 +88,7 @@ BrandTitle.defaultProps = {
 };
 
 const Title = styled.Text`
+  flex: 1;
   color: ${props => props.theme.colors.G};
   text-align: center;
   font-family: ${props => props.theme.fonts.headers};
@@ -99,6 +101,16 @@ const Title = styled.Text`
 Title.defaultProps = {
   numberOfLines: 2,
 };
+
+const Restriction = styled.Text`
+  color: ${props => props.theme.colors.A};
+  text-align: center;
+  font-family: ${props => props.theme.fonts.body};
+  font-weight: 700;
+  font-size: 12;
+  padding: 0 18;
+  margin-bottom: 12;
+`;
 
 
 const mapStateToProps = ({ nav, entities }) => {
@@ -131,6 +143,10 @@ export default class BenefitActive extends Component {
 
   state = {
     benefit: this.props.benefit,
+    deadline: null,
+    isInTime: false,
+    timeleft: null,
+    ready: false,
   }
 
   componentWillMount() {
@@ -139,11 +155,32 @@ export default class BenefitActive extends Component {
 
   componentDidMount() {
     this.startAnimation();
+    this.setupTimer(this.props.benefit);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.benefit) {
-      this.setState({ benefit: nextProps.benefit });
+      this.setState({ benefit: nextProps.benefit, ready: false });
+      this.setupTimer(nextProps.benefit);
+    }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
+  setupTimer = (benefit) => {
+    if (this.timer) clearTimeout(this.timer);
+
+    const deadline = benefit.benefit.expires && benefit.benefit.deadline;
+    if (deadline) {
+      this.timer = setInterval(() => {
+        const now = moment();
+        const diff = moment(deadline).diff(now, 'seconds');
+        const isInTime = diff > 0;
+        const timeleft = isInTime && moment.duration(diff, 'seconds').format('d[d] h:mm:ss');
+        this.setState({ deadline, isInTime, timeleft, ready: true });
+      }, 1000);
     }
   }
 
@@ -158,7 +195,7 @@ export default class BenefitActive extends Component {
 
   render() {
     const { error } = this.props;
-    const { benefit } = this.state;
+    const { benefit, deadline, isInTime, timeleft, ready } = this.state;
 
     const spin = this.animatedValue.interpolate({
       inputRange: [0, 100],
@@ -178,7 +215,10 @@ export default class BenefitActive extends Component {
               <Card>
                 <Cover source={source}>
                   {benefit.benefit.expires && (
-                    <AbsoluteEventDate date={new Date(benefit.benefit.deadline)} />
+                    <AbsoluteBookmark>
+                      <Bookmark.Lead>NRO</Bookmark.Lead>
+                      <Bookmark.Title>24</Bookmark.Title>
+                    </AbsoluteBookmark>
                   )}
                 </Cover>
                 <Bottom>
@@ -188,6 +228,21 @@ export default class BenefitActive extends Component {
                   <Title>
                     {benefit.title}
                   </Title>
+                  {!ready && (
+                    <Restriction>
+                      Cargando...
+                    </Restriction>
+                  )}
+                  {deadline && isInTime && timeleft && (
+                    <Restriction>
+                      {`Valido por ${timeleft}`.toUpperCase()}
+                    </Restriction>
+                  )}
+                  {deadline && !isInTime && (
+                    <Restriction>
+                      Expirado
+                    </Restriction>
+                  )}
                 </Bottom>
               </Card>
             )}
