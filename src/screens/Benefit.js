@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Image } from 'react-native';
+import { Image, Dimensions } from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { connect } from 'react-redux';
 import { denormalize } from 'normalizr';
@@ -10,6 +10,7 @@ import get from 'lodash/get';
 import { Thumbnail, Button, ErrorBar, RichText } from '../components/';
 import * as schemas from '../schemas';
 import Themed, { colors } from '../styles';
+import { images } from '../assets/';
 
 
 const Container = styled.View`
@@ -27,15 +28,8 @@ const Banner = styled.Image`
   height: ${props => props.height};
 `;
 
-const BannerContent = styled.View`
-  flex: 1;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-`;
-
 const BrandImage = styled(Thumbnail)`
-  margin-bottom: 12;
+  top: -30;
 `;
 
 BrandImage.defaultProps = {
@@ -48,8 +42,25 @@ const BrandTitle = styled.Text`
   font-family: ${props => props.theme.fonts.headers};
   font-weight: 700;
   font-size: 13;
+  margin-top: 20;
   margin-bottom: 8;
 `;
+
+const Arc = styled.Image`
+  position: absolute;
+  overflow: visible;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  resize-mode: ${Image.resizeMode.contain};
+  width: ${Dimensions.get('window').width};
+  height: 26;
+  top: -26;
+`;
+
+Arc.defaultProps = {
+  source: images.arc,
+};
 
 const Title = styled.Text`
   color: ${props => props.theme.colors.G};
@@ -178,21 +189,19 @@ export default class Benefit extends Component {
     const bannerSource = {
       uri: get(benefit, 'image.secure_url'),
     };
-    const responsableSource = {
-      uri: get(benefit, ['responsable', benefit.responsable.kind, 'image', 'secure_url']),
-    };
+
     return (
-      <Banner height={bannerHeight} source={bannerSource}>
-        <BannerContent>
-          <BrandImage source={responsableSource} />
-        </BannerContent>
-      </Banner>
+      <Banner height={bannerHeight} source={bannerSource} />
     );
   }
 
   render() {
     const { bannerHeight, error } = this.props;
     const { benefit } = this.state;
+
+    const responsableSource = {
+      uri: get(benefit, ['responsable', benefit.responsable.kind, 'image', 'secure_url']),
+    };
 
     return (
       <Themed content="dark">
@@ -204,6 +213,9 @@ export default class Benefit extends Component {
               renderBackground={this.renderBackground}
               parallaxHeaderHeight={bannerHeight}
             >
+              <Arc>
+                <BrandImage source={responsableSource} />
+              </Arc>
               <BrandTitle>
                 {benefit.responsable[benefit.responsable.kind].name}
               </BrandTitle>

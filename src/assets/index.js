@@ -9,6 +9,7 @@ export const images = {
     benefit: require('./images/default-benefit.png'),
   },
   eventBookmark: require('./images/event-bookmark.png'),
+  arc: require('./images/arc.png'),
 };
 
 export const fonts = {
