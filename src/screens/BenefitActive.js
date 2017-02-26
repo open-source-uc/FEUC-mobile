@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { Image, Dimensions, Animated, Easing } from 'react-native';
 import { BlurView } from 'react-native-blur';
+import Spinner from 'react-native-spinkit';
 import { connect } from 'react-redux';
 import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
@@ -11,7 +12,7 @@ import 'moment-duration-format';
 
 import { ErrorBar, Bookmark } from '../components/';
 import * as schemas from '../schemas';
-import Themed from '../styles';
+import Themed, { colors } from '../styles';
 
 const temp = {
   image: 'https://cdn-starbucks.netdna-ssl.com/uploads/images/_framed/HvSQZ0WW-4500-3000.JPG',
@@ -56,7 +57,7 @@ const Card = styled.View`
 `;
 
 const Cover = styled.Image`
-  flex: 7;
+  flex: 14;
   resize-mode: ${Image.resizeMode.cover};
   border-top-left-radius: 10;
   border-top-right-radius: 10;
@@ -69,8 +70,32 @@ const AbsoluteBookmark = styled(Bookmark)`
 `;
 
 const Bottom = styled.View`
-  flex: 3;
+  flex: 7;
 `;
+
+const Center = styled.View`
+  position: absolute;
+  top: ${props => props.size / -2};
+  left: 0;
+  right: 0;
+  justify-content: center;
+  align-items: center;
+`;
+
+Center.defaultProps = {
+  size: 30,
+};
+
+const Circle = styled.View`
+  justify-content: center;
+  align-items: center;
+  width: ${props => props.size};
+  height: ${props => props.size};
+  border-radius: ${props => props.size / 2};
+  background-color: ${props => props.theme.colors.X};
+`;
+
+Circle.defaultProps = Center.defaultProps;
 
 const BrandTitle = styled.Text`
   color: ${props => props.theme.colors.C};
@@ -79,7 +104,7 @@ const BrandTitle = styled.Text`
   font-weight: 700;
   font-size: 10;
   margin-bottom: 5;
-  margin-top: 20;
+  margin-top: 25;
   padding: 0 18;
 `;
 
@@ -222,6 +247,11 @@ export default class BenefitActive extends Component {
                   )}
                 </Cover>
                 <Bottom>
+                  <Center>
+                    <Circle>
+                      <Spinner type="Pulse" color={colors.B} size={35} />
+                    </Circle>
+                  </Center>
                   <BrandTitle>
                     {benefit.responsable[benefit.responsable.kind].name}
                   </BrandTitle>
