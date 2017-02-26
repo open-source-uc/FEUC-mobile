@@ -11,10 +11,6 @@ import { Thumbnail, Button, ErrorBar, RichText } from '../components/';
 import * as schemas from '../schemas';
 import Themed, { colors } from '../styles';
 
-const temp = {
-  image: 'https://cdn-starbucks.netdna-ssl.com/uploads/images/_framed/HvSQZ0WW-4500-3000.JPG',
-};
-
 
 const Container = styled.View`
   flex: 1;
@@ -179,11 +175,16 @@ export default class Benefit extends Component {
     const { bannerHeight } = this.props;
     const { benefit } = this.state;
 
-    const brand = benefit.responsable[benefit.responsable.kind];
+    const bannerSource = {
+      uri: get(benefit, 'image.secure_url'),
+    };
+    const responsableSource = {
+      uri: get(benefit, ['responsable', benefit.responsable.kind, 'image', 'secure_url']),
+    };
     return (
-      <Banner height={bannerHeight} source={{ uri: temp.image }}>
+      <Banner height={bannerHeight} source={bannerSource}>
         <BannerContent>
-          <BrandImage source={{ uri: get(brand, 'image.secure_url') }} />
+          <BrandImage source={responsableSource} />
         </BannerContent>
       </Banner>
     );

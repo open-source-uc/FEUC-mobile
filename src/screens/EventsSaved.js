@@ -2,10 +2,9 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
-import get from 'lodash/get';
 import noop from 'lodash/noop';
 
-import { ListViewRow, ErrorBar, ListView } from '../components/';
+import { ErrorBar, ListView, ListViewRowEvent } from '../components/';
 import { fetchEvents } from '../redux/modules/events';
 import * as schemas from '../schemas';
 import Themed from '../styles';
@@ -77,22 +76,14 @@ export default class EventsSaved extends Component {
   }
 
   renderRow = (item, section, row, highlight) => (
-    <ListViewRow
-      background="Z"
-      onPress={() => this.handlePress(item)}
+    <ListViewRowEvent
+      item={item}
+      row={row}
       highlight={highlight}
+      onPress={() => this.handlePress(item)}
       first={Number(row) === 0}
       last={this.state.dataSource.getRowCount() - 1 === Number(row)}
-    >
-      <ListViewRow.Thumbnail source={{ uri: get(item, 'image.secure_url') }} />
-      <ListViewRow.Content>
-        <ListViewRow.Title>{item.title}</ListViewRow.Title>
-        <ListViewRow.Body>
-          {get(item, 'description.brief')}
-        </ListViewRow.Body>
-      </ListViewRow.Content>
-      <ListViewRow.Disclosure />
-    </ListViewRow>
+    />
   )
 
   render = () => {

@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { StyleSheet, Image, Linking, Alert, Dimensions } from 'react-native';
+import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { Svg as SVG, Polygon } from 'react-native-svg';
 import { connect } from 'react-redux';
 import { denormalize } from 'normalizr';
@@ -11,14 +12,15 @@ import { Button, ErrorBar, Tag, EventDate, RichText, Loading } from '../componen
 import * as schemas from '../schemas';
 import Themed, { colors } from '../styles';
 
-const temp = {
-  default: 'http://www.joblo.com/posters/images/full/1982-pink-floyd-the-wall-poster1.jpg',
-};
-
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${props => props.theme.colors.black};
+  background-color: ${props => props.theme.colors.Z};
+`;
+
+const StyledParallaxScrollView = styled(ParallaxScrollView)`
+  flex: 1;
+  overflow: hidden;
 `;
 
 const Banner = styled.Image`
@@ -29,13 +31,15 @@ const Banner = styled.Image`
   top: 0;
   right: 0;
   left: 0;
-  height: 256;
+  height: ${props => props.height || 256};
 `;
 
 const BannerContent = styled.View`
   flex: 1;
   flex-direction: column;
   justify-content: flex-end;
+  position: absolute;
+  top: ${props => -1 * props.offset};
 `;
 
 const StyledSVG = styled(SVG)`
@@ -59,8 +63,7 @@ ScrollView.defaultProps = {
 
 const Content = styled.View`
   background-color: ${props => props.theme.colors.Z};
-  margin-top: 256;
-  padding: 0 0;
+  padding: 0 0 28;
 `;
 
 const Row = styled.View`
@@ -147,12 +150,16 @@ export default class Event extends Component {
     // navigation: PropTypes.any,
     event: PropTypes.object,
     error: PropTypes.object,
+    bannerHeight: PropTypes.number,
+    triangleHeight: PropTypes.number,
   }
 
   static defaultProps = {
     // navigation: null,
     event: null,
     error: null,
+    bannerHeight: 256,
+    triangleHeight: 40,
   }
 
   state = {
@@ -204,13 +211,22 @@ export default class Event extends Component {
 
   }
 
+  renderBackground = () => {
+    const { bannerHeight } = this.props;
+    const { event } = this.state;
+
+    return (
+      <Banner source={{ uri: get(event, 'image.secure_url') }} height={bannerHeight} />
+    );
+  }
+
   render() {
-    const { error } = this.props;
+    const { error, bannerHeight, triangleHeight } = this.props;
     const { event, addded } = this.state;
 
     // Triangle dimensions
     const width = Dimensions.get('window').width;
-    const height = 40;
+    const height = triangleHeight;
 
     const points = [
       [0, height],
@@ -226,19 +242,20 @@ export default class Event extends Component {
             <Loading />
           )}
           {event && (
-            <ScrollView>
-              <ErrorBar error={error} />
-              <Banner source={{ uri: temp.default }}>
-                <BannerContent>
-                  <StyledSVG height={height}>
-                    <Polygon
-                      points={points.reduce((string, [x, y]) => `${string} ${x},${y}`, '')}
-                      fill={colors.Z}
-                    />
-                  </StyledSVG>
-                  <AbsoluteEventDate date={new Date(event.temporality.start)} />
-                </BannerContent>
-              </Banner>
+            <StyledParallaxScrollView
+              contentBackgroundColor={colors.white}
+              renderBackground={this.renderBackground}
+              parallaxHeaderHeight={bannerHeight}
+            >
+              <BannerContent offset={triangleHeight}>
+                <StyledSVG height={height}>
+                  <Polygon
+                    points={points.reduce((string, [x, y]) => `${string} ${x},${y}`, '')}
+                    fill={colors.Z}
+                  />
+                </StyledSVG>
+                <AbsoluteEventDate date={new Date(event.temporality.start)} />
+              </BannerContent>
               <Content>
                 <Row>
                   <View>
@@ -311,7 +328,7 @@ export default class Event extends Component {
                   ) : null}
                 </Row>
               </Content>
-            </ScrollView>
+            </StyledParallaxScrollView>
           )}
         </Container>
       </Themed>

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import has from 'lodash/has';
 import styled from 'styled-components/native';
+import get from 'lodash/get';
 
 import ListViewRow from './ListViewRow';
 import { images } from '../assets/';
@@ -8,21 +8,30 @@ import { images } from '../assets/';
 
 const FooterRow = styled.View`
   flex-direction: row;
-  ${''/* justify-content: space-between; */}
   align-items: center;
   margin-top: 3;
 `;
 
+function selectImage(item) {
+  let uri = get(item, 'thumbnail.secure_url');
+  if (uri) return { uri };
+
+  uri = get(item, ['responsable', item.responsable.kind, 'image', 'secure_url']);
+  if (uri) return { uri };
+
+  return images.default.benefit;
+}
+
 
 const ListViewRowBenefit = ({ item, row, ...props }) => (
   <ListViewRow
-    background={row % 2 === 0 ? 'Z' : 'Z'}
+    background="Z"
     {...props}
   >
     <ListViewRow.Thumbnail
       shadow
       circle
-      source={has(item, 'image.secure_url') ? { uri: item.image.secure_url } : images.default.benefit}
+      source={selectImage(item)}
     />
     <ListViewRow.Content>
       <FooterRow>

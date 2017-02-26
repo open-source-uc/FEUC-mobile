@@ -12,10 +12,6 @@ import { ErrorBar, EventDate } from '../components/';
 import * as schemas from '../schemas';
 import Themed from '../styles';
 
-const temp = {
-  image: 'https://cdn-starbucks.netdna-ssl.com/uploads/images/_framed/HvSQZ0WW-4500-3000.JPG',
-};
-
 
 const Container = styled.View`
   flex: 1;
@@ -166,17 +162,19 @@ export default class BenefitActive extends Component {
     });
     const transform = [{ rotate: spin }];
 
-    const source = { uri: temp.image };
+    const bannerSource = {
+      uri: get(benefit, 'image.secure_url'),
+    };
 
     return (
       <Themed content="dark">
         <Container>
-          <Background source={source} style={{ transform }} />
+          <Background source={bannerSource} style={{ transform }} />
           <ErrorBar error={error} />
           <Blurred>
             {benefit && (
               <Card>
-                <Cover source={source}>
+                <Cover source={bannerSource}>
                   {benefit.benefit.expires && (
                     <AbsoluteEventDate date={new Date(benefit.benefit.deadline)} />
                   )}
