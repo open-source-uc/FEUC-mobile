@@ -3,7 +3,7 @@ import { StackNavigator } from 'react-navigation';
 
 import Tabs from './Root/';
 
-import { Event, Community, Benefit, AboutDetail, Transparence, BenefitActive } from '../screens/';
+import { Event, Initiative, Benefit, AboutDetail, Transparence, BenefitActive, Delegationship } from '../screens/';
 // import { Logo } from '../components/';
 import { colors } from '../styles';
 
@@ -49,9 +49,9 @@ const Navigator = StackNavigator({
       // }),
     },
   },
-  Community: {
-    screen: Community,
-    path: '/community',
+  Initiative: {
+    screen: Initiative,
+    path: '/initiative',
     navigationOptions: {
       header: (navigation, defaultHeader) => ({
         ...defaultHeader,
@@ -61,6 +61,15 @@ const Navigator = StackNavigator({
   Event: {
     screen: Event,
     path: '/event',
+    navigationOptions: {
+      header: (navigation, defaultHeader) => ({
+        ...defaultHeader,
+      }),
+    },
+  },
+  Delegationship: {
+    screen: Delegationship,
+    path: '/delegationship',
     navigationOptions: {
       header: (navigation, defaultHeader) => ({
         ...defaultHeader,

@@ -1,6 +1,8 @@
 // Actions
 import { BENEFIT_FETCH_FULFILLED } from './benefits';
 import { EVENT_FETCH_FULFILLED } from './events';
+import { INITIATIVE_FETCH_FULFILLED } from './initiatives';
+import { DELEGATIONSHIP_FETCH_FULFILLED } from './delegationships';
 
 
 // Initial state
@@ -26,6 +28,24 @@ export default function reducer(state = initialState, action) {
         brands: {
           ...state.brands,
           ...action.payload.entities.brands,
+        },
+      };
+    }
+    case INITIATIVE_FETCH_FULFILLED: {
+      return {
+        ...state,
+        initiatives: {
+          ...state.initiatives,
+          ...action.payload.entities.initiatives,
+        },
+      };
+    }
+    case DELEGATIONSHIP_FETCH_FULFILLED: {
+      return {
+        ...state,
+        delegationships: {
+          ...state.delegationships,
+          ...action.payload.entities.delegationships,
         },
       };
     }

@@ -4,7 +4,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
 import isArray from 'lodash/fp/isArray';
 
-import RichText from './RichText';
 import Thumbnail from './Thumbnail';
 
 
@@ -56,6 +55,7 @@ const Title = styled.Text`
   color: ${props => props.theme.colors.G};
   font-family: ${props => props.theme.fonts.headers};
   font-size: 14;
+  font-weight: 700;
   margin-bottom: 2;
 `;
 
@@ -71,10 +71,11 @@ const Footer = styled.Text`
   margin: 4 0 2;
 `;
 
-const Body = styled(RichText)`
+const Body = styled.Text`
   background-color: transparent;
   color: ${props => props.theme.colors.F};
-  font-family: ${props => props.theme.fonts.main};
+  font-family: ${props => props.theme.fonts.body};
+  font-weight: 400;
   font-size: 11;
   line-height: 16;
 `;

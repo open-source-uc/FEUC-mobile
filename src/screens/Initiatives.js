@@ -1,11 +1,13 @@
 import React, { PropTypes, Component } from 'react';
+import { connect } from 'react-redux';
+import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
-import has from 'lodash/has';
+import noop from 'lodash/noop';
 
-import client from '../api-client';
-import { ListViewRow, ErrorBar, ListView } from '../components/';
+import { ErrorBar, ListView, ListViewRowInitiative } from '../components/';
+import { fetchInitiatives } from '../redux/modules/initiatives';
+import * as schemas from '../schemas';
 import Themed from '../styles';
-import { images } from '../assets/';
 
 
 const Container = styled.View`
@@ -14,73 +16,79 @@ const Container = styled.View`
 `;
 
 
+const mapStateToProps = state => ({
+  initiatives: state.initiatives,
+  entities: state.entities,
+});
+
+const mapDispatchToProps = ({
+  fetchInitiatives,
+});
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class Initiatives extends Component {
+  static propTypes = {
+    initiatives: PropTypes.object,
+    entities: PropTypes.object, // eslint-disable-line
+    navigation: PropTypes.object,
+
+    fetchInitiatives: PropTypes.func,
+  }
+
+  static defaultProps = {
+    initiatives: {},
+    entities: {},
+    navigation: null,
+
+    fetchInitiatives: noop,
+  }
+
+  static denormalize = ({ initiatives, entities }) => {
+    const schema = [schemas.initiative];
+    return denormalize(initiatives.result, schema, entities);
+  }
+
   static DataSource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1._id !== r2._id,
   })
 
-  static propTypes = {
-    navigation: PropTypes.object,
-    items: PropTypes.array,
-  }
-
-  static defaultProps = {
-    navigation: null,
-    items: [],
-  }
-
   state = {
-    refreshing: false,
-    error: false,
-    dataSource: this.constructor.DataSource.cloneWithRows(this.props.items),
+    dataSource: this.constructor.DataSource.cloneWithRows(this.constructor.denormalize(this.props)),
   }
 
   componentDidMount = () => {
-    this.fetchContent({ showRefresh: false });
+    this.props.fetchInitiatives();
   }
 
-  fetchContent = (options = { showRefresh: true }) => {
-    this.setState({ refreshing: options.showRefresh });
-
-    return client.initiatives()
-      .then(items => this.constructor.DataSource.cloneWithRows(items))
-      .then(
-        dataSource => this.setState({ refreshing: false, error: null, dataSource }),
-        error => this.setState({ refreshing: false, error }),
-      );
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.entities && nextProps.initiatives) {
+      const items = this.constructor.denormalize(nextProps);
+      this.setState({ dataSource: this.constructor.DataSource.cloneWithRows(items) });
+    }
   }
 
   handlePress = (item) => {
     const { navigation } = this.props;
 
     if (item && navigation) {
-      navigation.navigate('Community', { _id: item._id, title: item.name });
+      navigation.navigate('Initiative', { initiativeId: item._id, title: item.name });
     }
   }
 
   renderRow = (item, section, row, highlight) => (
-    <ListViewRow
-      background={row % 2 === 0 ? 'Z' : 'X'}
-      onPress={() => this.handlePress(item)}
+    <ListViewRowInitiative
+      item={item}
+      row={row}
       highlight={highlight}
-    >
-      <ListViewRow.Thumbnail
-        shadow
-        circle
-        source={has(item, 'image.secure_url') ? { uri: item.image.secure_url } : images.default.initiative}
-      />
-      <ListViewRow.Content>
-        <ListViewRow.Title>{item.name}</ListViewRow.Title>
-        <ListViewRow.Body>
-          {item.description.brief}
-        </ListViewRow.Body>
-      </ListViewRow.Content>
-      <ListViewRow.Disclosure />
-    </ListViewRow>
+      onPress={() => this.handlePress(item)}
+      first={Number(row) === 0}
+      last={this.state.dataSource.getRowCount() - 1 === Number(row)}
+    />
   )
 
   render = () => {
-    const { dataSource, error, refreshing } = this.state;
+    const { error, refreshing } = this.props.initiatives;
+    const { dataSource } = this.state;
 
     return (
       <Themed content="dark">
@@ -90,7 +98,7 @@ export default class Initiatives extends Component {
             dataSource={dataSource}
             renderRow={this.renderRow}
             refreshing={refreshing}
-            onRefresh={this.fetchContent}
+            onRefresh={this.props.fetchInitiatives}
           />
         </Container>
       </Themed>

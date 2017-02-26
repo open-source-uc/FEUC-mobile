@@ -9,6 +9,8 @@ export { default as ListView } from './ListView';
 export { default as ListViewRow } from './ListViewRow';
 export { default as ListViewRowBenefit } from './ListViewRowBenefit';
 export { default as ListViewRowEvent } from './ListViewRowEvent';
+export { default as ListViewRowInitiative } from './ListViewRowInitiative';
+export { default as ListViewRowDelegationship } from './ListViewRowDelegationship';
 export { default as RichText } from './RichText';
 export { default as ErrorBar } from './ErrorBar';
 export { default as RefreshControl } from './RefreshControl';

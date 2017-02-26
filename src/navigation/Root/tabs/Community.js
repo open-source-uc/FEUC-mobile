@@ -1,4 +1,5 @@
 import { TabNavigator } from 'react-navigation';
+import { StyleSheet, Platform } from 'react-native';
 
 import { Initiatives, Delegationships } from '../../../screens/';
 import { colors, fonts } from '../../../styles';
@@ -41,6 +42,8 @@ export default TabNavigator({
     inactiveBackgroundColor: colors.Z,
     style: {
       backgroundColor: colors.Z,
+      borderBottomWidth: Platform.OS === 'ios' ? StyleSheet.hairlineWidth : 0,
+      borderBottomColor: colors.separator,
     },
     labelStyle: {
       fontFamily: fonts.main,

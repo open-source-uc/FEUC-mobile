@@ -16,6 +16,7 @@ export { default as Contact } from './Contact';
 
 export { default as Transparence } from './Transparence';
 export { default as AboutDetail } from './AboutDetail';
-export { default as Community } from './Community';
+export { default as Initiative } from './Initiative';
+export { default as Delegationship } from './Delegationship';
 export { default as Benefit } from './Benefit';
 export { default as BenefitActive } from './BenefitActive';

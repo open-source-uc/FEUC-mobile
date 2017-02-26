@@ -1,11 +1,13 @@
 import React, { PropTypes, Component } from 'react';
-import { ListView } from 'react-native';
+import { connect } from 'react-redux';
+import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
+import noop from 'lodash/noop';
 
-import client from '../api-client';
-import { ListViewRow, ErrorBar, RefreshControl } from '../components/';
+import { ErrorBar, ListView, ListViewRowDelegationship } from '../components/';
+import { fetchDelegationships } from '../redux/modules/delegationships';
+import * as schemas from '../schemas';
 import Themed from '../styles';
-import { images } from '../assets/';
 
 
 const Container = styled.View`
@@ -13,91 +15,90 @@ const Container = styled.View`
   background-color: ${props => props.theme.colors.background};
 `;
 
-const StyledListView = styled.ListView`
 
-`;
+const mapStateToProps = state => ({
+  delegationships: state.delegationships,
+  entities: state.entities,
+});
 
+const mapDispatchToProps = ({
+  fetchDelegationships,
+});
 
+@connect(mapStateToProps, mapDispatchToProps)
 export default class Delegationships extends Component {
+  static propTypes = {
+    delegationships: PropTypes.object,
+    entities: PropTypes.object, // eslint-disable-line
+    navigation: PropTypes.object,
+
+    fetchDelegationships: PropTypes.func,
+  }
+
+  static defaultProps = {
+    delegationships: {},
+    entities: {},
+    navigation: null,
+
+    fetchDelegationships: noop,
+  }
+
+  static denormalize = ({ delegationships, entities }) => {
+    const schema = [schemas.delegationship];
+    return denormalize(delegationships.result, schema, entities);
+  }
+
   static DataSource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1._id !== r2._id,
   })
 
-  static propTypes = {
-    navigation: PropTypes.object,
-    items: PropTypes.array,
-    image: PropTypes.any,
-  }
-
-  static defaultProps = {
-    navigation: null,
-    items: [],
-    image: images.logo.transparent,
-  }
-
   state = {
-    refreshing: false,
-    error: false,
-    items: this.constructor.DataSource.cloneWithRows(this.props.items),
+    dataSource: this.constructor.DataSource.cloneWithRows(this.constructor.denormalize(this.props)),
   }
 
   componentDidMount = () => {
-    this.fetchContent({ showRefresh: false });
+    this.props.fetchDelegationships();
   }
 
-  fetchContent = (options = { showRefresh: true }) => {
-    this.setState({ refreshing: options.showRefresh });
-
-    return client.delegationships()
-      .then(items => this.constructor.DataSource.cloneWithRows(items))
-      .then(
-        items => this.setState({ refreshing: false, error: null, items }),
-        error => this.setState({ refreshing: false, error }),
-      );
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.entities && nextProps.delegationships) {
+      const items = this.constructor.denormalize(nextProps);
+      this.setState({ dataSource: this.constructor.DataSource.cloneWithRows(items) });
+    }
   }
 
   handlePress = (item) => {
     const { navigation } = this.props;
 
     if (item && navigation) {
-      navigation.navigate('Delegationship', { _id: item._id, title: item.name });
+      navigation.navigate('Delegationship', { delegationshipId: item._id, title: item.name });
     }
   }
 
   renderRow = (item, section, row, highlight) => (
-    <ListViewRow
-      background={row % 2 === 0 ? 'lightClear' : 'white'}
-      onPress={() => this.handlePress(item)}
+    <ListViewRowDelegationship
+      item={item}
+      row={row}
       highlight={highlight}
-    >
-      <ListViewRow.Thumbnail source={this.props.image} tint={item.color} background="transparent" />
-      <ListViewRow.Content>
-        <ListViewRow.Title>{item.name}</ListViewRow.Title>
-        <ListViewRow.Body>
-          {item.description.brief}
-        </ListViewRow.Body>
-      </ListViewRow.Content>
-      <ListViewRow.Disclosure />
-    </ListViewRow>
+      onPress={() => this.handlePress(item)}
+      first={Number(row) === 0}
+      last={this.state.dataSource.getRowCount() - 1 === Number(row)}
+    />
   )
 
   render = () => {
-    const { items, error, refreshing } = this.state;
+    const { error, refreshing } = this.props.delegationships;
+    const { dataSource } = this.state;
 
     return (
       <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
-          <StyledListView
-            dataSource={items}
-            enableEmptySections
+          <ListView
+            dataSource={dataSource}
             renderRow={this.renderRow}
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={this.fetchContent}
-              />
-            }
+            refreshing={refreshing}
+            onRefresh={this.props.fetchDelegationships}
           />
         </Container>
       </Themed>
