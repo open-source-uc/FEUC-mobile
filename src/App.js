@@ -5,6 +5,7 @@ import { Provider, connect } from 'react-redux';
 import noop from 'lodash/noop';
 
 import Navigator from './redux/Navigator';
+import I18n from './I18n';
 import Notifications from './Notifications';
 
 import * as hydratation from './redux/modules/hydratation';
@@ -43,9 +44,11 @@ export default class App extends Component { // eslint-disable-line
     if (this.props.hydratation && this.props.hydratation.done) {
       return (
         <Provider store={this.props.store}>
-          <Notifications>
-            <Navigator />
-          </Notifications>
+          <I18n>
+            <Notifications>
+              <Navigator />
+            </Notifications>
+          </I18n>
         </Provider>
       );
     } else {

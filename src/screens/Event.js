@@ -4,9 +4,11 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { Svg as SVG, Polygon } from 'react-native-svg';
 import { connect } from 'react-redux';
 import { denormalize } from 'normalizr';
+import { translate } from 'react-i18next';
 import styled from 'styled-components/native';
 import moment from 'moment';
 import get from 'lodash/get';
+import identity from 'lodash/identity';
 
 import { Button, ErrorBar, Tag, EventDate, RichText, Loading } from '../components/';
 import * as schemas from '../schemas';
@@ -138,6 +140,7 @@ const mapStateToProps = ({ nav, entities }) => {
 const mapDispatchToProps = null;
 
 @connect(mapStateToProps, mapDispatchToProps)
+@translate()
 export default class Event extends Component {
   static navigationOptions = {
     header: ({ state }, defaultHeader) => ({
@@ -148,6 +151,7 @@ export default class Event extends Component {
 
   static propTypes = {
     // navigation: PropTypes.any,
+    t: PropTypes.func,
     event: PropTypes.object,
     error: PropTypes.object,
     bannerHeight: PropTypes.number,
@@ -156,6 +160,7 @@ export default class Event extends Component {
 
   static defaultProps = {
     // navigation: null,
+    t: identity,
     event: null,
     error: null,
     bannerHeight: 256,
@@ -220,8 +225,18 @@ export default class Event extends Component {
     );
   }
 
+  renderLocation = (event) => {
+    const parts = ['street1', 'suburb'];
+    const got = parts.map(part => get(event, ['location', part])).filter(Boolean);
+    if (got.length) {
+      return got.join(', ');
+    } else {
+      return null;
+    }
+  }
+
   render() {
-    const { error, bannerHeight, triangleHeight } = this.props;
+    const { t, error, bannerHeight, triangleHeight } = this.props;
     const { event, addded } = this.state;
 
     // Triangle dimensions
@@ -233,6 +248,8 @@ export default class Event extends Component {
       [width, height],
       [width, 0],
     ];
+
+    const location = this.renderLocation(event);
 
     return (
       <Themed content="dark">
@@ -281,19 +298,18 @@ export default class Event extends Component {
                   <Button color="Z" onPress={this.handleLocationPress}>
                     <Button.Icon color="A" name="ios-map-outline" />
                     <Button.Text color="F">
-                      {event.location
-                        ? `${event.location.street1}, ${event.location.suburb}`
-                        : 'Lugar por definir.'
-                      }
+                      {location || 'Lugar por definir'}
                     </Button.Text>
-                    <Button.Icon color="A" position="right" name="ios-arrow-forward" />
+                    {location && (
+                      <Button.Icon color="A" position="right" name="ios-arrow-forward" />
+                    )}
                   </Button>
                 </Row>
                 <Row fluid separator vertical="fit">
                   <Button color="Z" onPress={this.handleAdmissionPress}>
                     <Button.Icon color="A" name="ios-barcode-outline" />
                     <Button.Text color="F">
-                      {event.admission.note || event.admission.ticket.toUpperCase()}
+                      {event.admission.note || t(['events', 'admission', event.admission.ticket].join('.')).toUpperCase()}
                     </Button.Text>
                     <Button.Icon color="A" position="right" name="ios-arrow-forward" />
                   </Button>

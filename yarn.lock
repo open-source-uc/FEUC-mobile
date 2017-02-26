@@ -2700,7 +2700,7 @@ hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
-hoist-non-react-statics@^1.0.3, hoist-non-react-statics@^1.0.5, hoist-non-react-statics@^1.2.0:
+hoist-non-react-statics@1.2.0, hoist-non-react-statics@^1.0.3, hoist-non-react-statics@^1.0.5, hoist-non-react-statics@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
 
@@ -2745,6 +2745,10 @@ humanize-string@^1.0.0:
 hyphenate-style-name@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz#31160a36930adaf1fc04c6074f7eb41465d4ec4b"
+
+i18next@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-7.0.1.tgz#f9e8001d826f1009db3770c9edbd7c6f5f6c1e53"
 
 iconv-lite@0.4.11:
   version "0.4.11"
@@ -4498,6 +4502,12 @@ react-clone-referenced-element@^1.0.1:
 react-deep-force-update@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
+
+react-i18next@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-2.2.0.tgz#a8779e55778bd2e891649d8b2e6dd38787367ee0"
+  dependencies:
+    hoist-non-react-statics "1.2.0"
 
 react-mixin@^3.0.5:
   version "3.0.5"
