@@ -1,108 +1,18 @@
 import React, { PropTypes, Component } from 'react';
-import { Image, Dimensions } from 'react-native';
-import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { connect } from 'react-redux';
 import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
 import moment from 'moment';
 import get from 'lodash/get';
 
-import { Thumbnail, Button, ErrorBar, RichText } from '../components/';
+import { Arc, Button, ErrorBar } from '../components/';
 import * as schemas from '../schemas';
-import Themed, { colors } from '../styles';
-import { images } from '../assets/';
+import Themed from '../styles';
 
 
 const Container = styled.View`
   flex: 1;
   background-color: ${props => props.theme.colors.background};
-`;
-
-const StyledParallaxScrollView = styled(ParallaxScrollView)`
-  flex: 1;
-  overflow: hidden;
-`;
-
-const Banner = styled.Image`
-  resize-mode: ${Image.resizeMode.cover};
-  height: ${props => props.height};
-`;
-
-const BrandImage = styled(Thumbnail)`
-  top: -30;
-`;
-
-BrandImage.defaultProps = {
-  circle: true,
-};
-
-const BrandTitle = styled.Text`
-  color: ${props => props.theme.colors.C};
-  text-align: center;
-  font-family: ${props => props.theme.fonts.headers};
-  font-weight: 700;
-  font-size: 13;
-  margin-top: 20;
-  margin-bottom: 8;
-`;
-
-const Arc = styled.Image`
-  position: absolute;
-  overflow: visible;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  resize-mode: ${Image.resizeMode.contain};
-  width: ${Dimensions.get('window').width};
-  height: 26;
-  top: -26;
-`;
-
-Arc.defaultProps = {
-  source: images.arc,
-};
-
-const Title = styled.Text`
-  color: ${props => props.theme.colors.G};
-  text-align: center;
-  font-family: ${props => props.theme.fonts.headers};
-  font-weight: 500;
-  font-size: 20;
-  margin-bottom: 8;
-`;
-
-Title.defaultProps = {
-  numberOfLines: 2,
-};
-
-const ActivatedCount = styled.Text`
-  color: ${props => props.theme.colors.E};
-  text-align: center;
-  font-family: ${props => props.theme.fonts.headers};
-  font-weight: 500;
-  font-size: 10;
-  margin-bottom: 1;
-`;
-
-const Considerations = styled.View`
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 20;
-`;
-
-const ValidRange = styled.Text`
-  color: ${props => props.theme.colors.E};
-  text-align: center;
-  font-family: ${props => props.theme.fonts.headers};
-  font-weight: 500;
-  font-size: 10;
-  margin: 0 3;
-`;
-
-const Content = styled.View`
-  padding: 18;
 `;
 
 const AboutTitle = styled.Text`
@@ -111,13 +21,6 @@ const AboutTitle = styled.Text`
   font-size: 12;
   font-weight: 600;
   margin-bottom: 6;
-`;
-
-const AboutText = styled(RichText)`
-  font-family: ${props => props.theme.fonts.body};
-  color: ${props => props.theme.colors.E};
-  font-size: 14;
-  font-weight: 300;
 `;
 
 const Bottom = styled.View`
@@ -182,19 +85,6 @@ export default class Benefit extends Component {
     }
   }
 
-  renderBackground = () => {
-    const { bannerHeight } = this.props;
-    const { benefit } = this.state;
-
-    const bannerSource = {
-      uri: get(benefit, 'image.secure_url'),
-    };
-
-    return (
-      <Banner height={bannerHeight} source={bannerSource} />
-    );
-  }
-
   render() {
     const { bannerHeight, error } = this.props;
     const { benefit } = this.state;
@@ -202,53 +92,52 @@ export default class Benefit extends Component {
     const responsableSource = {
       uri: get(benefit, ['responsable', benefit.responsable.kind, 'image', 'secure_url']),
     };
+    const bannerSource = {
+      uri: get(benefit, 'image.secure_url'),
+    };
 
     return (
       <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
           {benefit && (
-            <StyledParallaxScrollView
-              contentBackgroundColor={colors.white}
-              renderBackground={this.renderBackground}
-              parallaxHeaderHeight={bannerHeight}
-            >
-              <Arc>
-                <BrandImage source={responsableSource} />
-              </Arc>
-              <BrandTitle>
+            <Arc bannerSource={bannerSource} bannerHeight={bannerHeight}>
+              <Arc.ArcLayout>
+                <Arc.BrandImage source={responsableSource} />
+              </Arc.ArcLayout>
+              <Arc.BrandTitle>
                 {benefit.responsable[benefit.responsable.kind].name}
-              </BrandTitle>
-              <Title>
+              </Arc.BrandTitle>
+              <Arc.Title>
                 {benefit.title}
-              </Title>
-              <ActivatedCount>
+              </Arc.Title>
+              <Arc.Lead>
                 {`${benefit.uses} dcts. activados`.toUpperCase()}
-              </ActivatedCount>
-              <Considerations>
+              </Arc.Lead>
+              <Arc.DropTexts>
                 {benefit.benefit.limited && (
-                  <ValidRange>
+                  <Arc.DropText>
                     {`Solo ${benefit.benefit.stock} disponibles`}
-                  </ValidRange>
+                  </Arc.DropText>
                 )}
                 {benefit.benefit.limited && benefit.benefit.expires && (
-                  <ValidRange>-</ValidRange>
+                  <Arc.DropText>-</Arc.DropText>
                 )}
                 {benefit.benefit.expires && (
-                  <ValidRange>
+                  <Arc.DropText>
                     {`Válido hasta ${moment(benefit.benefit.deadline).toNow()}`}
-                  </ValidRange>
+                  </Arc.DropText>
                 )}
-              </Considerations>
-              <Content>
+              </Arc.DropTexts>
+              <Arc.Content>
                 <AboutTitle>
                   Sobre el descuento
                 </AboutTitle>
-                <AboutText>
+                <Arc.Body>
                   {get(benefit, 'description.full.md') || benefit.description.brief}
-                </AboutText>
-              </Content>
-            </StyledParallaxScrollView>
+                </Arc.Body>
+              </Arc.Content>
+            </Arc>
           )}
           {benefit && (
             <Bottom>
