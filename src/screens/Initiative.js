@@ -1,21 +1,22 @@
 import React, { PropTypes, Component } from 'react';
+import { Linking } from 'react-native';
 import { connect } from 'react-redux';
 import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
 import get from 'lodash/get';
 
-import { ErrorBar, RichText } from '../components/';
+import { Arc, ErrorBar, Social } from '../components/';
 import * as schemas from '../schemas';
 import Themed from '../styles';
 
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${props => props.theme.colors.background};
+  background-color: ${props => props.theme.colors.Z};
 `;
 
-const ScrollView = styled.ScrollView`
-  padding: 18;
+const ArcLead = styled(Arc.Lead)`
+  margin-bottom: 18;
 `;
 
 
@@ -42,12 +43,14 @@ export default class Initiative extends Component {
     // navigation: PropTypes.object,
     initiative: PropTypes.object,
     error: PropTypes.object,
+    bannerHeight: PropTypes.number,
   }
 
   static defaultProps = {
     // navigation: null,
     initiative: null,
     error: null,
+    bannerHeight: 190,
   }
 
   state = {
@@ -60,19 +63,55 @@ export default class Initiative extends Component {
     }
   }
 
+  handleSocialPress = ({ url }) => {
+    try {
+      Linking.openURL(url);
+    } catch (err) {
+      alert('Hubo un problema abriendo la URL.') // eslint-disable-line
+    }
+  }
+
   render() {
-    const { error } = this.props;
+    const { bannerHeight, error } = this.props;
     const { initiative } = this.state;
+
+    const initiativeSource = {
+      uri: get(initiative, 'image.secure_url'),
+    };
+    const bannerSource = {
+      uri: get(initiative, 'banner.secure_url'),
+    };
 
     return (
       <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
           {initiative && (
-            <ScrollView>
-              <RichText>{JSON.stringify(initiative, 2, null)}</RichText>
-            </ScrollView>
+            <Arc bannerSource={bannerSource} bannerHeight={bannerHeight}>
+              <Arc.ArcLayout>
+                <Arc.BrandImage source={initiativeSource} />
+              </Arc.ArcLayout>
+              <Arc.BrandTitle>
+                Iniciativa UC
+              </Arc.BrandTitle>
+              <Arc.Title>
+                {initiative.name}
+              </Arc.Title>
+              <ArcLead>
+                Somos ${342} participantes
+              </ArcLead>
+              <Arc.Content>
+                <Arc.Body>
+                  {get(initiative, 'description.full.md') || initiative.description.brief}
+                </Arc.Body>
+              </Arc.Content>
+            </Arc>
           )}
+          <Social.Bar>
+            {initiative && initiative.social && initiative.social.filter(Boolean).map(url => (
+              <Social key={url} url={url} onPress={this.handleSocialPress} />
+            ))}
+          </Social.Bar>
         </Container>
       </Themed>
     );

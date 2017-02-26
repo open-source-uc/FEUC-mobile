@@ -44,7 +44,7 @@ const ArcLayout = styled.Image`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  resize-mode: ${Image.resizeMode.contain};
+  resize-mode: ${Image.resizeMode.cover};
   width: ${Dimensions.get('window').width};
   height: 26;
   top: -26;
