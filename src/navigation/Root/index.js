@@ -147,7 +147,7 @@ export default TabNavigator({
   lazyLoad: true,
   swipeEnabled: false,
   animationEnabled: false,
-  initialRouteName: 'BenefitsTab',
+  initialRouteName: 'EventsTab',
   order: ['EnviorementTab', 'CommunityTab', 'EventsTab', 'BenefitsTab', 'AboutTab'],
   tabBarOptions: defaultsDeep({}, options[Platform.OS], options.common),
 });

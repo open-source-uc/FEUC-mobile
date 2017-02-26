@@ -1,12 +1,14 @@
 import React, { PropTypes, Component } from 'react';
-import { StyleSheet, Linking, Dimensions } from 'react-native';
+import { StyleSheet, Image, Linking, Alert, Dimensions } from 'react-native';
 import { Svg as SVG, Polygon } from 'react-native-svg';
+import { connect } from 'react-redux';
+import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
 import moment from 'moment';
 import get from 'lodash/get';
 
-import client from '../api-client';
 import { Button, ErrorBar, Tag, EventDate, RichText, Loading } from '../components/';
+import * as schemas from '../schemas';
 import Themed, { colors } from '../styles';
 
 const temp = {
@@ -15,14 +17,14 @@ const temp = {
 
 
 const Container = styled.View`
-  background-color: ${props => props.theme.colors.black};
   flex: 1;
+  background-color: ${props => props.theme.colors.black};
 `;
 
 const Banner = styled.Image`
   width: ${Dimensions.get('window').width};
   background-color: ${props => props.theme.colors.F};
-  resize-mode: cover;
+  resize-mode: ${Image.resizeMode.cover};
   position: absolute;
   top: 0;
   right: 0;
@@ -65,7 +67,7 @@ const Row = styled.View`
   justify-content: flex-start;
   flex-direction: ${props => props.direction || 'row'};
   flex-wrap: wrap;
-  align-items: center;
+  align-items: stretch;
   padding-vertical: ${props => (props.vertical === 'fit' ? 0 : 5)};
   padding-horizontal: ${props => (props.fluid ? 0 : 18)};
   border-bottom-width: ${props => (props.separator ? StyleSheet.hairlineWidth : 0)};
@@ -123,46 +125,52 @@ const ActionText = styled.Text`
 `;
 
 
+const mapStateToProps = ({ nav, entities }) => {
+  const id = get(nav, ['routes', nav.index, 'params', 'eventId']);
+  return {
+    event: id ? denormalize(id, schemas.event, entities) : null,
+  };
+};
+
+const mapDispatchToProps = null;
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class Event extends Component {
   static navigationOptions = {
     header: ({ state }, defaultHeader) => ({
       ...defaultHeader,
-      title: state.params ? state.params.title : 'EVENTO',
+      title: get(state, 'params.title', 'Evento').toUpperCase(),
     }),
   }
 
   static propTypes = {
-    navigation: PropTypes.any,
+    // navigation: PropTypes.any,
+    event: PropTypes.object,
+    error: PropTypes.object,
   }
 
   static defaultProps = {
-    navigation: null,
-  }
-
-  state = {
+    // navigation: null,
     event: null,
-    refreshing: true,
     error: null,
   }
 
-  componentDidMount() {
-    const { navigation } = this.props;
-    if (navigation && navigation.state.params) {
-      this.fetchContent(navigation.state.params._id, { showRefresh: false });
+  state = {
+    event: this.props.event,
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.event) {
+      this.setState({ event: nextProps.event });
     }
   }
 
-  fetchContent = (identifier, options = { showRefresh: true }) => {
-    this.setState({ refreshing: options.showRefresh });
-
-    return client.event(identifier).then(
-      event => this.setState({ refreshing: false, error: null, event }),
-      error => this.setState({ refreshing: false, error }),
-    );
+  alertError = (error, url) => {
+    Alert.alert('Hubo un error abriendo la URL:', String(url));
   }
 
   handleToogleCalendar = () => {
-    alert('Calendar');
+
   }
 
   handleFacebookPress = async () => {
@@ -170,7 +178,7 @@ export default class Event extends Component {
     try {
       Linking.openURL(url);
     } catch (err) {
-      console.error(err);
+      this.alertError(err);
     }
   }
 
@@ -179,7 +187,7 @@ export default class Event extends Component {
     try {
       Linking.openURL(url);
     } catch (err) {
-      console.error(err);
+      this.alertError(err);
     }
   }
 
@@ -188,27 +196,17 @@ export default class Event extends Component {
     try {
       Linking.openURL(url);
     } catch (err) {
-      console.error(err);
+      this.alertError(err);
     }
   }
 
   handleLocationPress = () => {
-    alert(this.state.event.location.street1);
+
   }
 
   render() {
-    const { event, addded, error } = this.state;
-
-    if (!event) {
-      return (
-        <Themed content="dark">
-          <Container>
-            <ErrorBar error={error} />
-            <Loading />
-          </Container>
-        </Themed>
-      );
-    }
+    const { error } = this.props;
+    const { event, addded } = this.state;
 
     // Triangle dimensions
     const width = Dimensions.get('window').width;
@@ -224,96 +222,97 @@ export default class Event extends Component {
       <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
-          <ScrollView>
-            <ErrorBar error={error} />
-            <Banner source={{ uri: temp.default }}>
-              <BannerContent>
-                <StyledSVG height={height}>
-                  <Polygon
-                    points={points.reduce((string, [x, y]) => `${string} ${x},${y}`, '')}
-                    fill={colors.Z}
-                  />
-                </StyledSVG>
-                <AbsoluteEventDate date={new Date(event.temporality.start)} />
-              </BannerContent>
-            </Banner>
-            <Content>
-              <Row>
-                <View>
-                  <Ttile>{event.title.toUpperCase()}</Ttile>
-                  <SubTitle>{event.subtitle}</SubTitle>
-                </View>
-              </Row>
-              <Row fluid separator vertical="fit">
-                <Button color="Z">
-                  <Button.Icon color="A" name="ios-time-outline" />
-                  <Button.Text color="F">
-                    {moment(event.temporality.start).format('HH:mm')} - {moment(event.temporality.end).format('HH:mm')}
-                  </Button.Text>
-                </Button>
-                <Button color={addded ? 'Z' : 'A'} onPress={this.handleToogleCalendar}>
-                  <Button.Icon color={addded ? 'A' : 'Z'} name="ios-calendar" />
-                  <Button.Text color={addded ? 'A' : 'Z'}>
-                    Agregar a agenda
-                  </Button.Text>
-                </Button>
-              </Row>
-              <Row fluid separator vertical="fit">
-                <Button color="Z" onPress={this.handleLocationPress}>
-                  <Button.Icon color="A" name="ios-map-outline" />
-                  <Button.Text color="F">
-                    {event.location.street1}, {event.location.suburb}
-                  </Button.Text>
-                  <Button.Icon color="A" position="right" name="ios-arrow-forward" />
-                </Button>
-              </Row>
-              <Row fluid separator vertical="fit">
-                <Button color="Z" onPress={this.handleAdmissionPress}>
-                  <Button.Icon color="A" name="ios-barcode-outline" />
-                  <Button.Text color="F">
-                    {event.admission.note}
-                  </Button.Text>
-                  <Button.Icon color="A" position="right" name="ios-arrow-forward" />
-                </Button>
-              </Row>
-              <Row>
-                <AboutTitle>
-                  {'Sobre el evento'}
-                </AboutTitle>
-              </Row>
-              <Row>
-                <AboutText>
-                  {get(event, 'description.full.md') || event.description.brief}
-                </AboutText>
-              </Row>
-              <Row>
-                {event.tags.map(tag => (
-                  <Tag key={tag._id} name={tag.name} />
-                ))}
-              </Row>
-              <Row fluid>
-                <View>
-                  {/*
-                  <ActionContainer>
-                    <ActionText>Entrada liberada</ActionText>
-                  </ActionContainer>
-                   */}
-                  {event.facebook && (
+          {!event && (
+            <Loading />
+          )}
+          {event && (
+            <ScrollView>
+              <ErrorBar error={error} />
+              <Banner source={{ uri: temp.default }}>
+                <BannerContent>
+                  <StyledSVG height={height}>
+                    <Polygon
+                      points={points.reduce((string, [x, y]) => `${string} ${x},${y}`, '')}
+                      fill={colors.Z}
+                    />
+                  </StyledSVG>
+                  <AbsoluteEventDate date={new Date(event.temporality.start)} />
+                </BannerContent>
+              </Banner>
+              <Content>
+                <Row>
+                  <View>
+                    <Ttile>{event.title.toUpperCase()}</Ttile>
+                    <SubTitle>{event.subtitle}</SubTitle>
+                  </View>
+                </Row>
+                <Row fluid separator vertical="fit">
+                  <Button color="Z">
+                    <Button.Icon color="A" name="ios-time-outline" />
+                    <Button.Text color="F">
+                      {moment(event.temporality.start).format('HH:mm')} - {moment(event.temporality.end).format('HH:mm')}
+                    </Button.Text>
+                  </Button>
+                  <Button color={addded ? 'Z' : 'A'} onPress={this.handleToogleCalendar}>
+                    <Button.Icon color={addded ? 'A' : 'Z'} name="ios-calendar" />
+                    <Button.Text color={addded ? 'A' : 'Z'}>
+                      Agregar a agenda
+                    </Button.Text>
+                  </Button>
+                </Row>
+                <Row fluid separator vertical="fit">
+                  <Button color="Z" onPress={this.handleLocationPress}>
+                    <Button.Icon color="A" name="ios-map-outline" />
+                    <Button.Text color="F">
+                      {event.location
+                        ? `${event.location.street1}, ${event.location.suburb}`
+                        : 'Lugar por definir.'
+                      }
+                    </Button.Text>
+                    <Button.Icon color="A" position="right" name="ios-arrow-forward" />
+                  </Button>
+                </Row>
+                <Row fluid separator vertical="fit">
+                  <Button color="Z" onPress={this.handleAdmissionPress}>
+                    <Button.Icon color="A" name="ios-barcode-outline" />
+                    <Button.Text color="F">
+                      {event.admission.note || event.admission.ticket.toUpperCase()}
+                    </Button.Text>
+                    <Button.Icon color="A" position="right" name="ios-arrow-forward" />
+                  </Button>
+                </Row>
+                <Row>
+                  <AboutTitle>
+                    Sobre el evento
+                  </AboutTitle>
+                </Row>
+                <Row>
+                  <AboutText>
+                    {get(event, 'description.full.md') || get(event, 'description.brief') || 'Sin descripción.'}
+                  </AboutText>
+                </Row>
+                <Row>
+                  {event.tags && event.tags.filter(Boolean).map(tag => (
+                    <Tag key={tag._id}>{tag.name}</Tag>
+                  ))}
+                </Row>
+                <Row fluid fit direction="column">
+                  {event.facebook ? (
                     <ActionContainer background="facebook" onPress={this.handleFacebookPress}>
                       <ActionText color="Z">Facebook</ActionText>
                       <Button.Icon color="Z" position="right" name="ios-arrow-forward" />
                     </ActionContainer>
-                  )}
-                  {event.twitter && (
+                  ) : null}
+                  {event.twitter ? (
                     <ActionContainer background="twitter" onPress={this.handleTwitterPress}>
                       <ActionText color="Z">Twitter</ActionText>
                       <Button.Icon color="Z" position="right" name="ios-arrow-forward" />
                     </ActionContainer>
-                  )}
-                </View>
-              </Row>
-            </Content>
-          </ScrollView>
+                  ) : null}
+                </Row>
+              </Content>
+            </ScrollView>
+          )}
         </Container>
       </Themed>
     );

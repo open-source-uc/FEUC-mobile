@@ -1,5 +1,6 @@
 import React, { PropTypes, PureComponent } from 'react';
 import styled from 'styled-components/native';
+import isString from 'lodash/isString';
 
 
 const Container = styled.TouchableOpacity`
@@ -20,11 +21,25 @@ const Name = styled.Text`
 
 
 export default class Tag extends PureComponent {
+  static Name = Name
+
+  static propTypes = {
+    children: PropTypes.any,
+  }
+
+  static defaultProps = {
+    children: null,
+  }
+
   render() {
-    const { name, ...props } = this.props;
+    const { children, ...props } = this.props;
     return (
       <Container {...props}>
-        <Name>{name.toUpperCase()}</Name>
+        {isString(children) ? (
+          <Name>{children.toUpperCase()}</Name>
+        ) : (
+          children
+        )}
       </Container>
     );
   }

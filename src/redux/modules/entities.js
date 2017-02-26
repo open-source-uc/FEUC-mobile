@@ -1,7 +1,6 @@
 // Actions
-import {
-  BENEFIT_FETCH_FULFILLED,
-} from './benefits';
+import { BENEFIT_FETCH_FULFILLED } from './benefits';
+import { EVENT_FETCH_FULFILLED } from './events';
 
 
 // Initial state
@@ -11,6 +10,8 @@ const initialState = {
   delegationships: {},
   initiatives: {},
   brands: {},
+  tags: {},
+  campuses: {},
 };
 
 export default function reducer(state = initialState, action) {
@@ -25,6 +26,31 @@ export default function reducer(state = initialState, action) {
         brands: {
           ...state.brands,
           ...action.payload.entities.brands,
+        },
+      };
+    }
+    case EVENT_FETCH_FULFILLED: {
+      return {
+        ...state,
+        events: {
+          ...state.events,
+          ...action.payload.entities.events,
+        },
+        tags: {
+          ...state.tags,
+          ...action.payload.entities.tags,
+        },
+        campuses: {
+          ...state.campuses,
+          ...action.payload.entities.campuses,
+        },
+        initiatives: {
+          ...state.initiatives,
+          ...action.payload.entities.initiatives,
+        },
+        delegationships: {
+          ...state.delegationships,
+          ...action.payload.entities.delegationships,
         },
       };
     }
