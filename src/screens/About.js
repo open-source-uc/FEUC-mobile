@@ -1,102 +1,124 @@
 import React, { PropTypes, Component } from 'react';
-import { ListView } from 'react-native';
+import { Linking } from 'react-native';
+import { connect } from 'react-redux';
 import styled from 'styled-components/native';
-import pick from 'lodash/pick';
+import noop from 'lodash/noop';
+import get from 'lodash/get';
 
-import client from '../api-client';
-import { ListViewRow, ListViewSeparator, ErrorBar } from '../components/';
+import { Arc, ErrorBar, Social } from '../components/';
+import { fetchAbout } from '../redux/modules/about';
 import Themed from '../styles';
 
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${props => props.theme.colors.background};
+  background-color: ${props => props.theme.colors.Z};
 `;
 
-const StyledListView = styled.ListView`
-  padding-top: 18;
-`;
-
-const Text = styled.Text`
-
+const ArcLead = styled(Arc.Lead)`
+  margin-bottom: 18;
 `;
 
 
+const mapStateToProps = state => state.about;
+
+const mapDispatchToProps = ({
+  fetchAbout,
+});
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class About extends Component {
-  static DataSource = new ListView.DataSource({
-    rowHasChanged: (r1, r2) => r1.key !== r2.key,
-  })
+  static navigationOptions = {
+    title: 'FEUC',
+    header: ({ state }, defaultHeader) => ({
+      ...defaultHeader,
+      title: state.params ? state.params.title : 'FEUC',
+    }),
+  }
 
   static propTypes = {
-    navigation: PropTypes.any,
-    mapping: PropTypes.object,
-    items: PropTypes.array,
-    transparence: PropTypes.object,
+    // navigation: PropTypes.object,
+    fetchAbout: PropTypes.func,
+    content: PropTypes.object,
+    error: PropTypes.object,
+    bannerHeight: PropTypes.number,
   }
 
   static defaultProps = {
-    navigation: null,
-    mapping: {
-      whoarewe: 'AboutDetail',
-      council: 'AboutDetail',
-      speakeroffices: 'AboutDetail',
-      transparence: 'Transparence',
-    },
-    items: [],
-    transparence: { key: 'transparence', title: 'Transparencia' },
+    // navigation: null,
+    fetchAbout: noop,
+    content: null,
+    error: null,
+    bannerHeight: 190,
   }
 
   state = {
-    refreshing: false,
-    error: false,
-    items: About.DataSource.cloneWithRows(this.props.items),
+    content: this.props.content,
   }
 
-  componentDidMount = () => {
-    this.fetchContent();
+  componentDidMount() {
+    this.props.fetchAbout();
   }
 
-  fetchContent = () => {
-    this.setState({ refreshing: true });
-
-    return client.information()
-      .then(items => About.DataSource.cloneWithRows([...items, this.props.transparence]))
-      .then(
-        items => this.setState({ refreshing: false, error: null, items }),
-        error => this.setState({ refreshing: false, error }),
-      );
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.content) {
+      this.setState({ content: nextProps.content });
+    }
   }
 
-  handlePress = (item) => {
-    const { navigation, mapping } = this.props;
+  handleAttendancePress = () => {
 
-    if (navigation && mapping[item.key]) {
-      const args = pick(item, ['_id', 'key', 'title', 'content']);
-      navigation.navigate(mapping[item.key], args);
-    } else {
-      alert(item._id) // eslint-disable-line
+  }
+
+  handleSocialPress = ({ url }) => {
+    try {
+      Linking.openURL(url);
+    } catch (err) {
+      alert('Hubo un problema abriendo la URL.') // eslint-disable-line
     }
   }
 
   render() {
-    const { items, error } = this.state;
+    const { bannerHeight, error } = this.props;
+    const { content } = this.state;
+
+    const logo = {
+      uri: get(content, 'logo.secure_url'),
+    };
+    const bannerSource = {
+      uri: get(content, 'banner.secure_url'),
+    };
 
     return (
       <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
-          <StyledListView
-            dataSource={items}
-            enableEmptySections
-            renderRow={item => (
-              <ListViewRow onPress={() => this.handlePress(item)}>
-                <Text>{item.title}</Text>
-              </ListViewRow>
-            )}
-            renderSeparator={(section, row) => (
-              <ListViewSeparator key={row} />
-            )}
-          />
+          {content && (
+            <Arc bannerSource={bannerSource} bannerHeight={bannerHeight}>
+              <Arc.ArcLayout>
+                <Arc.BrandImage shadow background="Z" source={logo} />
+              </Arc.ArcLayout>
+              <Arc.BrandTitle>
+                Conócenos
+              </Arc.BrandTitle>
+              <Arc.Title>
+                {content.title}
+              </Arc.Title>
+              <ArcLead>
+                {content.subtitle}
+              </ArcLead>
+              <Arc.Content>
+                <Arc.Body>
+                  {get(content, 'content.full.md') || content.content.brief}
+                </Arc.Body>
+              </Arc.Content>
+            </Arc>
+          )}
+          <Social.Bar>
+            {content && get(content, 'social', []).filter(Boolean).map(url => (
+              <Social key={url} url={url} onPress={this.handleSocialPress} />
+            ))}
+          </Social.Bar>
         </Container>
       </Themed>
     );

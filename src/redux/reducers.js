@@ -8,6 +8,7 @@ import benefits from './modules/benefits';
 import initiatives from './modules/initiatives';
 import delegationships from './modules/delegationships';
 import notifications from './modules/notifications';
+import about from './modules/about';
 
 const reducer = combineReducers({
   hydratation,
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   initiatives,
   delegationships,
   notifications,
+  about,
 });
 
 export default reducer;

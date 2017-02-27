@@ -3,12 +3,12 @@ import { Platform } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import defaultsDeep from 'lodash/defaultsDeep';
 
-import HomeTab from './tabs/Home';
+// import HomeTab from './tabs/Home';
 import EventsTab from './tabs/Events';
 import CommunityTab from './tabs/Community';
 import AboutTab from './tabs/About';
 import BenefitsTab from './tabs/Benefits';
-import EnviorementTab from './tabs/Enviorement';
+// import EnviorementTab from './tabs/Enviorement';
 
 import { TabBarIcon } from '../../components/';
 import { colors } from '../../styles';
@@ -46,22 +46,22 @@ const options = {
 
 // https://reactnavigation.org/docs/navigators/tab
 export default TabNavigator({
-  HomeTab: {
-    screen: HomeTab,
-    path: '/home',
-    navigationOptions: {
-      tabBar: (navigation, defaultTabBar) => ({
-        ...defaultTabBar,
-        label: 'Home',
-        icon: props => <TabBarIcon.Home {...props} />,
-      }),
-      header: ({ state }, defaultHeader) => ({ // FIXME: not working
-        ...defaultHeader,
-        title: 'Home',
-        visible: true,
-      }),
-    },
-  },
+  // HomeTab: {
+  //   screen: HomeTab,
+  //   path: '/home',
+  //   navigationOptions: {
+  //     tabBar: (navigation, defaultTabBar) => ({
+  //       ...defaultTabBar,
+  //       label: 'Home',
+  //       icon: props => <TabBarIcon.Home {...props} />,
+  //     }),
+  //     header: ({ state }, defaultHeader) => ({ // FIXME: not working
+  //       ...defaultHeader,
+  //       title: 'Home',
+  //       visible: true,
+  //     }),
+  //   },
+  // },
   EventsTab: {
     screen: EventsTab,
     path: '/home',
@@ -126,28 +126,28 @@ export default TabNavigator({
       }),
     },
   },
-  EnviorementTab: {
-    screen: EnviorementTab,
-    path: '/enviorement',
-    navigationOptions: {
-      tabBar: (navigation, defaultTabBar) => ({
-        ...defaultTabBar,
-        label: 'Huella',
-        icon: props => <TabBarIcon.Enviorement {...props} />,
-      }),
-      header: ({ state }, defaultHeader) => ({ // FIXME: not working
-        ...defaultHeader,
-        title: 'Huella',
-        visible: true,
-      }),
-    },
-  },
+  // EnviorementTab: {
+  //   screen: EnviorementTab,
+  //   path: '/enviorement',
+  //   navigationOptions: {
+  //     tabBar: (navigation, defaultTabBar) => ({
+  //       ...defaultTabBar,
+  //       label: 'Huella',
+  //       icon: props => <TabBarIcon.Enviorement {...props} />,
+  //     }),
+  //     header: ({ state }, defaultHeader) => ({ // FIXME: not working
+  //       ...defaultHeader,
+  //       title: 'Huella',
+  //       visible: true,
+  //     }),
+  //   },
+  // },
 }, {
   tabBarPosition: 'bottom', // 'top' 'bottom'
   lazyLoad: true,
   swipeEnabled: false,
   animationEnabled: false,
   initialRouteName: 'EventsTab',
-  order: ['EnviorementTab', 'CommunityTab', 'EventsTab', 'BenefitsTab', 'AboutTab'],
+  order: ['CommunityTab', 'EventsTab', 'BenefitsTab', 'AboutTab'],
   tabBarOptions: defaultsDeep({}, options[Platform.OS], options.common),
 });

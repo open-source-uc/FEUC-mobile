@@ -71,8 +71,8 @@ export default class Client {
     return response;
   }
 
-  async information(path = '', options) {
-    const response = await fetcher(`${this.baseURL}/api/v1/informations/${path}`, options);
+  async about(options) {
+    const response = await fetcher(`${this.baseURL}/api/v1/about`, options);
     return response;
   }
 
