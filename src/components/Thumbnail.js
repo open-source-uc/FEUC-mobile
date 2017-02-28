@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { View, Image } from 'react-native';
+import { BlurView } from 'react-native-blur';
 import styled from 'styled-components/native';
 
 
@@ -21,8 +22,40 @@ const ThumbnailImage = styled.Image`
   resize-mode: ${Image.resizeMode.contain};
 `;
 
+const Blurred = styled(BlurView)`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
 
-const Thumbnail = ({ size, circle, shadow, tint, source, ...props }) => (
+Blurred.defaultProps = {
+  blurType: 'light',
+  blurAmount: 10,
+};
+
+const Upper = styled.Text`
+  color: ${props => props.theme.colors.white};
+  font-family: ${props => props.theme.fonts.headers};
+  font-weight: 400;
+  font-size: 12;
+`;
+
+Upper.defaultProps = {
+  numberOfLines: 0,
+};
+
+const Main = styled.Text`
+  color: ${props => props.theme.colors.white};
+  font-family: ${props => props.theme.fonts.headers};
+  font-weight: 300;
+  font-size: 22;
+  line-height: 24;
+`;
+
+Main.defaultProps = Upper.defaultProps;
+
+
+const Thumbnail = ({ children, blur, size, circle, shadow, tint, source, ...props }) => (
   <ThumbnailContainer size={size} circle={circle} shadow={shadow} {...props}>
     <ThumbnailImage
       size={size}
@@ -30,17 +63,26 @@ const Thumbnail = ({ size, circle, shadow, tint, source, ...props }) => (
       shadow={shadow}
       source={source}
       style={{ tintColor: tint }} // undefined is disabled
-    />
+    >
+      {blur ? (
+        <Blurred>
+          {children}
+        </Blurred>
+      ) : children}
+    </ThumbnailImage>
   </ThumbnailContainer>
 );
 
+Thumbnail.Upper = Upper;
+Thumbnail.Main = Main;
+
 Thumbnail.propTypes = {
+  ...View.propTypes,
   size: PropTypes.number,
   circle: PropTypes.bool,
   shadow: PropTypes.bool,
   source: PropTypes.any.isRequired,
   tint: PropTypes.string,
-  ...View.propTypes,
 };
 
 Thumbnail.defaultProps = {
