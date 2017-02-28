@@ -7,8 +7,10 @@ import socialUrl from 'social-url';
 const Container = styled.TouchableOpacity`
   background-color: ${props => props.theme.colors[props.network] || props.theme.colors.B};
   flex: 1;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+  padding: 0 14;
   height: 44;
 `;
 
@@ -61,11 +63,12 @@ export default class Social extends PureComponent {
   }
 
   render() {
-    const { defaultIcon, ...props } = this.props;
+    const { defaultIcon, children, ...props } = this.props;
     const { network } = this.state;
     return (
       <Container network={network} {...props} onPress={this.handlePress}>
         <Icon name={network ? `sc-${network}` : defaultIcon} />
+        {children}
       </Container>
     );
   }
