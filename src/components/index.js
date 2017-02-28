@@ -5,6 +5,7 @@ export { default as Loading } from './Loading';
 export { default as TabBarIcon } from './TabBarIcon';
 export { default as Thumbnail } from './Thumbnail';
 export { default as Arc } from './Arc';
+export { default as Card } from './Card';
 export { default as ListView } from './ListView';
 export { default as ListViewRow } from './ListViewRow';
 export { default as ListViewRowBenefit } from './ListViewRowBenefit';

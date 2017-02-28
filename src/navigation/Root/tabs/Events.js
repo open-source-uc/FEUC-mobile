@@ -1,14 +1,13 @@
 import { TabNavigator } from 'react-navigation';
 import { StyleSheet, Platform } from 'react-native';
 
-import { Events, EventsSaved } from '../../../screens/';
+import { EventsToday, Events, EventsSaved } from '../../../screens/';
 import { colors, fonts } from '../../../styles';
 
 
 export default TabNavigator({
-  Events: {
-    screen: Events,
-    path: '/events',
+  EventsToday: {
+    screen: EventsToday,
     navigationOptions: {
       tabBar: (navigation, defaultTabBar) => ({
         ...defaultTabBar,
@@ -16,9 +15,17 @@ export default TabNavigator({
       }),
     },
   },
+  Events: {
+    screen: Events,
+    navigationOptions: {
+      tabBar: (navigation, defaultTabBar) => ({
+        ...defaultTabBar,
+        label: 'Esta semana'.toUpperCase(),
+      }),
+    },
+  },
   EventsSaved: {
     screen: EventsSaved,
-    path: '/saved-events',
     navigationOptions: {
       tabBar: (navigation, defaultTabBar) => ({
         ...defaultTabBar,
@@ -27,12 +34,12 @@ export default TabNavigator({
     },
   },
 }, {
-  initialRouteName: 'Events',
+  initialRouteName: 'EventsToday',
   tabBarPosition: 'top',
   lazyLoad: true,
   swipeEnabled: true,
   animationEnabled: true,
-  order: ['Events', 'EventsSaved'],
+  order: ['EventsToday', 'Events', 'EventsSaved'],
   tabBarOptions: {
     showIcon: false,
     showLabel: true,
