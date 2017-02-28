@@ -214,10 +214,10 @@ export default class Event extends Component {
 
   handleLocationPress = async () => {
     const { event } = this.state;
+
     const parts = ['street1', 'suburb', 'country'];
     const got = parts.map(part => get(event, ['location', part])).filter(Boolean);
-
-    if (!location) return;
+    if (got.length === 0) return;
 
     // TODO: Open in native app
     const query = qs.stringify({ q: got.join(', ') });
