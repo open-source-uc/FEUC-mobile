@@ -34,7 +34,6 @@ const Blurred = styled(BlurView)`
   bottom: 0;
   justify-content: center;
   align-items: center;
-  resize-mode: ${Image.resizeMode.cover};
 `;
 
 Blurred.defaultProps = {
