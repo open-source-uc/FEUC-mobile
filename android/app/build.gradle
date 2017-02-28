@@ -134,6 +134,7 @@ repositories {
 }
 
 dependencies {
+    compile project(':react-native-spinkit')
     compile project(':react-native-blur')
     compile project(':react-native-linear-gradient')
     compile project(':react-native-device-info')

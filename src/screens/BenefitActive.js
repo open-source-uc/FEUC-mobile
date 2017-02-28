@@ -1,16 +1,18 @@
 import React, { PropTypes, Component } from 'react';
 import { Image, Dimensions, Animated, Easing } from 'react-native';
 import { BlurView } from 'react-native-blur';
+import Spinner from 'react-native-spinkit';
 import { connect } from 'react-redux';
 import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
-// import moment from 'moment';
 import get from 'lodash/get';
 import max from 'lodash/max';
+import moment from 'moment';
+import 'moment-duration-format';
 
-import { ErrorBar, EventDate } from '../components/';
+import { ErrorBar, Bookmark } from '../components/';
 import * as schemas from '../schemas';
-import Themed from '../styles';
+import Themed, { colors } from '../styles';
 
 
 const Container = styled.View`
@@ -50,21 +52,45 @@ const Card = styled.View`
 `;
 
 const Cover = styled.Image`
-  flex: 7;
+  flex: 14;
   resize-mode: ${Image.resizeMode.cover};
   border-top-left-radius: 10;
   border-top-right-radius: 10;
 `;
 
-const AbsoluteEventDate = styled(EventDate)`
+const AbsoluteBookmark = styled(Bookmark)`
   position: absolute;
   right: 12;
   top: -4;
 `;
 
 const Bottom = styled.View`
-  flex: 3;
+  flex: 7;
 `;
+
+const Center = styled.View`
+  position: absolute;
+  top: ${props => props.size / -2};
+  left: 0;
+  right: 0;
+  justify-content: center;
+  align-items: center;
+`;
+
+Center.defaultProps = {
+  size: 30,
+};
+
+const Circle = styled.View`
+  justify-content: center;
+  align-items: center;
+  width: ${props => props.size};
+  height: ${props => props.size};
+  border-radius: ${props => props.size / 2};
+  background-color: ${props => props.theme.colors.X};
+`;
+
+Circle.defaultProps = Center.defaultProps;
 
 const BrandTitle = styled.Text`
   color: ${props => props.theme.colors.C};
@@ -73,7 +99,7 @@ const BrandTitle = styled.Text`
   font-weight: 700;
   font-size: 10;
   margin-bottom: 5;
-  margin-top: 20;
+  margin-top: 25;
   padding: 0 18;
 `;
 
@@ -82,6 +108,7 @@ BrandTitle.defaultProps = {
 };
 
 const Title = styled.Text`
+  flex: 1;
   color: ${props => props.theme.colors.G};
   text-align: center;
   font-family: ${props => props.theme.fonts.headers};
@@ -94,6 +121,16 @@ const Title = styled.Text`
 Title.defaultProps = {
   numberOfLines: 2,
 };
+
+const Restriction = styled.Text`
+  color: ${props => props.theme.colors.A};
+  text-align: center;
+  font-family: ${props => props.theme.fonts.body};
+  font-weight: 700;
+  font-size: 12;
+  padding: 0 18;
+  margin-bottom: 12;
+`;
 
 
 const mapStateToProps = ({ nav, entities }) => {
@@ -126,6 +163,10 @@ export default class BenefitActive extends Component {
 
   state = {
     benefit: this.props.benefit,
+    deadline: null,
+    isInTime: false,
+    timeleft: null,
+    ready: false,
   }
 
   componentWillMount() {
@@ -134,11 +175,32 @@ export default class BenefitActive extends Component {
 
   componentDidMount() {
     this.startAnimation();
+    this.setupTimer(this.props.benefit);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.benefit) {
-      this.setState({ benefit: nextProps.benefit });
+      this.setState({ benefit: nextProps.benefit, ready: false });
+      this.setupTimer(nextProps.benefit);
+    }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
+  setupTimer = (benefit) => {
+    if (this.timer) clearTimeout(this.timer);
+
+    const deadline = benefit.benefit.expires && benefit.benefit.deadline;
+    if (deadline) {
+      this.timer = setInterval(() => {
+        const now = moment();
+        const diff = moment(deadline).diff(now, 'seconds');
+        const isInTime = diff > 0;
+        const timeleft = isInTime && moment.duration(diff, 'seconds').format('d[d] h:mm:ss');
+        this.setState({ deadline, isInTime, timeleft, ready: true });
+      }, 1000);
     }
   }
 
@@ -153,7 +215,7 @@ export default class BenefitActive extends Component {
 
   render() {
     const { error } = this.props;
-    const { benefit } = this.state;
+    const { benefit, deadline, isInTime, timeleft, ready } = this.state;
 
     const spin = this.animatedValue.interpolate({
       inputRange: [0, 100],
@@ -175,16 +237,39 @@ export default class BenefitActive extends Component {
               <Card>
                 <Cover source={bannerSource}>
                   {benefit.benefit.expires && (
-                    <AbsoluteEventDate date={new Date(benefit.benefit.deadline)} />
+                    <AbsoluteBookmark>
+                      <Bookmark.Lead>NRO</Bookmark.Lead>
+                      <Bookmark.Title>24</Bookmark.Title>
+                    </AbsoluteBookmark>
                   )}
                 </Cover>
                 <Bottom>
+                  <Center>
+                    <Circle>
+                      <Spinner type="Pulse" color={colors.B} size={35} />
+                    </Circle>
+                  </Center>
                   <BrandTitle>
                     {benefit.responsable[benefit.responsable.kind].name}
                   </BrandTitle>
                   <Title>
                     {benefit.title}
                   </Title>
+                  {!ready && (
+                    <Restriction>
+                      Cargando...
+                    </Restriction>
+                  )}
+                  {deadline && isInTime && timeleft && (
+                    <Restriction>
+                      {`Valido por ${timeleft}`.toUpperCase()}
+                    </Restriction>
+                  )}
+                  {deadline && !isInTime && (
+                    <Restriction>
+                      Expirado
+                    </Restriction>
+                  )}
                 </Bottom>
               </Card>
             )}
