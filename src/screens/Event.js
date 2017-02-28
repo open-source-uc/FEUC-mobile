@@ -6,11 +6,13 @@ import { connect } from 'react-redux';
 import { denormalize } from 'normalizr';
 import { translate } from 'react-i18next';
 import styled from 'styled-components/native';
+import qs from 'qs';
 import moment from 'moment';
 import get from 'lodash/get';
 import identity from 'lodash/identity';
+import startCase from 'lodash/startCase';
 
-import { Button, ErrorBar, Tag, EventDate, RichText, Loading } from '../components/';
+import { Button, ErrorBar, Tag, EventDate, RichText, Social, Loading } from '../components/';
 import * as schemas from '../schemas';
 import Themed, { colors } from '../styles';
 
@@ -114,20 +116,16 @@ const AboutText = styled(RichText)`
   line-height: 19;
 `;
 
-const ActionContainer = styled.TouchableOpacity`
-  background-color: ${props => (props.theme.colors[props.background] || props.theme.colors.D)};
+const ActionText = styled.Text`
   flex: 1;
-  flex-direction: row;
-  height: 44;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 0 0 18;
+  color: ${props => props.theme.colors[props.color] || props.theme.colors.F};
+  font-family: ${props => props.theme.fonts.main};
+  padding-left: 3;
 `;
 
-const ActionText = styled.Text`
-  font-family: ${props => props.theme.fonts.main};
-  color: ${props => props.theme.colors[props.color] || props.theme.colors.F};
-`;
+ActionText.defaultProps = {
+  numberOfLines: 0,
+};
 
 
 const mapStateToProps = ({ nav, entities }) => {
@@ -181,21 +179,23 @@ export default class Event extends Component {
     Alert.alert('Hubo un error abriendo la URL:', String(url));
   }
 
+  formatTimeRange = (event) => {
+    const start = moment(get(event, 'temporality.start')); // required
+    const end = moment(get(event, 'temporality.end')); // required
+
+    if (start.isSame(end, 'day')) {
+      return `${start.format('HH:mm')} - ${end.format('HH:mm')}`;
+    } else {
+      const days = end.diff(start, 'days') + 1;
+      return `${start.format('HH:mm')} (${days} días)`;
+    }
+  }
+
   handleToogleCalendar = () => {
 
   }
 
-  handleFacebookPress = async () => {
-    const url = this.state.event.facebook;
-    try {
-      Linking.openURL(url);
-    } catch (err) {
-      this.alertError(err);
-    }
-  }
-
-  handleTwitterPress = async () => {
-    const url = this.state.event.twitter;
+  handleSocialPress = async ({ url }) => {
     try {
       Linking.openURL(url);
     } catch (err) {
@@ -212,8 +212,22 @@ export default class Event extends Component {
     }
   }
 
-  handleLocationPress = () => {
+  handleLocationPress = async () => {
+    const { event } = this.state;
+    const parts = ['street1', 'suburb', 'country'];
+    const got = parts.map(part => get(event, ['location', part])).filter(Boolean);
 
+    if (!location) return;
+
+    // TODO: Open in native app
+    const query = qs.stringify({ q: got.join(', ') });
+    const url = `http://maps.google.com/?${query}`;
+
+    try {
+      Linking.openURL(url);
+    } catch (err) {
+      this.alertError(err);
+    }
   }
 
   renderBackground = () => {
@@ -221,7 +235,7 @@ export default class Event extends Component {
     const { event } = this.state;
 
     return (
-      <Banner source={{ uri: get(event, 'image.secure_url') }} height={bannerHeight} />
+      <Banner source={{ uri: get(event, 'banner.secure_url') }} height={bannerHeight} />
     );
   }
 
@@ -284,7 +298,7 @@ export default class Event extends Component {
                   <Button color="Z">
                     <Button.Icon color="A" name="ios-time-outline" />
                     <Button.Text color="F">
-                      {moment(event.temporality.start).format('HH:mm')} - {moment(event.temporality.end).format('HH:mm')}
+                      {this.formatTimeRange(event)}
                     </Button.Text>
                   </Button>
                   <Button color={addded ? 'Z' : 'A'} onPress={this.handleToogleCalendar}>
@@ -330,18 +344,15 @@ export default class Event extends Component {
                   ))}
                 </Row>
                 <Row fluid fit direction="column">
-                  {event.facebook ? (
-                    <ActionContainer background="facebook" onPress={this.handleFacebookPress}>
-                      <ActionText color="Z">Facebook</ActionText>
-                      <Button.Icon color="Z" position="right" name="ios-arrow-forward" />
-                    </ActionContainer>
-                  ) : null}
-                  {event.twitter ? (
-                    <ActionContainer background="twitter" onPress={this.handleTwitterPress}>
-                      <ActionText color="Z">Twitter</ActionText>
-                      <Button.Icon color="Z" position="right" name="ios-arrow-forward" />
-                    </ActionContainer>
-                  ) : null}
+                  {get(event, 'social', []).filter(Boolean).map((url) => {
+                    const obj = Social.parse(url);
+                    return (
+                      <Social key={url} url={url} onPress={this.handleSocialPress}>
+                        <ActionText color="Z">Abrir en {startCase(obj.network)}</ActionText>
+                        <Button.Icon color="Z" position="left" name="ios-arrow-forward" />
+                      </Social>
+                    );
+                  })}
                 </Row>
               </Content>
             </StyledParallaxScrollView>
