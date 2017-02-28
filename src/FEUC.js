@@ -3,11 +3,14 @@
 import React from 'react';
 import { AsyncStorage } from 'react-native';
 import Config from 'react-native-config';
+import moment from 'moment';
 
 import App from './App';
 import Client from './api-client/Client';
 import configureStore from './redux/store';
 
+// Moment.js I18n
+moment.locale('es', require('moment/locale/es'));
 
 // HTTP Client
 const client = new Client(Config.FEUC_API_URL || 'http://localhost:3000');
