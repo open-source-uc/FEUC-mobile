@@ -15,6 +15,14 @@ const Container = styled.View`
   background-color: ${props => props.theme.colors.background};
 `;
 
+const Text = styled.Text`
+  font-family: ${props => props.theme.fonts.headers};
+  font-size: 30;
+  color: ${props => props.theme.colors.E};
+  margin-top: 36;
+  text-align: center;
+`;
+
 
 const mapStateToProps = state => ({
   benefits: state.benefits,
@@ -89,6 +97,14 @@ export default class BenefitsSaved extends Component {
   render = () => {
     const { error, refreshing } = this.props.benefits;
     const { dataSource } = this.state;
+
+    return (
+      <Themed content="dark">
+        <Container>
+          <Text>Próximamente</Text>
+        </Container>
+      </Themed>
+    );
 
     return (
       <Themed content="dark">

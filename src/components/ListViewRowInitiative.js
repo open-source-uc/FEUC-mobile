@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-// import styled from 'styled-components/native';
+import { Platform } from 'react-native';
 import get from 'lodash/get';
 
 import ListViewRow from './ListViewRow';
@@ -16,7 +16,7 @@ function selectImage(item) {
 
 const ListViewRowInitiative = ({ item, row, ...props }) => (
   <ListViewRow
-    background="Z"
+    background={Platform.OS === 'android' && row % 2 ? 'X' : 'Z'}
     {...props}
   >
     <ListViewRow.Thumbnail circle shadow source={selectImage(item)} />

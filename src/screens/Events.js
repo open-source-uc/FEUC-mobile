@@ -15,6 +15,10 @@ const Container = styled.View`
   background-color: ${props => props.theme.colors.background};
 `;
 
+const Text = styled.Text`
+  font-size: 20;
+`;
+
 
 const mapStateToProps = state => ({
   events: state.events,
@@ -99,6 +103,11 @@ export default class Events extends Component {
             renderRow={this.renderRow}
             refreshing={refreshing}
             onRefresh={this.props.fetchEvents}
+            renderEmpty={() => (
+              <Text>
+                Nada 😘
+              </Text>
+            )}
           />
         </Container>
       </Themed>

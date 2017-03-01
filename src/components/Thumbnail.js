@@ -1,5 +1,5 @@
 import React, { PropTypes, PureComponent } from 'react';
-import { View, Image, findNodeHandle } from 'react-native';
+import { View, Image, findNodeHandle, Platform } from 'react-native';
 import { BlurView } from 'react-native-blur';
 import styled from 'styled-components/native';
 
@@ -19,7 +19,7 @@ const ThumbnailImage = styled.Image`
   width: ${props => props.size};
   height: ${props => props.size};
   border-radius: ${props => (props.circle ? props.size / 2 : 0)};
-  resize-mode: ${Image.resizeMode.cover};
+  resize-mode: ${props => props.mode};
   justify-content: center;
   align-items: center;
 `;
@@ -44,7 +44,7 @@ const Upper = styled.Text`
   background-color: transparent;
   font-family: ${props => props.theme.fonts.headers};
   font-weight: 400;
-  font-size: 12;
+  font-size: ${props => (props.small ? 10 : 12)};
 `;
 
 Upper.defaultProps = {
@@ -56,7 +56,7 @@ const Main = styled.Text`
   background-color: transparent;
   font-family: ${props => props.theme.fonts.headers};
   font-weight: 300;
-  font-size: 22;
+  font-size: ${props => (props.small ? 18 : 22)};
   line-height: 24;
 `;
 
@@ -73,6 +73,7 @@ export default class Thumbnail extends PureComponent {
     shadow: PropTypes.bool,
     source: PropTypes.any.isRequired,
     tint: PropTypes.string,
+    mode: PropTypes.any,
   }
 
   static defaultProps = {
@@ -81,6 +82,7 @@ export default class Thumbnail extends PureComponent {
     shadow: false,
     tint: undefined,
     elevation: 5,
+    mode: Image.resizeMode.cover,
   }
 
   state = {
@@ -88,24 +90,47 @@ export default class Thumbnail extends PureComponent {
   }
 
   render() {
-    const { children, blur, size, circle, shadow, tint, source, ...props } = this.props;
-    return (
-      <ThumbnailContainer size={size} circle={circle} shadow={shadow} {...props}>
+    const { children, blur, size, circle, shadow, tint, source, mode, ...props } = this.props;
+
+    if (Platform.OS === 'ios') {
+      return (
+        <ThumbnailContainer size={size} circle={circle} shadow={shadow} {...props}>
+          <ThumbnailImage
+            source={source}
+            mode={mode}
+            size={size}
+            circle={circle}
+            shadow={shadow}
+            style={{ tintColor: tint }} // undefined is disabled
+            innerRef={(background) => {
+              this.background = background;
+            }}
+            onLoadEnd={() => this.setState({ viewRef: findNodeHandle(this.background) })}
+          >
+            {blur && <Blurred viewRef={this.state.viewRef} />}
+            {children}
+          </ThumbnailImage>
+        </ThumbnailContainer>
+      );
+    } else {
+      return (
         <ThumbnailImage
+          source={source}
+          mode={mode}
           size={size}
           circle={circle}
           shadow={shadow}
-          source={source}
           style={{ tintColor: tint }} // undefined is disabled
           innerRef={(background) => {
             this.background = background;
           }}
           onLoadEnd={() => this.setState({ viewRef: findNodeHandle(this.background) })}
+          {...props}
         >
           {blur && <Blurred viewRef={this.state.viewRef} />}
           {children}
         </ThumbnailImage>
-      </ThumbnailContainer>
-    );
+      );
+    }
   }
 }

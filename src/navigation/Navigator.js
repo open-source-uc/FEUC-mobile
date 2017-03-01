@@ -41,7 +41,7 @@ const Navigator = StackNavigator({
     navigationOptions: {
       header: ({ state }, defaultHeader) => ({
         ...defaultHeader,
-        title: <Logo />,
+        title: <Logo center />,
       }),
       // header: (navigation, defaultHeader) => ({
       //   ...defaultHeader,

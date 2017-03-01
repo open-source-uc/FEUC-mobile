@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 import get from 'lodash/get';
 
@@ -25,7 +26,7 @@ function selectImage(item) {
 
 const ListViewRowBenefit = ({ item, row, ...props }) => (
   <ListViewRow
-    background="Z"
+    background={Platform.OS === 'android' && row % 2 ? 'X' : 'Z'}
     {...props}
   >
     <ListViewRow.Thumbnail

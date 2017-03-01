@@ -1,5 +1,5 @@
 import { TabNavigator } from 'react-navigation';
-import { StyleSheet, Platform, Dimensions } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 import { EventsToday, Events, EventsSaved } from '../../../screens/';
 import { colors, fonts } from '../../../styles';
@@ -39,7 +39,7 @@ export default TabNavigator({
   lazyLoad: true,
   swipeEnabled: false,
   animationEnabled: true,
-  order: ['EventsToday', 'Events', 'EventsSaved'],
+  order: ['EventsToday', 'Events'], // TODO: 'EventsSaved'],
   tabBarOptions: {
     showIcon: false,
     showLabel: true,

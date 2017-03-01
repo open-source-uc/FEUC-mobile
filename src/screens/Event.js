@@ -270,10 +270,10 @@ export default class Event extends Component {
             </Button.Text>
           </Button>
           <Button color={addded ? 'Z' : 'A'} onPress={this.handleToogleCalendar}>
-            <Button.Icon color={addded ? 'A' : 'Z'} name="ios-calendar" />
+            {/* <Button.Icon color={addded ? 'A' : 'Z'} name="ios-calendar" />
             <Button.Text color={addded ? 'A' : 'Z'}>
               Agregar a agenda
-            </Button.Text>
+            </Button.Text> */}
           </Button>
         </Row>
         <Row fluid separator vertical="fit">

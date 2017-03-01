@@ -2,6 +2,7 @@ import React, { PropTypes, PureComponent } from 'react';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import styled from 'styled-components/native';
 import socialUrl from 'social-url';
+import noop from 'lodash/noop';
 
 
 const Container = styled.TouchableOpacity`
@@ -30,13 +31,17 @@ export default class Social extends PureComponent {
   static Bar = Bar
 
   static propTypes = {
+    children: PropTypes.node,
     url: PropTypes.string,
     defaultIcon: PropTypes.string,
+    onPress: PropTypes.func,
   }
 
   static defaultProps = {
+    children: null,
     url: null,
     defaultIcon: 'link',
+    onPress: noop,
   }
 
   static parse = (url) => {

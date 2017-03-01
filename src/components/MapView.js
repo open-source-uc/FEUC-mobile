@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import { Dimensions, InteractionManager } from 'react-native';
 import MapView from 'react-native-maps';
 import styled from 'styled-components/native';
@@ -22,6 +22,14 @@ const StyledMap = styled(MapView)`
 
 
 export default class MapViewComponent extends Component {
+  static propTypes = {
+    children: PropTypes.node,
+  }
+
+  static defaultProps = {
+    children: null,
+  }
+
   state = {
     loading: true,
   }
@@ -33,7 +41,7 @@ export default class MapViewComponent extends Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, ...props } = this.props;
     const { loading } = this.state;
 
     const { width, height } = Dimensions.get('window');
@@ -47,7 +55,7 @@ export default class MapViewComponent extends Component {
     };
 
     return (
-      <Container>
+      <Container {...props}>
         {loading ? <Loading /> : (
           <StyledMap
             initialRegion={coordinates}

@@ -11,6 +11,7 @@ const Container = styled.View`
   border-radius: 10;
   flex: 1;
   overflow: hidden;
+  elevation: 4;
   shadow-color: ${props => props.theme.colors.G};
   shadow-offset: 2 2;
   shadow-opacity: 0.3;

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-// import styled from 'styled-components/native';
+import { Image, Platform } from 'react-native';
 import get from 'lodash/get';
 import trimStart from 'lodash/trimStart';
 
@@ -7,12 +7,17 @@ import ListViewRow from './ListViewRow';
 import { images } from '../assets/';
 
 
-const ListViewRowDelegationship = ({ item, ...props }) => (
+const ListViewRowDelegationship = ({ item, row, ...props }) => (
   <ListViewRow
-    background="Z"
+    background={Platform.OS === 'android' && row % 2 ? 'X' : 'Z'}
     {...props}
   >
-    <ListViewRow.Thumbnail tint={`#${trimStart(item.color, '#')}`} background="transparent" source={images.logo.transparent} />
+    <ListViewRow.Thumbnail
+      mode={Image.resizeMode.contain}
+      tint={`#${trimStart(item.color, '#')}`}
+      background="transparent"
+      source={images.logo.transparent}
+    />
     <ListViewRow.Content>
       <ListViewRow.Title>{item.name}</ListViewRow.Title>
       <ListViewRow.Body>

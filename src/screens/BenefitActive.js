@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Image, Dimensions, Animated, Easing, findNodeHandle } from 'react-native';
+import { Image, Platform, Dimensions, Animated, Easing, findNodeHandle } from 'react-native';
 import { BlurView } from 'react-native-blur';
 import Spinner from 'react-native-spinkit';
 import { connect } from 'react-redux';
@@ -23,8 +23,8 @@ const Container = styled.View`
 `;
 
 const Background = styled(Animated.Image)`
-  width: ${max(Object.values(Dimensions.get('window')))};
-  height: ${max(Object.values(Dimensions.get('window')))};
+  width: ${max(Object.values(Dimensions.get('window'))) * 1.2};
+  height: ${max(Object.values(Dimensions.get('window'))) * 1.2};
   background-color: ${props => props.theme.colors.background};
 `;
 
@@ -37,6 +37,7 @@ const Content = styled.View`
   justify-content: center;
   align-items: center;
 `;
+
 const Blurred = styled(BlurView)`
   position: absolute;
   top: 0;
@@ -154,7 +155,7 @@ const mapDispatchToProps = null;
 @connect(mapStateToProps, mapDispatchToProps)
 export default class BenefitActive extends Component {
   static navigationOptions = {
-    title: 'Beneficio Activado!',
+    title: 'Beneficio Activado'.toUpperCase(),
     header: ({ state }, defaultHeader) => ({
       ...defaultHeader,
     }),
@@ -241,7 +242,7 @@ export default class BenefitActive extends Component {
         <Container>
           <Background
             source={bannerSource}
-            style={{ transform }}
+            style={Platform.OS === 'ios' ? { transform } : null}
             innerRef={(background) => {
               this.background = background;
             }}
@@ -256,7 +257,7 @@ export default class BenefitActive extends Component {
                 <Cover
                   source={bannerSource}
                 >
-                  {benefit.benefit.expires && (
+                  {benefit.benefit.expires && false && ( // TODO
                     <AbsoluteBookmark>
                       <Bookmark.Lead>NRO</Bookmark.Lead>
                       <Bookmark.Title>24</Bookmark.Title>

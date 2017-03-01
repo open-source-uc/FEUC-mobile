@@ -46,10 +46,10 @@ const mapDispatchToProps = null;
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Benefit extends Component {
   static navigationOptions = {
-    title: 'Beneficio',
+    title: 'Beneficio'.toUpperCase(),
     header: ({ state }, defaultHeader) => ({
       ...defaultHeader,
-      title: 'Beneficio',
+      title: 'Beneficio'.toUpperCase(),
     }),
   }
 
