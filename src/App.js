@@ -47,7 +47,7 @@ export default class App extends Component { // eslint-disable-line
   }
 
   componentDidMount() {
-
+    BackAndroid.addEventListener('backPress', this.handleBackButton);
   }
 
   componentWillUnmount() {
@@ -55,10 +55,11 @@ export default class App extends Component { // eslint-disable-line
   }
 
   handleBackButton = () => {
-    if (get(this.props, 'nav.routes.length', 0) < 0) {
+    console.log(get(this.props, 'nav.routes.length'));
+    if (get(this.props, 'nav.routes.length', 0) <= 1) {
       return BackAndroid.exitApp();
     } else {
-      return BackAndroid.addEventListener('backPress', this.props.back);
+      return this.props.back();
     }
   }
 

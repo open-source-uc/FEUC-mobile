@@ -204,7 +204,7 @@ export default class Event extends Component {
   handleAdmissionPress = async () => {
     const url = this.state.event.admission.url;
     try {
-      Linking.openURL(url);
+      if (url) Linking.openURL(url);
     } catch (err) {
       this.alertError(err);
     }
