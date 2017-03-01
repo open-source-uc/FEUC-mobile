@@ -105,3 +105,45 @@ To show every log:
 ```sh
 adb logcat
 ```
+
+##### Colors
+
+Change the app colors in [`android/app/src/main/res/values/styles.xml`](.android/app/src/main/res/values/styles.xml).
+
+```xml
+<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">#43D1C0</item>
+    <item name="colorPrimaryDark">#34A79D</item>
+    <item name="colorAccent">#F2F2F2</item>
+</style>
+```
+
+## Production
+
+### iOS
+
+
+### Android
+
+Generate a `.keystore` if you do not have one:
+
+```sh
+# Generate key
+keytool -genkey -v -keystore feuc-release.keystore -alias feuc -keyalg RSA -keysize 2048 -validity 10000
+
+# Move it to ./android/app/
+mv feuc-release.keystore ./android/app/feuc-release.keystore
+```
+
+Compile the app with:
+
+```sh
+cd android
+./gradlew assembleRelease
+```
+
+The signed `.apk` will be located at:
+
+```sh
+app/build/outputs/apk/app-release.apk
+```

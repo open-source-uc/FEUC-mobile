@@ -93,7 +93,7 @@ export default class Benefit extends Component {
       uri: get(benefit, ['responsable', benefit.responsable.kind, 'image', 'secure_url']),
     };
     const bannerSource = {
-      uri: get(benefit, 'image.secure_url'),
+      uri: get(benefit, 'banner.secure_url'),
     };
 
     return (
@@ -112,7 +112,7 @@ export default class Benefit extends Component {
                 {benefit.title}
               </Arc.Title>
               <Arc.Lead>
-                {`${benefit.uses} dcts. activados`.toUpperCase()}
+                {/* {`${benefit.uses} dcts. activados`.toUpperCase()} */}
               </Arc.Lead>
               <Arc.DropTexts>
                 {benefit.benefit.limited && (

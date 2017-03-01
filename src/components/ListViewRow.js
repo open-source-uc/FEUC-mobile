@@ -24,7 +24,7 @@ ContainerIOS.defaultProps = {
   background: 'white',
 };
 
-const ContainerAndroid = styled.TouchableNativeFeedback`
+const ContainerAndroid = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

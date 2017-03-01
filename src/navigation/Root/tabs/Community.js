@@ -30,7 +30,7 @@ export default TabNavigator({
   initialRouteName: 'Initiatives',
   tabBarPosition: 'top',
   lazyLoad: true,
-  swipeEnabled: true,
+  swipeEnabled: false,
   animationEnabled: true,
   order: ['Initiatives', 'Delegationships'],
   tabBarOptions: {
@@ -49,6 +49,9 @@ export default TabNavigator({
       fontFamily: fonts.main,
       fontSize: 13,
       fontWeight: '600',
+    },
+    indicatorStyle: {
+      backgroundColor: colors.B,
     },
   },
   navigationOptions: {

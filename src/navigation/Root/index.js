@@ -33,7 +33,7 @@ const options = {
     scrollEnabled: false,
     upperCaseLabel: false,
     indicatorStyle: {
-      backgroundColor: colors.B,
+      backgroundColor: 'transparent',
     },
     labelStyle: {
       margin: 0,

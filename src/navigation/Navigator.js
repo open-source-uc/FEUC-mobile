@@ -1,10 +1,10 @@
-// import React from 'react';
+import React from 'react';
 import { StackNavigator } from 'react-navigation';
 
 import Tabs from './Root/';
 
 import { Event, Initiative, Benefit, AboutDetail, Transparence, BenefitActive, Delegationship } from '../screens/';
-// import { Logo } from '../components/';
+import { Logo } from '../components/';
 import { colors } from '../styles';
 
 const options = {
@@ -22,17 +22,17 @@ const options = {
   },
 };
 
-function getTitle(state) {
-  const route = state.routes[state.index];
-  switch (route.routeName) {
-    case 'EventsTab': return 'Home';
-    case 'BenefitsTab': return 'Beneficios';
-    case 'CommunityTab': return 'Comunidad';
-    case 'AboutTab': return 'FEUC';
-    case 'EnviorementTab': return 'Huella';
-    default: return 'FEUC';
-  }
-}
+// function getTitle(state) {
+//   const route = state.routes[state.index];
+//   switch (route.routeName) {
+//     case 'EventsTab': return 'Home';
+//     case 'BenefitsTab': return 'Beneficios';
+//     case 'CommunityTab': return 'Comunidad';
+//     case 'AboutTab': return 'FEUC';
+//     case 'EnviorementTab': return 'Huella';
+//     default: return 'FEUC';
+//   }
+// }
 
 const Navigator = StackNavigator({
   Tabs: {
@@ -41,7 +41,7 @@ const Navigator = StackNavigator({
     navigationOptions: {
       header: ({ state }, defaultHeader) => ({
         ...defaultHeader,
-        title: getTitle(state).toUpperCase(),
+        title: <Logo />,
       }),
       // header: (navigation, defaultHeader) => ({
       //   ...defaultHeader,

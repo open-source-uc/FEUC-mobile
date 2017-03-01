@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Image, Dimensions, Animated, Easing } from 'react-native';
+import { Image, Dimensions, Animated, Easing, findNodeHandle } from 'react-native';
 import { BlurView } from 'react-native-blur';
 import Spinner from 'react-native-spinkit';
 import { connect } from 'react-redux';
@@ -28,6 +28,15 @@ const Background = styled(Animated.Image)`
   background-color: ${props => props.theme.colors.background};
 `;
 
+const Content = styled.View`
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+`;
 const Blurred = styled(BlurView)`
   position: absolute;
   top: 0;
@@ -224,18 +233,29 @@ export default class BenefitActive extends Component {
     const transform = [{ rotate: spin }];
 
     const bannerSource = {
-      uri: get(benefit, 'image.secure_url'),
+      uri: get(benefit, 'banner.secure_url'),
     };
 
     return (
       <Themed content="dark">
         <Container>
-          <Background source={bannerSource} style={{ transform }} />
+          <Background
+            source={bannerSource}
+            style={{ transform }}
+            innerRef={(background) => {
+              this.background = background;
+            }}
+            onLoadEnd={() => this.setState({ viewRef: findNodeHandle(this.background) })}
+          >
+            <Blurred viewRef={this.state.viewRef} />
+          </Background>
           <ErrorBar error={error} />
-          <Blurred>
+          <Content>
             {benefit && (
               <Card>
-                <Cover source={bannerSource}>
+                <Cover
+                  source={bannerSource}
+                >
                   {benefit.benefit.expires && (
                     <AbsoluteBookmark>
                       <Bookmark.Lead>NRO</Bookmark.Lead>
@@ -273,7 +293,7 @@ export default class BenefitActive extends Component {
                 </Bottom>
               </Card>
             )}
-          </Blurred>
+          </Content>
         </Container>
       </Themed>
     );

@@ -1,12 +1,12 @@
 import React, { PropTypes, Component } from 'react';
-import { StyleSheet, Image, Linking, Alert, Dimensions } from 'react-native';
+import { StyleSheet, Image, Linking, Alert, Dimensions, Platform } from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { Svg as SVG, Polygon } from 'react-native-svg';
 import { connect } from 'react-redux';
 import { denormalize } from 'normalizr';
 import { translate } from 'react-i18next';
 import styled from 'styled-components/native';
-import qs from 'qs';
+import stringify from 'qs/lib/stringify';
 import moment from 'moment';
 import get from 'lodash/get';
 import identity from 'lodash/identity';
@@ -31,19 +31,21 @@ const Banner = styled.Image`
   width: ${Dimensions.get('window').width};
   background-color: ${props => props.theme.colors.F};
   resize-mode: ${Image.resizeMode.cover};
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
   height: ${props => props.height || 256};
 `;
 
-const BannerContent = styled.View`
+const BannerContentIOS = styled.View`
   flex: 1;
   flex-direction: column;
   justify-content: flex-end;
   position: absolute;
   top: ${props => -1 * props.offset};
+`;
+
+const BannerContentAndroid = styled.View`
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
 `;
 
 const StyledSVG = styled(SVG)`
@@ -60,10 +62,6 @@ const AbsoluteEventDate = styled(EventDate)`
 const ScrollView = styled.ScrollView`
   flex: 1;
 `;
-
-ScrollView.defaultProps = {
-  contentContainerStyle: { paddingBottom: 24 },
-};
 
 const Content = styled.View`
   background-color: ${props => props.theme.colors.Z};
@@ -220,7 +218,7 @@ export default class Event extends Component {
     if (got.length === 0) return;
 
     // TODO: Open in native app
-    const query = qs.stringify({ q: got.join(', ') });
+    const query = stringify({ q: got.join(', ') });
     const url = `http://maps.google.com/?${query}`;
 
     try {
@@ -230,12 +228,14 @@ export default class Event extends Component {
     }
   }
 
-  renderBackground = () => {
+  renderBackground = (children) => {
     const { bannerHeight } = this.props;
     const { event } = this.state;
 
     return (
-      <Banner source={{ uri: get(event, 'banner.secure_url') }} height={bannerHeight} />
+      <Banner source={{ uri: get(event, 'banner.secure_url') }} height={bannerHeight}>
+        {children}
+      </Banner>
     );
   }
 
@@ -249,9 +249,86 @@ export default class Event extends Component {
     }
   }
 
-  render() {
-    const { t, error, bannerHeight, triangleHeight } = this.props;
+  renderContent = () => {
+    const { t } = this.props;
     const { event, addded } = this.state;
+    const location = this.renderLocation(event);
+
+    return (
+      <Content>
+        <Row>
+          <View>
+            <Ttile>{event.title.toUpperCase()}</Ttile>
+            <SubTitle>{event.subtitle}</SubTitle>
+          </View>
+        </Row>
+        <Row fluid separator vertical="fit">
+          <Button color="Z">
+            <Button.Icon color="A" name="ios-time-outline" />
+            <Button.Text color="F">
+              {this.formatTimeRange(event)}
+            </Button.Text>
+          </Button>
+          <Button color={addded ? 'Z' : 'A'} onPress={this.handleToogleCalendar}>
+            <Button.Icon color={addded ? 'A' : 'Z'} name="ios-calendar" />
+            <Button.Text color={addded ? 'A' : 'Z'}>
+              Agregar a agenda
+            </Button.Text>
+          </Button>
+        </Row>
+        <Row fluid separator vertical="fit">
+          <Button color="Z" onPress={this.handleLocationPress}>
+            <Button.Icon color="A" name="ios-map-outline" />
+            <Button.Text color="F">
+              {location || 'Lugar por definir'}
+            </Button.Text>
+            {location && (
+              <Button.Icon color="A" position="right" name="ios-arrow-forward" />
+            )}
+          </Button>
+        </Row>
+        <Row fluid separator vertical="fit">
+          <Button color="Z" onPress={this.handleAdmissionPress}>
+            <Button.Icon color="A" name="ios-barcode-outline" />
+            <Button.Text color="F">
+              {event.admission.note || t(['events', 'admission', event.admission.ticket].join('.')).toUpperCase()}
+            </Button.Text>
+            <Button.Icon color="A" position="right" name="ios-arrow-forward" />
+          </Button>
+        </Row>
+        <Row>
+          <AboutTitle>
+            Sobre el evento
+          </AboutTitle>
+        </Row>
+        <Row>
+          <AboutText>
+            {get(event, 'description.full.md') || get(event, 'description.brief') || 'Sin descripción.'}
+          </AboutText>
+        </Row>
+        <Row>
+          {event.tags && event.tags.filter(Boolean).map(tag => (
+            <Tag key={tag._id}>{tag.name}</Tag>
+          ))}
+        </Row>
+        <Row fluid fit direction="column">
+          {get(event, 'social', []).filter(Boolean).map((url) => {
+            const obj = Social.parse(url);
+            return (
+              <Social key={url} url={url} onPress={this.handleSocialPress}>
+                <ActionText color="Z">Abrir en {startCase(obj.network)}</ActionText>
+                <Button.Icon color="Z" position="left" name="ios-arrow-forward" />
+              </Social>
+            );
+          })}
+        </Row>
+      </Content>
+    );
+  }
+
+  render() {
+    const { error, bannerHeight, triangleHeight } = this.props;
+    const { event } = this.state;
 
     // Triangle dimensions
     const width = Dimensions.get('window').width;
@@ -263,8 +340,6 @@ export default class Event extends Component {
       [width, 0],
     ];
 
-    const location = this.renderLocation(event);
-
     return (
       <Themed content="dark">
         <Container>
@@ -272,13 +347,13 @@ export default class Event extends Component {
           {!event && (
             <Loading />
           )}
-          {event && (
+          {event && Platform.OS === 'ios' && (
             <StyledParallaxScrollView
               contentBackgroundColor={colors.white}
               renderBackground={this.renderBackground}
               parallaxHeaderHeight={bannerHeight}
             >
-              <BannerContent offset={triangleHeight}>
+              <BannerContentIOS offset={triangleHeight}>
                 <StyledSVG height={height}>
                   <Polygon
                     points={points.reduce((string, [x, y]) => `${string} ${x},${y}`, '')}
@@ -286,76 +361,25 @@ export default class Event extends Component {
                   />
                 </StyledSVG>
                 <AbsoluteEventDate date={new Date(event.temporality.start)} />
-              </BannerContent>
-              <Content>
-                <Row>
-                  <View>
-                    <Ttile>{event.title.toUpperCase()}</Ttile>
-                    <SubTitle>{event.subtitle}</SubTitle>
-                  </View>
-                </Row>
-                <Row fluid separator vertical="fit">
-                  <Button color="Z">
-                    <Button.Icon color="A" name="ios-time-outline" />
-                    <Button.Text color="F">
-                      {this.formatTimeRange(event)}
-                    </Button.Text>
-                  </Button>
-                  <Button color={addded ? 'Z' : 'A'} onPress={this.handleToogleCalendar}>
-                    <Button.Icon color={addded ? 'A' : 'Z'} name="ios-calendar" />
-                    <Button.Text color={addded ? 'A' : 'Z'}>
-                      Agregar a agenda
-                    </Button.Text>
-                  </Button>
-                </Row>
-                <Row fluid separator vertical="fit">
-                  <Button color="Z" onPress={this.handleLocationPress}>
-                    <Button.Icon color="A" name="ios-map-outline" />
-                    <Button.Text color="F">
-                      {location || 'Lugar por definir'}
-                    </Button.Text>
-                    {location && (
-                      <Button.Icon color="A" position="right" name="ios-arrow-forward" />
-                    )}
-                  </Button>
-                </Row>
-                <Row fluid separator vertical="fit">
-                  <Button color="Z" onPress={this.handleAdmissionPress}>
-                    <Button.Icon color="A" name="ios-barcode-outline" />
-                    <Button.Text color="F">
-                      {event.admission.note || t(['events', 'admission', event.admission.ticket].join('.')).toUpperCase()}
-                    </Button.Text>
-                    <Button.Icon color="A" position="right" name="ios-arrow-forward" />
-                  </Button>
-                </Row>
-                <Row>
-                  <AboutTitle>
-                    Sobre el evento
-                  </AboutTitle>
-                </Row>
-                <Row>
-                  <AboutText>
-                    {get(event, 'description.full.md') || get(event, 'description.brief') || 'Sin descripción.'}
-                  </AboutText>
-                </Row>
-                <Row>
-                  {event.tags && event.tags.filter(Boolean).map(tag => (
-                    <Tag key={tag._id}>{tag.name}</Tag>
-                  ))}
-                </Row>
-                <Row fluid fit direction="column">
-                  {get(event, 'social', []).filter(Boolean).map((url) => {
-                    const obj = Social.parse(url);
-                    return (
-                      <Social key={url} url={url} onPress={this.handleSocialPress}>
-                        <ActionText color="Z">Abrir en {startCase(obj.network)}</ActionText>
-                        <Button.Icon color="Z" position="left" name="ios-arrow-forward" />
-                      </Social>
-                    );
-                  })}
-                </Row>
-              </Content>
+              </BannerContentIOS>
+              {this.renderContent()}
             </StyledParallaxScrollView>
+          )}
+          {event && Platform.OS === 'android' && (
+            <ScrollView>
+              {this.renderBackground(
+                <BannerContentAndroid offset={bannerHeight}>
+                  <StyledSVG height={height}>
+                    <Polygon
+                      points={points.reduce((string, [x, y]) => `${string} ${x},${y}`, '')}
+                      fill={colors.Z}
+                    />
+                  </StyledSVG>
+                  <AbsoluteEventDate date={new Date(event.temporality.start)} />
+                </BannerContentAndroid>,
+              )}
+              {this.renderContent()}
+            </ScrollView>
           )}
         </Container>
       </Themed>

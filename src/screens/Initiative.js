@@ -97,9 +97,11 @@ export default class Initiative extends Component {
               <Arc.Title>
                 {initiative.name}
               </Arc.Title>
-              <ArcLead>
-                Somos ${342} participantes
-              </ArcLead>
+              {initiative.lead && (
+                <ArcLead>
+                  {initiative.lead}
+                </ArcLead>)
+              }
               <Arc.Content>
                 <Arc.Body>
                   {get(initiative, 'description.full.md') || initiative.description.brief}

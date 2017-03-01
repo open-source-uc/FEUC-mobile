@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { ListView, Dimensions } from 'react-native';
+import { ListView, Dimensions, findNodeHandle } from 'react-native';
 import { BlurView } from 'react-native-blur';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
@@ -15,15 +15,19 @@ import Themed, { colors } from '../styles';
 
 
 const Container = styled.Image`
-  flex: 1;
   background-color: ${props => props.theme.colors.D};
-`;
-
-const Blurred = styled(BlurView)`
   flex: 1;
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
+`;
+
+const Blurred = styled(BlurView)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 `;
 
 Blurred.defaultProps = {
@@ -67,9 +71,9 @@ const Page = styled.View`
   padding: 22 36 18;
 `;
 
-const Content = styled.View`
+const CardContent = styled.View`
   flex: 1;
-  padding: 16 12 12 12;
+  padding: 14 12 12 12;
   background-color: transparent;
 `;
 
@@ -81,7 +85,7 @@ const Title = styled.Text`
   margin-bottom: 4;
 `;
 
-Content.defaultProps = {
+Title.defaultProps = {
   numberOfLines: 2,
 };
 
@@ -90,7 +94,7 @@ const Body = styled.Text`
   color: ${props => props.theme.colors.E};
   font-family: ${props => props.theme.fonts.body};
   font-weight: 400;
-  font-size: 10;
+  font-size: 11;
   font-style: italic;
 `;
 
@@ -100,6 +104,7 @@ Body.defaultProps = {
 
 const Arrow = styled(Ionicons)`
   color: ${props => props.theme.colors.Z};
+  background-color: transparent;
   font-size: 28;
   text-align: center;
   margin: 0 10;
@@ -200,7 +205,7 @@ export default class EventsToday extends Component {
           <Card.EventDate date={new Date(get(item, 'temporality.start'))} />
         </Card.Cover>
         <Card.Bottom>
-          <Content>
+          <CardContent>
             <Title>{get(item, 'title', 'Sin título').toUpperCase()}</Title>
             <Body>{get(item, 'description.brief')}</Body>
             <Footer>
@@ -208,7 +213,7 @@ export default class EventsToday extends Component {
                 {'19:00 - 22:00 hrs.'.toUpperCase()}
               </When>
             </Footer>
-          </Content>
+          </CardContent>
         </Card.Bottom>
       </Card>
     </Page>
@@ -219,42 +224,48 @@ export default class EventsToday extends Component {
     const { index, dataSource } = this.state;
 
     const current = entities.events[result[index]];
+    const uri = get(current, 'image.secure_url');
 
     return (
       <Themed content="dark">
-        <Container source={{ uri: get(current, 'banner.secure_url') }}>
+        <Container
+          innerRef={(background) => {
+            this.background = background;
+          }}
+          source={uri ? { uri } : { uri: 'https://www.lollapalooza.com/wp-www-lollapalooza-com/wp/wp-content/uploads/2013/12/LOL2014-Footer-BG-CHI.png' }}
+          onLoadEnd={() => this.setState({ viewRef: findNodeHandle(this.background) })}
+        >
           <ErrorBar error={error} />
-          <Blurred>
-            {index > 0 && (
-              <Arrow name="ios-arrow-back" left />
-            )}
-            {index > 0 && (
-              <Nothing />
-            )}
-            {index <= get(result, 'length', 0) && (
-              <Nothing />
-            )}
-            {index < get(result, 'length', 0) - 1 && (
-              <Arrow name="ios-arrow-forward" right />
-            )}
-            <VerticalScrollView
-              refreshControl={
-                <RefreshControl
-                  refreshing={refreshing}
-                  onRefresh={this.props.fetchEvents}
-                  tintColor={colors.Z}
-                />
-              }
-            >
-              <HorizontalListView
-                enableEmptySections
-                scrollEventThrottle={16}
-                onScroll={this.handleScroll}
-                dataSource={dataSource}
-                renderRow={this.renderRow}
+          <Blurred viewRef={this.state.viewRef} />
+          {index > 0 && (
+            <Arrow name="ios-arrow-back" left />
+          )}
+          {index > 0 && (
+            <Nothing />
+          )}
+          {index <= get(result, 'length', 0) && (
+            <Nothing />
+          )}
+          {index < get(result, 'length', 0) - 1 && (
+            <Arrow name="ios-arrow-forward" right />
+          )}
+          <VerticalScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={this.props.fetchEvents}
+                tintColor={colors.Z}
               />
-            </VerticalScrollView>
-          </Blurred>
+            }
+          >
+            <HorizontalListView
+              enableEmptySections
+              scrollEventThrottle={16}
+              onScroll={this.handleScroll}
+              dataSource={dataSource}
+              renderRow={this.renderRow}
+            />
+          </VerticalScrollView>
         </Container>
       </Themed>
     );

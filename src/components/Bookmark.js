@@ -1,5 +1,5 @@
 import React, { PropTypes, PureComponent } from 'react';
-import { Image } from 'react-native';
+import { Image, Platform } from 'react-native';
 import styled from 'styled-components/native';
 
 import { images } from '../assets/';
@@ -7,7 +7,7 @@ import { images } from '../assets/';
 
 const Container = styled.Image`
   width: 56;
-  height: 95;
+  height: ${Platform.OS === 'ios' ? 95 : 105};
   resize-mode: ${Image.resizeMode.stretch};
 `;
 
@@ -39,8 +39,8 @@ const Title = styled(Lead)`
   color: ${props => props.theme.colors.G};
   font-size: 25;
   font-weight: 200;
-  height: 20;
-  line-height: 25;
+  height: ${Platform.OS === 'ios' ? 20 : 25};
+  line-height: ${Platform.OS === 'ios' ? 25 : 24};
 `;
 
 

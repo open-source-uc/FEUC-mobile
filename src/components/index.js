@@ -5,6 +5,7 @@ export { default as Bookmark } from './Bookmark';
 export { default as Loading } from './Loading';
 export { default as TabBarIcon } from './TabBarIcon';
 export { default as Thumbnail } from './Thumbnail';
+export { default as Logo } from './Logo';
 export { default as Arc } from './Arc';
 export { default as Card } from './Card';
 export { default as ListView } from './ListView';

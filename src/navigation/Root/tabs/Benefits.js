@@ -30,7 +30,7 @@ export default TabNavigator({
   initialRouteName: 'Benefits',
   tabBarPosition: 'top',
   lazyLoad: true,
-  swipeEnabled: true,
+  swipeEnabled: false,
   animationEnabled: true,
   order: ['Benefits', 'BenefitsSaved'],
   tabBarOptions: {
@@ -50,10 +50,9 @@ export default TabNavigator({
       fontSize: 13,
       fontWeight: '600',
     },
-    // indicatorStyle: {
-    //   height: 10,
-    //   backgroundColor: colors.B,
-    // },
+    indicatorStyle: {
+      backgroundColor: colors.B,
+    },
   },
   navigationOptions: {
     title: 'Comunidad',

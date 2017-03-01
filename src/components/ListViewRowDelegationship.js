@@ -1,17 +1,18 @@
 import React, { PropTypes } from 'react';
 // import styled from 'styled-components/native';
 import get from 'lodash/get';
+import trimStart from 'lodash/trimStart';
 
 import ListViewRow from './ListViewRow';
 import { images } from '../assets/';
 
 
-const ListViewRowDelegationship = ({ item, row, ...props }) => (
+const ListViewRowDelegationship = ({ item, ...props }) => (
   <ListViewRow
     background="Z"
     {...props}
   >
-    <ListViewRow.Thumbnail tint={item.color} background="transparent" source={images.logo.transparent} />
+    <ListViewRow.Thumbnail tint={`#${trimStart(item.color, '#')}`} background="transparent" source={images.logo.transparent} />
     <ListViewRow.Content>
       <ListViewRow.Title>{item.name}</ListViewRow.Title>
       <ListViewRow.Body>

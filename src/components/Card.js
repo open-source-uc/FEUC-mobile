@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Platform, Dimensions, Image, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
+import { Dimensions, Image } from 'react-native';
 import styled from 'styled-components/native';
 
 import EventDate from './EventDate';
@@ -17,9 +17,10 @@ const Container = styled.View`
   shadow-radius: 1.2;
 `;
 
-const Touchable = styled(Platform.OS === 'ios' ? TouchableOpacity : TouchableNativeFeedback)`
+const Touchable = styled.TouchableOpacity`
   border-top-left-radius: 10;
   border-top-right-radius: 10;
+  background-color: ${props => props.theme.colors.D};
   flex: 7;
 `;
 
@@ -41,6 +42,8 @@ const Cover = ({ children, source, ...props }) => (
     </CoverImage>
   </Touchable>
 );
+
+Cover.propTypes = Image.propTypes;
 
 const AbsoluteEventDate = styled(EventDate)`
   position: absolute;

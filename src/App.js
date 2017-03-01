@@ -1,8 +1,11 @@
 /* eslint class-methods-use-this: 0, no-console: 0 */
 
 import React, { PropTypes, Component } from 'react';
+import { BackAndroid } from 'react-native';
 import { Provider, connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 import noop from 'lodash/noop';
+import get from 'lodash/get';
 
 import Navigator from './redux/Navigator';
 import I18n from './I18n';
@@ -18,6 +21,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = ({
   hydrate: hydratation.hydrate,
+  back: NavigationActions.back,
 });
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -26,11 +30,13 @@ export default class App extends Component { // eslint-disable-line
     store: PropTypes.object.isRequired,
     hydratation: PropTypes.object.isRequired,
     hydrate: PropTypes.func.isRequired,
+    back: PropTypes.func.isRequired,
     options: PropTypes.object,
   }
 
   static defaultProps = {
     hydrate: noop,
+    back: noop,
     options: {},
   }
 
@@ -38,6 +44,22 @@ export default class App extends Component { // eslint-disable-line
     const { store, hydrate, options } = this.props;
 
     hydrate(store, options.hydratation);
+  }
+
+  componentDidMount() {
+
+  }
+
+  componentWillUnmount() {
+    BackAndroid.removeEventListener('backPress', this.handleBackButton);
+  }
+
+  handleBackButton = () => {
+    if (get(this.props, 'nav.routes.length', 0) < 0) {
+      return BackAndroid.exitApp();
+    } else {
+      return BackAndroid.addEventListener('backPress', this.props.back);
+    }
   }
 
   render() {

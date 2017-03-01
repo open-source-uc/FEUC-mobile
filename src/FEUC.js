@@ -10,7 +10,7 @@ import Client from './api-client/Client';
 import configureStore from './redux/store';
 
 // Moment.js I18n
-moment.locale('es', require('moment/locale/es'));
+moment.updateLocale('es', require('moment/locale/es'));
 
 // HTTP Client
 const client = new Client(Config.FEUC_API_URL || 'http://localhost:3000');

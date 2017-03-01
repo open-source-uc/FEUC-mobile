@@ -47,7 +47,7 @@ const ListViewRowBenefit = ({ item, row, ...props }) => (
         {item.description.brief}
       </ListViewRow.Body>
       <ListViewRow.Footer>
-        {`${item.uses} veces activado`.toUpperCase()}
+        {/* {`${item.uses} veces activado`.toUpperCase()} */}
       </ListViewRow.Footer>
     </ListViewRow.Content>
     <ListViewRow.Disclosure />

@@ -14,10 +14,10 @@ const View = styled.View`
 `;
 
 const Logo = styled.Image`
-  height: 38;
+  height: 34;
   width: 60;
   background-color: transparent;
-  margin-bottom: 4;
+  margin-bottom: 5;
 `;
 
 

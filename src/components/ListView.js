@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { ListView, StyleSheet } from 'react-native';
+import { ListView, StyleSheet, Platform } from 'react-native';
 import styled from 'styled-components/native';
 
 import RefreshControl from './RefreshControl';
@@ -13,7 +13,7 @@ export const Separator = styled.View`
 `;
 
 const StyledListView = styled.ListView`
-  padding-top: 28;
+  padding-top: ${Platform.OS === 'ios' ? 28 : 0};
   background-color: ${props => props.theme.colors.transparent};
 `;
 

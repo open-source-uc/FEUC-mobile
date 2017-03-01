@@ -1,5 +1,5 @@
 import { TabNavigator } from 'react-navigation';
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, Dimensions } from 'react-native';
 
 import { EventsToday, Events, EventsSaved } from '../../../screens/';
 import { colors, fonts } from '../../../styles';
@@ -37,7 +37,7 @@ export default TabNavigator({
   initialRouteName: 'EventsToday',
   tabBarPosition: 'top',
   lazyLoad: true,
-  swipeEnabled: true,
+  swipeEnabled: false,
   animationEnabled: true,
   order: ['EventsToday', 'Events', 'EventsSaved'],
   tabBarOptions: {
@@ -54,8 +54,12 @@ export default TabNavigator({
     },
     labelStyle: {
       fontFamily: fonts.main,
-      fontSize: 13,
+      fontSize: 12,
       fontWeight: '600',
+      textAlign: 'center',
+    },
+    indicatorStyle: {
+      backgroundColor: colors.B,
     },
   },
   navigationOptions: {
