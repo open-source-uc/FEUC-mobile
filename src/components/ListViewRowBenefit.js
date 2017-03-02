@@ -34,6 +34,7 @@ const ListViewRowBenefit = ({ item, row, ...props }) => {
   const restrictions = [
     limited && `Quedan ${Math.max(0, Number(stock) - Number(item.uses))}`,
     expires && `Expiración ${moment(deadline).fromNow()}`,
+    !limited && !expires && 'Disponible',
   ].filter(Boolean).map(s => s.toUpperCase());
 
   return (
