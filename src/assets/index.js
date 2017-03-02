@@ -4,6 +4,7 @@ export const images = {
   logo: {
     transparent: require('./images/logo-transparent-rect.png'),
     square: require('./images/logo-transparent.png'),
+    outline: require('./images/logo-outline.png'),
   },
   default: {
     initiative: require('./images/default-initiative.png'),

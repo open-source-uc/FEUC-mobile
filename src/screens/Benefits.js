@@ -4,7 +4,7 @@ import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
 import noop from 'lodash/noop';
 
-import { ListViewRowBenefit, ErrorBar, ListView } from '../components/';
+import { ListViewRowBenefit, ListView, Loading, ErrorBar } from '../components/';
 import { fetchBenefits } from '../redux/modules/benefits';
 import * as schemas from '../schemas';
 import Themed from '../styles';
@@ -99,6 +99,14 @@ export default class Benefits extends Component {
             renderRow={this.renderRow}
             refreshing={refreshing}
             onRefresh={this.props.fetchBenefits}
+            renderEmpty={() => (
+              <Loading>
+                <Loading.Logo />
+                <Loading.Text>
+                  {refreshing ? 'Cargando...' : 'Sin descuentos por el momento, vuelve pronto a revisar ;)'}
+                </Loading.Text>
+              </Loading>
+            )}
           />
         </Container>
       </Themed>

@@ -4,7 +4,7 @@ import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
 import noop from 'lodash/noop';
 
-import { ErrorBar, ListView, ListViewRowEvent } from '../components/';
+import { ListView, ListViewRowEvent, Loading, ErrorBar } from '../components/';
 import { fetchEventsSaved } from '../redux/modules/events';
 import * as schemas from '../schemas';
 import Themed from '../styles';
@@ -99,6 +99,14 @@ export default class EventsSaved extends Component {
             renderRow={this.renderRow}
             refreshing={refreshing}
             onRefresh={this.props.fetchEvents}
+            renderEmpty={() => (
+              <Loading>
+                <Loading.Logo />
+                <Loading.Text>
+                  {refreshing ? 'Cargando...' : 'Agrega eventos y aparecerán aquí'}
+                </Loading.Text>
+              </Loading>
+            )}
           />
         </Container>
       </Themed>

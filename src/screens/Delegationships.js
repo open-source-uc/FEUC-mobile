@@ -4,7 +4,7 @@ import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
 import noop from 'lodash/noop';
 
-import { ErrorBar, ListView, ListViewRowDelegationship } from '../components/';
+import { ListView, ListViewRowDelegationship, Loading, ErrorBar } from '../components/';
 import { fetchDelegationships } from '../redux/modules/delegationships';
 import * as schemas from '../schemas';
 import Themed from '../styles';
@@ -99,6 +99,14 @@ export default class Delegationships extends Component {
             renderRow={this.renderRow}
             refreshing={refreshing}
             onRefresh={this.props.fetchDelegationships}
+            renderEmpty={() => (
+              <Loading>
+                <Loading.Logo />
+                <Loading.Text>
+                  {refreshing ? 'Cargando...' : 'No hay vocalías para mostrar'}
+                </Loading.Text>
+              </Loading>
+            )}
           />
         </Container>
       </Themed>

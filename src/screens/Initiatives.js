@@ -4,7 +4,7 @@ import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
 import noop from 'lodash/noop';
 
-import { ErrorBar, ListView, ListViewRowInitiative } from '../components/';
+import { ListView, ListViewRowInitiative, Loading, ErrorBar } from '../components/';
 import { fetchInitiatives } from '../redux/modules/initiatives';
 import * as schemas from '../schemas';
 import Themed from '../styles';
@@ -99,6 +99,14 @@ export default class Initiatives extends Component {
             renderRow={this.renderRow}
             refreshing={refreshing}
             onRefresh={this.props.fetchInitiatives}
+            renderEmpty={() => (
+              <Loading>
+                <Loading.Logo />
+                <Loading.Text>
+                  {refreshing ? 'Cargando...' : 'No hay comunidades para mostrar'}
+                </Loading.Text>
+              </Loading>
+            )}
           />
         </Container>
       </Themed>

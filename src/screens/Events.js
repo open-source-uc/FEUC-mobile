@@ -4,7 +4,7 @@ import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
 import noop from 'lodash/noop';
 
-import { ErrorBar, ListView, ListViewRowEvent } from '../components/';
+import { ListView, ListViewRowEvent, Loading, ErrorBar } from '../components/';
 import { fetchEvents } from '../redux/modules/events';
 import * as schemas from '../schemas';
 import Themed from '../styles';
@@ -13,10 +13,6 @@ import Themed from '../styles';
 const Container = styled.View`
   flex: 1;
   background-color: ${props => props.theme.colors.background};
-`;
-
-const Text = styled.Text`
-  font-size: 20;
 `;
 
 
@@ -104,9 +100,12 @@ export default class Events extends Component {
             refreshing={refreshing}
             onRefresh={this.props.fetchEvents}
             renderEmpty={() => (
-              <Text>
-                Nada 😘
-              </Text>
+              <Loading>
+                <Loading.Logo />
+                <Loading.Text>
+                  {refreshing ? 'Cargando...' : 'No hay eventos para mostrar, vuelve pronto a revisar ;)'}
+                </Loading.Text>
+              </Loading>
             )}
           />
         </Container>
