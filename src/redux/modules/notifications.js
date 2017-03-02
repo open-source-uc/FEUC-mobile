@@ -36,7 +36,7 @@ export default handleActions({
 
 
 // Action creators
-export const registerDevice = data => async (dispatch, getState, { client }) => dispatch({
+export const registerDevice = data => (dispatch, getState, { client }) => dispatch({
   type: NOTIFICATION_REGISTER,
   payload: client.register(data),
 });

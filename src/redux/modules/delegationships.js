@@ -44,7 +44,7 @@ export default function reducer(state = initialState, action) {
 
 
 // Action creators
-export const fetchDelegationships = options => async (dispatch, getState, { client }) => dispatch({
+export const fetchDelegationships = options => (dispatch, getState, { client }) => dispatch({
   type: DELEGATIONSHIP_FETCH,
   payload: client.delegationships(options),
 });

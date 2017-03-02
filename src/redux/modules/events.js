@@ -44,7 +44,7 @@ export default function reducer(state = initialState, action) {
 
 
 // Action creators
-export const fetchEvents = options => async (dispatch, getState, { client }) => dispatch({
+export const fetchEvents = options => (dispatch, getState, { client }) => dispatch({
   type: EVENT_FETCH,
   payload: client.events(options),
 });

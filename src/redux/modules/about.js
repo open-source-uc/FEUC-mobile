@@ -42,7 +42,7 @@ export default function reducer(state = initialState, action) {
 
 
 // Action creators
-export const fetchAbout = options => async (dispatch, getState, { client }) => dispatch({
+export const fetchAbout = options => (dispatch, getState, { client }) => dispatch({
   type: ABOUT_FETCH,
   payload: client.about(options),
 });
