@@ -97,7 +97,7 @@ export default class Delegationship extends Component {
                 {delegationship.name}
               </Arc.Title>
               <ArcLead>
-                Somos ${342} participantes
+                {delegationship.lead}
               </ArcLead>
               <Arc.Content>
                 <Arc.Body>
