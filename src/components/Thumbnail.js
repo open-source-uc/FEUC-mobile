@@ -1,5 +1,5 @@
 import React, { PropTypes, PureComponent } from 'react';
-import { View, Image, findNodeHandle, Platform } from 'react-native';
+import { View, Image, Platform } from 'react-native';
 import { BlurView } from 'react-native-blur';
 import styled from 'styled-components/native';
 
@@ -38,6 +38,18 @@ Blurred.defaultProps = {
   blurType: 'light',
   blurAmount: 4,
 };
+
+const Opaque = styled.View`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  opacity: 0.3;
+`;
 
 const Upper = styled.Text`
   color: ${props => props.theme.colors.white};
@@ -86,7 +98,7 @@ export default class Thumbnail extends PureComponent {
   }
 
   state = {
-    viewRef: null,
+
   }
 
   render() {
@@ -102,12 +114,8 @@ export default class Thumbnail extends PureComponent {
             circle={circle}
             shadow={shadow}
             style={{ tintColor: tint }} // undefined is disabled
-            innerRef={(background) => {
-              this.background = background;
-            }}
-            onLoadEnd={() => this.setState({ viewRef: findNodeHandle(this.background) })}
           >
-            {blur && <Blurred viewRef={this.state.viewRef} />}
+            {blur && <Blurred />}
             {children}
           </ThumbnailImage>
         </ThumbnailContainer>
@@ -121,13 +129,9 @@ export default class Thumbnail extends PureComponent {
           circle={circle}
           shadow={shadow}
           style={{ tintColor: tint }} // undefined is disabled
-          innerRef={(background) => {
-            this.background = background;
-          }}
-          onLoadEnd={() => this.setState({ viewRef: findNodeHandle(this.background) })}
           {...props}
         >
-          {blur && <Blurred viewRef={this.state.viewRef} />}
+          {blur && <Opaque />}
           {children}
         </ThumbnailImage>
       );

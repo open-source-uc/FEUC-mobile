@@ -32,6 +32,15 @@ const ListViewRowBenefit = ({ item, row, ...props }) => {
     ? `${start.format('HH:mm')} - ${end.format('HH:mm')}`
     : `${start.format('HH:mm')} (${end.diff(start, 'days') + 1} días) - ${end.format('HH:mm')} hrs`;
 
+  const displayMonth = months.map(m => m.format('MMM'))
+    .map(m => trim(m, '.'))
+    .join(' - ')
+    .toUpperCase();
+
+  const displayDays = days.map(m => m.format('D'))
+    .join('-')
+    .toUpperCase();
+
   return (
     <ListViewRow
       background={Platform.OS === 'android' && row % 2 ? 'X' : 'Z'}
@@ -39,15 +48,10 @@ const ListViewRowBenefit = ({ item, row, ...props }) => {
     >
       <ListViewRow.Thumbnail blur source={selectImage(item)}>
         <ListViewRow.Thumbnail.Upper small={months.length > 1}>
-          {months.map(m => m.format('MMM'))
-            .map(m => trim(m, '.'))
-            .join(' - ')
-            .toUpperCase()}
+          {displayMonth}
         </ListViewRow.Thumbnail.Upper>
         <ListViewRow.Thumbnail.Main small={days.length > 1}>
-          {days.map(m => m.format('D'))
-            .join('-')
-            .toUpperCase()}
+          {displayDays}
         </ListViewRow.Thumbnail.Main>
       </ListViewRow.Thumbnail>
       <ListViewRow.Content>
@@ -57,6 +61,8 @@ const ListViewRowBenefit = ({ item, row, ...props }) => {
         </ListViewRow.Body>
         <ListViewRow.Footer>
           {display.toUpperCase()}
+          {'    '}
+          {Platform.OS === 'android' ? [displayMonth, displayDays].join(', ') : ''}
         </ListViewRow.Footer>
       </ListViewRow.Content>
       <ListViewRow.Disclosure />
