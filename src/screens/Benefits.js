@@ -7,6 +7,7 @@ import noop from 'lodash/noop';
 import { ListViewRowBenefit, ListView, Loading, ErrorBar } from '../components/';
 import { fetchBenefits } from '../redux/modules/benefits';
 import * as schemas from '../schemas';
+import { isExpired } from '../utils/benefits';
 import Themed from '../styles';
 
 
@@ -70,8 +71,12 @@ export default class Benefits extends Component {
   handlePress = (item) => {
     const { navigation } = this.props;
 
-    if (item && navigation) {
+    const expiredBy = isExpired(item);
+
+    if (item && navigation && !expiredBy.overall) {
       navigation.navigate('Benefit', { benefitId: item._id, title: item.title });
+    } else if (item && expiredBy.overall) {
+      alert('Ya no está disponible.'); // eslint-disable-line
     }
   }
 
