@@ -1,6 +1,6 @@
 // Actions
 import { BENEFIT_FETCH_FULFILLED } from './benefits';
-import { EVENT_FETCH_FULFILLED } from './events';
+import { EVENT_FETCH_FULFILLED, EVENT_FETCH_SAVED_FULFILLED } from './events';
 import { INITIATIVE_FETCH_FULFILLED } from './initiatives';
 import { DELEGATIONSHIP_FETCH_FULFILLED } from './delegationships';
 
@@ -49,6 +49,7 @@ export default function reducer(state = initialState, action) {
         },
       };
     }
+    case EVENT_FETCH_SAVED_FULFILLED:
     case EVENT_FETCH_FULFILLED: {
       return {
         ...state,

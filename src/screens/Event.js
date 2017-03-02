@@ -10,9 +10,11 @@ import stringify from 'qs/lib/stringify';
 import moment from 'moment';
 import get from 'lodash/get';
 import identity from 'lodash/identity';
+import noop from 'lodash/noop';
 import startCase from 'lodash/startCase';
 
 import { Button, ErrorBar, Tag, EventDate, RichText, Social, Loading } from '../components/';
+import { saveEvent, removeEvent } from '../redux/modules/events';
 import * as schemas from '../schemas';
 import Themed, { colors } from '../styles';
 
@@ -126,14 +128,18 @@ ActionText.defaultProps = {
 };
 
 
-const mapStateToProps = ({ nav, entities }) => {
+const mapStateToProps = ({ nav, entities, events }) => {
   const id = get(nav, ['routes', nav.index, 'params', 'eventId']);
   return {
     event: id ? denormalize(id, schemas.event, entities) : null,
+    isSaved: events.saved.includes(id),
   };
 };
 
-const mapDispatchToProps = null;
+const mapDispatchToProps = ({
+  saveEvent,
+  removeEvent,
+});
 
 @connect(mapStateToProps, mapDispatchToProps)
 @translate()
@@ -148,7 +154,10 @@ export default class Event extends Component {
   static propTypes = {
     // navigation: PropTypes.any,
     t: PropTypes.func,
+    saveEvent: PropTypes.func,
+    removeEvent: PropTypes.func,
     event: PropTypes.object,
+    isSaved: PropTypes.bool,
     error: PropTypes.object,
     bannerHeight: PropTypes.number,
     triangleHeight: PropTypes.number,
@@ -157,7 +166,10 @@ export default class Event extends Component {
   static defaultProps = {
     // navigation: null,
     t: identity,
+    saveEvent: noop,
+    removeEvent: noop,
     event: null,
+    isSaved: false,
     error: null,
     bannerHeight: 256,
     triangleHeight: 40,
@@ -165,11 +177,13 @@ export default class Event extends Component {
 
   state = {
     event: this.props.event,
+    isSaved: this.props.isSaved,
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.event) {
-      this.setState({ event: nextProps.event });
+    const { event, isSaved } = nextProps;
+    if (event) {
+      this.setState({ event, isSaved });
     }
   }
 
@@ -190,7 +204,12 @@ export default class Event extends Component {
   }
 
   handleToogleCalendar = () => {
-
+    const { event, isSaved } = this.state;
+    if (isSaved) {
+      this.props.removeEvent(event._id);
+    } else {
+      this.props.saveEvent(event._id);
+    }
   }
 
   handleSocialPress = async ({ url }) => {
@@ -251,7 +270,7 @@ export default class Event extends Component {
 
   renderContent = () => {
     const { t } = this.props;
-    const { event, addded } = this.state;
+    const { event, isSaved } = this.state;
     const location = this.renderLocation(event);
 
     return (
@@ -269,11 +288,11 @@ export default class Event extends Component {
               {this.formatTimeRange(event)}
             </Button.Text>
           </Button>
-          <Button color={addded ? 'Z' : 'A'} onPress={this.handleToogleCalendar}>
-            {/* <Button.Icon color={addded ? 'A' : 'Z'} name="ios-calendar" />
-            <Button.Text color={addded ? 'A' : 'Z'}>
-              Agregar a agenda
-            </Button.Text> */}
+          <Button color={isSaved ? 'Z' : 'A'} onPress={this.handleToogleCalendar}>
+            <Button.Icon color={isSaved ? 'A' : 'Z'} name="ios-calendar" />
+            <Button.Text color={isSaved ? 'A' : 'Z'}>
+              {isSaved ? 'Quitar de agenda' : 'Agregar a agenda'}
+            </Button.Text>
           </Button>
         </Row>
         <Row fluid separator vertical="fit">

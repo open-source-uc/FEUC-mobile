@@ -53,7 +53,7 @@ const AbsoluteEventDate = styled(EventDate)`
 `;
 
 const Bottom = styled.View`
-  flex: 3;
+  flex: 4;
 `;
 
 

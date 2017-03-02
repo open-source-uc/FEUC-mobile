@@ -110,6 +110,15 @@ const Arrow = styled(Ionicons)`
   margin: 0 10;
 `;
 
+const Calendar = styled(Ionicons)`
+  color: ${props => (props.active ? props.theme.colors.B : props.theme.colors.F)};
+  background-color: transparent;
+  font-size: 17;
+  text-align: center;
+  margin-right: 5;
+  padding-top: 3;
+`;
+
 const Nothing = styled.View``;
 
 const Footer = styled.View`
@@ -198,26 +207,34 @@ export default class EventsToday extends Component {
     }
   }
 
-  renderRow = (item, section, row, highlight) => (
-    <Page>
-      <Card highlight={highlight}>
-        <Card.Cover source={{ uri: get(item, 'banner.secure_url') }} onPress={() => this.handlePress(item)}>
-          <Card.EventDate date={new Date(get(item, 'temporality.start'))} />
-        </Card.Cover>
-        <Card.Bottom>
-          <CardContent>
-            <Title>{get(item, 'title', 'Sin título').toUpperCase()}</Title>
-            <Body>{get(item, 'description.brief')}</Body>
-            <Footer>
-              <When>
-                {'19:00 - 22:00 hrs.'.toUpperCase()}
-              </When>
-            </Footer>
-          </CardContent>
-        </Card.Bottom>
-      </Card>
-    </Page>
-  )
+  renderRow = (item, section, row, highlight) => {
+    const isSaved = this.props.events.saved.includes(item._id);
+
+    return (
+      <Page>
+        <Card highlight={highlight}>
+          <Card.Cover source={{ uri: get(item, 'banner.secure_url') }} onPress={() => this.handlePress(item)}>
+            <Card.EventDate date={new Date(get(item, 'temporality.start'))} />
+          </Card.Cover>
+          <Card.Bottom>
+            <CardContent>
+              <Title>{get(item, 'title', 'Sin título').toUpperCase()}</Title>
+              <Body>{get(item, 'description.brief')}</Body>
+              <Footer>
+                <When>
+                  {'19:00 - 22:00 hrs.'.toUpperCase()}
+                </When>
+                <Calendar
+                  name={isSaved ? 'ios-calendar' : 'ios-calendar-outline'}
+                  active={isSaved}
+                />
+              </Footer>
+            </CardContent>
+          </Card.Bottom>
+        </Card>
+      </Page>
+    );
+  }
 
   render = () => {
     const { events: { error, refreshing, result }, entities } = this.props;

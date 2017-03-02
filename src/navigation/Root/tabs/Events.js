@@ -39,7 +39,7 @@ export default TabNavigator({
   lazyLoad: true,
   swipeEnabled: false,
   animationEnabled: true,
-  order: ['EventsToday', 'Events'], // TODO: 'EventsSaved'],
+  order: ['EventsToday', 'Events', 'EventsSaved'],
   tabBarOptions: {
     showIcon: false,
     showLabel: true,

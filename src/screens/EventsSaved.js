@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import noop from 'lodash/noop';
 
 import { ErrorBar, ListView, ListViewRowEvent } from '../components/';
-import { fetchEvents } from '../redux/modules/events';
+import { fetchEventsSaved } from '../redux/modules/events';
 import * as schemas from '../schemas';
 import Themed from '../styles';
 
@@ -22,7 +22,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = ({
-  fetchEvents,
+  fetchEvents: fetchEventsSaved,
 });
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -45,7 +45,7 @@ export default class EventsSaved extends Component {
 
   static denormalize = ({ events, entities }) => {
     const schema = [schemas.event];
-    return denormalize(events.result, schema, entities);
+    return denormalize(events.saved, schema, entities);
   }
 
   static DataSource = new ListView.DataSource({
