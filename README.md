@@ -28,6 +28,7 @@ yarn install
 Create `.env` file for the following configuration variables:
 
 ```sh
+FEUC_API_URL=https://feuc.lopezjuri.com
 SIGNAL_APP_ID=...
 GOOGLE_MAPS_API_KEY=...
 ```
@@ -120,8 +121,24 @@ Change the app colors in [`android/app/src/main/res/values/styles.xml`](.android
 
 ## Production
 
+To create a `npm` and `git` version, commit everything on the master branch:
+
 ### iOS
 
+0. Open `ios/UCMaps.xcodeproj` with XCode.
+0. Go to `Project -> Scheme -> Edit Scheme (cmd + <)` and make sure you're in the `Run` tab from the side, and set the `Build Configuration` dropdown to `Release`.
+0. Select `Generic iOS Device`
+0. Go to `Product -> Archive`
+
+The final file should appear on the `Organizer`.
+
+> See: http://stackoverflow.com/a/34982804/3416691
+
+UNTESTED:
+
+```sh
+react-native run-ios --configuration Release
+```
 
 ### Android
 
@@ -133,6 +150,19 @@ keytool -genkey -v -keystore feuc-release.keystore -alias feuc -keyalg RSA -keys
 
 # Move it to ./android/app/
 mv feuc-release.keystore ./android/app/feuc-release.keystore
+```
+
+Edit `~/.gradle/gradle.properties`:
+
+```sh
+nano ~/.gradle/gradle.properties
+```
+
+```txt
+FEUC_RELEASE_STORE_FILE=feuc-release.keystore
+FEUC_RELEASE_KEY_ALIAS=feuc
+FEUC_RELEASE_STORE_PASSWORD=...
+FEUC_RELEASE_KEY_PASSWORD=...
 ```
 
 Compile the app with:

@@ -8,7 +8,6 @@
  */
 
 #import "AppDelegate.h"
-#import "RCTOneSignal.h"
 #import <ReactNativeConfig/ReactNativeConfig.h>
 
 #import <React/RCTBundleURLProvider.h>
