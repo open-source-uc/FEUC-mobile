@@ -103,10 +103,10 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file(project.env.get("RELEASE_STORE_FILE"))
-            storePassword project.env.get("RELEASE_STORE_PASSWORD")
-            keyAlias project.env.get("RELEASE_KEY_ALIAS")
-            keyPassword project.env.get("RELEASE_KEY_PASSWORD")
+            storeFile file(FEUC_RELEASE_STORE_FILE)
+            storePassword FEUC_RELEASE_STORE_PASSWORD
+            keyAlias FEUC_RELEASE_KEY_ALIAS
+            keyPassword FEUC_RELEASE_KEY_PASSWORD
         }
     }
     splits {
