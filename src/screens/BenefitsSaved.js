@@ -4,8 +4,8 @@ import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
 import noop from 'lodash/noop';
 
-import { ListViewRowBenefit, ErrorBar, ListView } from '../components/';
-import { fetchBenefits } from '../redux/modules/benefits';
+import { ListViewRowBenefit, ListView, Loading, ErrorBar } from '../components/';
+import { fetchBenefitsSaved } from '../redux/modules/benefits';
 import * as schemas from '../schemas';
 import Themed from '../styles';
 
@@ -15,14 +15,6 @@ const Container = styled.View`
   background-color: ${props => props.theme.colors.background};
 `;
 
-const Text = styled.Text`
-  font-family: ${props => props.theme.fonts.headers};
-  font-size: 30;
-  color: ${props => props.theme.colors.E};
-  margin-top: 36;
-  text-align: center;
-`;
-
 
 const mapStateToProps = state => ({
   benefits: state.benefits,
@@ -30,11 +22,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = ({
-  fetchBenefits,
+  fetchBenefits: fetchBenefitsSaved,
 });
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class BenefitsSaved extends Component {
+export default class Benefits extends Component {
   static propTypes = {
     benefits: PropTypes.object,
     entities: PropTypes.object, // eslint-disable-line
@@ -53,7 +45,7 @@ export default class BenefitsSaved extends Component {
 
   static denormalize = ({ benefits, entities }) => {
     const schema = [schemas.benefit];
-    return denormalize(benefits.result, schema, entities);
+    return denormalize(benefits.saved, schema, entities);
   }
 
   static DataSource = new ListView.DataSource({
@@ -101,20 +93,20 @@ export default class BenefitsSaved extends Component {
     return (
       <Themed content="dark">
         <Container>
-          <Text>Próximamente</Text>
-        </Container>
-      </Themed>
-    );
-
-    return (
-      <Themed content="dark">
-        <Container>
           <ErrorBar error={error} />
           <ListView
             dataSource={dataSource}
             renderRow={this.renderRow}
             refreshing={refreshing}
             onRefresh={this.props.fetchBenefits}
+            renderEmpty={() => (
+              <Loading>
+                <Loading.Logo />
+                <Loading.Text>
+                  {refreshing ? 'Cargando...' : 'Aquí se guardarán los beneficios que vayas adquiriendo'}
+                </Loading.Text>
+              </Loading>
+            )}
           />
         </Container>
       </Themed>

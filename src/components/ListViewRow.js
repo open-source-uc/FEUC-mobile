@@ -65,7 +65,7 @@ Title.defaultProps = {
 
 const Footer = styled.Text`
   background-color: transparent;
-  color: ${props => props.theme.colors.B};
+  color: ${props => props.theme.colors[props.color] || props.theme.colors.B};
   font-family: ${props => props.theme.fonts.main};
   font-size: 9;
   margin: 4 0 2;
@@ -73,7 +73,7 @@ const Footer = styled.Text`
 
 const Body = styled.Text`
   background-color: transparent;
-  color: ${props => props.theme.colors.F};
+  color: ${props => props.theme.colors[props.color] || props.theme.colors.F};
   font-family: ${props => props.theme.fonts.body};
   font-weight: 400;
   font-size: 11;

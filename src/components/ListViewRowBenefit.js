@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
 import { Platform } from 'react-native';
 import styled from 'styled-components/native';
+import moment from 'moment';
 import get from 'lodash/get';
 
 import ListViewRow from './ListViewRow';
 import { images } from '../assets/';
+import { isExpired } from '../utils/benefits';
 
 
 const FooterRow = styled.View`
@@ -24,36 +26,44 @@ function selectImage(item) {
 }
 
 
-const ListViewRowBenefit = ({ item, row, ...props }) => (
-  <ListViewRow
-    background={Platform.OS === 'android' && row % 2 ? 'X' : 'Z'}
-    {...props}
-  >
-    <ListViewRow.Thumbnail
-      shadow
-      circle
-      source={selectImage(item)}
-    />
-    <ListViewRow.Content>
-      <FooterRow>
+const ListViewRowBenefit = ({ item, row, ...props }) => {
+  const { limited, stock, expires, deadline } = item.benefit;
+
+  const didExpire = isExpired(item);
+
+  const restrictions = [
+    limited && `Quedan ${Math.max(0, Number(stock) - Number(item.uses))}`,
+    expires && `Expiración ${moment(deadline).fromNow()}`,
+  ].filter(Boolean).map(s => s.toUpperCase());
+
+  return (
+    <ListViewRow
+      background={Platform.OS === 'android' && row % 2 ? 'X' : 'Z'}
+      {...props}
+    >
+      <ListViewRow.Thumbnail
+        shadow
+        circle
+        source={selectImage(item)}
+      />
+      <ListViewRow.Content>
+        <FooterRow>
+          <ListViewRow.Footer color={didExpire.overall ? 'error' : 'B'}>
+            {restrictions.join('  |  ')}
+          </ListViewRow.Footer>
+        </FooterRow>
+        <ListViewRow.Title>{item.title}</ListViewRow.Title>
+        <ListViewRow.Body>
+          {item.description.brief || 'Sin descripción.'}
+        </ListViewRow.Body>
         <ListViewRow.Footer>
-          {(item.benefit.limited ? `Quedan ${item.benefit.stock - item.usage}` : 'ilimitado').toUpperCase()}
+          {`${item.uses} veces activado`.toUpperCase()}
         </ListViewRow.Footer>
-        <ListViewRow.Footer>
-          {(item.benefit.expires ? '   |  🕝 hasta el 2017' : '').toUpperCase()}
-        </ListViewRow.Footer>
-      </FooterRow>
-      <ListViewRow.Title>{item.title}</ListViewRow.Title>
-      <ListViewRow.Body>
-        {item.description.brief}
-      </ListViewRow.Body>
-      <ListViewRow.Footer>
-        {/* {`${item.uses} veces activado`.toUpperCase()} */}
-      </ListViewRow.Footer>
-    </ListViewRow.Content>
-    <ListViewRow.Disclosure />
-  </ListViewRow>
-);
+      </ListViewRow.Content>
+      <ListViewRow.Disclosure />
+    </ListViewRow>
+  );
+};
 
 ListViewRowBenefit.propTypes = {
   item: PropTypes.object.isRequired,

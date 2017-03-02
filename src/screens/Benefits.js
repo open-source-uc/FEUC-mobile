@@ -71,7 +71,7 @@ export default class Benefits extends Component {
     const { navigation } = this.props;
 
     if (item && navigation) {
-      navigation.navigate('Benefits', { benefitId: item._id, title: item.title });
+      navigation.navigate('Benefit', { benefitId: item._id, title: item.title });
     }
   }
 

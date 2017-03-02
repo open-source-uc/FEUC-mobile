@@ -77,11 +77,11 @@ const Lead = styled.Text`
 `;
 
 const DropTexts = styled.View`
-  flex-direction: row;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 20;
+  padding: 0 30;
 `;
 
 const DropText = styled.Text`
@@ -89,7 +89,7 @@ const DropText = styled.Text`
   text-align: center;
   font-family: ${props => props.theme.fonts.headers};
   font-weight: 500;
-  font-size: 10;
+  font-size: 11;
   margin: 0 3;
 `;
 

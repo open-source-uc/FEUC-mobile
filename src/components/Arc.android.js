@@ -77,11 +77,11 @@ const Lead = styled.Text`
 `;
 
 const DropTexts = styled.View`
-  flex-direction: row;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 20;
+  padding: 0 30;
 `;
 
 const DropText = styled.Text`

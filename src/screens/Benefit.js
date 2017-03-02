@@ -4,8 +4,10 @@ import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
 import moment from 'moment';
 import get from 'lodash/get';
+import noop from 'lodash/noop';
 
 import { Arc, Button, ErrorBar } from '../components/';
+import { saveBenefit } from '../redux/modules/benefits';
 import * as schemas from '../schemas';
 import Themed from '../styles';
 
@@ -34,14 +36,17 @@ const ButtonText = styled(Button.Text)`
 `;
 
 
-const mapStateToProps = ({ nav, entities }) => {
+const mapStateToProps = ({ nav, entities, benefits }) => {
   const id = get(nav, ['routes', nav.index, 'params', 'benefitId']);
   return {
     benefit: id ? denormalize(id, schemas.benefit, entities) : null,
+    isSaved: benefits.saved.includes(id),
   };
 };
 
-const mapDispatchToProps = null;
+const mapDispatchToProps = {
+  saveBenefit,
+};
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Benefit extends Component {
@@ -55,6 +60,8 @@ export default class Benefit extends Component {
 
   static propTypes = {
     navigation: PropTypes.object,
+    saveBenefit: PropTypes.func,
+    isSaved: PropTypes.bool,
     benefit: PropTypes.object,
     error: PropTypes.object,
     bannerHeight: PropTypes.number,
@@ -62,6 +69,8 @@ export default class Benefit extends Component {
 
   static defaultProps = {
     navigation: null,
+    saveBenefit: noop,
+    isSaved: false,
     benefit: null,
     error: null,
     bannerHeight: 230,
@@ -69,17 +78,23 @@ export default class Benefit extends Component {
 
   state = {
     benefit: this.props.benefit,
+    isSaved: this.props.isSaved,
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.benefit) {
-      this.setState({ benefit: nextProps.benefit });
+    const { benefit, isSaved } = nextProps;
+    if (benefit) {
+      this.setState({ benefit, isSaved });
     }
   }
 
   handleActivate = () => {
-    const { benefit, navigation } = this.props;
+    const { navigation } = this.props;
+    const { benefit, isSaved } = this.state;
 
+    if (benefit && !isSaved) {
+      this.props.saveBenefit(benefit._id);
+    }
     if (benefit && navigation) {
       navigation.navigate('BenefitActive', { benefitId: benefit._id, title: 'Activado' });
     }
@@ -87,7 +102,7 @@ export default class Benefit extends Component {
 
   render() {
     const { bannerHeight, error } = this.props;
-    const { benefit } = this.state;
+    const { benefit, isSaved } = this.state;
 
     const responsableSource = {
       uri: get(benefit, ['responsable', benefit.responsable.kind, 'image', 'secure_url']),
@@ -120,12 +135,14 @@ export default class Benefit extends Component {
                     {`Solo ${benefit.benefit.stock} disponibles`}
                   </Arc.DropText>
                 )}
-                {benefit.benefit.limited && benefit.benefit.expires && (
-                  <Arc.DropText>-</Arc.DropText>
+                {benefit.benefit.limited && (
+                  <Arc.DropText>
+                    {`${benefit.uses} personas lo han usado`}
+                  </Arc.DropText>
                 )}
                 {benefit.benefit.expires && (
                   <Arc.DropText>
-                    {`Válido hasta ${moment(benefit.benefit.deadline).toNow()}`}
+                    {`Válido hasta ${moment(benefit.benefit.deadline).format('D/MM/YYY [a las] HH:mm')}`}
                   </Arc.DropText>
                 )}
               </Arc.DropTexts>
@@ -143,7 +160,7 @@ export default class Benefit extends Component {
             <Bottom>
               <Button color="B" onPress={this.handleActivate}>
                 <ButtonText color="Z">
-                  Activar
+                  {isSaved ? 'Abrir' : 'Activar'}
                 </ButtonText>
               </Button>
             </Bottom>

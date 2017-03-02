@@ -76,7 +76,7 @@ const Navigator = StackNavigator({
       }),
     },
   },
-  Benefits: {
+  Benefit: {
     screen: StackNavigator({
       Benefit: {
         screen: Benefit,
