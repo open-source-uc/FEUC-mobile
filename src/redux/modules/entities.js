@@ -3,6 +3,7 @@ import { BENEFIT_FETCH_FULFILLED, BENEFIT_FETCH_SAVED_FULFILLED } from './benefi
 import { EVENT_FETCH_FULFILLED, EVENT_FETCH_SAVED_FULFILLED } from './events';
 import { INITIATIVE_FETCH_FULFILLED } from './initiatives';
 import { DELEGATIONSHIP_FETCH_FULFILLED } from './delegationships';
+import { NOTIFICATION_RECEIVED } from './notifications';
 
 
 // Initial state
@@ -14,6 +15,7 @@ const initialState = {
   brands: {},
   tags: {},
   campuses: {},
+  notifications: {},
 };
 
 export default function reducer(state = initialState, action) {
@@ -73,6 +75,15 @@ export default function reducer(state = initialState, action) {
         delegationships: {
           ...state.delegationships,
           ...action.payload.entities.delegationships,
+        },
+      };
+    }
+    case NOTIFICATION_RECEIVED: {
+      return {
+        ...state,
+        notifications: {
+          ...state.notifications,
+          ...action.payload.entities.notifications,
         },
       };
     }

@@ -1,6 +1,3 @@
-/* eslint no-unused-vars: 0 */
-
-import { handleActions, createAction } from 'redux-actions';
 import { persistStore } from 'redux-persist';
 
 
@@ -20,29 +17,39 @@ const initialState = {
 
 
 // Reducer
-export default handleActions({
-  [HYDRATATION_PENDING]: (state, { payload }) => ({
-    ...state,
-    done: false,
-  }),
-
-  [HYDRATATION_FULFILLED]: (state, { payload }) => ({
-    error: null,
-    persistor: payload,
-    done: true,
-  }),
-
-  [HYDRATATION_REJECTED]: (state, { payload }) => ({
-    error: payload,
-  }),
-
-}, initialState);
-
+export default function reducer(state = initialState, action) {
+  switch (action.type) {
+    case HYDRATATION_PENDING: {
+      return {
+        ...state,
+        done: false,
+      };
+    }
+    case HYDRATATION_FULFILLED: {
+      return {
+        ...state,
+        error: null,
+        persistor: action.payload,
+        done: true,
+      };
+    }
+    case HYDRATATION_REJECTED: {
+      return {
+        ...state,
+        error: action.payload,
+        done: true,
+      };
+    }
+    default: {
+      return state;
+    }
+  }
+}
 
 // Action creators
-export const hydrate = createAction(HYDRATATION, (store, options) => {
+export const hydrate = (store, options) => {
   const promise = new Promise((resolve, reject) => {
-    const persistor = persistStore(store, options, (err, restored) => {
+    const persistor = persistStore(store, options, (err) => {
       if (err) reject(err);
       else resolve(persistor);
     });
@@ -50,5 +57,8 @@ export const hydrate = createAction(HYDRATATION, (store, options) => {
     // persistor.purge();
   });
 
-  return promise;
-});
+  return {
+    type: HYDRATATION,
+    payload: promise,
+  };
+};

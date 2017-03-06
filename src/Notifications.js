@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import noop from 'lodash/noop';
 import get from 'lodash/get';
 
-import { registerDevice, addNotification } from './redux/modules/notifications';
+import { registerDevice, receiveNotification } from './redux/modules/notifications';
 
 
 const mapStateToProps = state => ({
@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = ({
-  addNotification,
+  receiveNotification,
   registerDevice,
 });
 
@@ -25,13 +25,13 @@ export default class Notifications extends Component {
     // notifications: PropTypes.object,
     children: PropTypes.node,
     registerDevice: PropTypes.func,
-    addNotification: PropTypes.func,
+    receiveNotification: PropTypes.func,
   }
 
   static defaultProps = {
     children: null,
     registerDevice: noop,
-    addNotification: noop,
+    receiveNotification: noop,
   }
 
   componentWillMount = () => {
@@ -49,7 +49,7 @@ export default class Notifications extends Component {
   }
 
   onReceived = (notification) => {
-    this.props.addNotification(notification);
+    this.props.receiveNotification(notification);
   }
 
   onOpened(openResult) {

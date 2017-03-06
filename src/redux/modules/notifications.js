@@ -1,11 +1,10 @@
-import { handleActions, createAction } from 'redux-actions';
 import { normalize } from 'normalizr';
 
 import * as schemas from '../../schemas';
 
 
 // Actions
-export const NOTIFICATION_ADD = 'feuc/notifications/NOTIFICATION_ADD';
+export const NOTIFICATION_RECEIVED = 'feuc/notifications/NOTIFICATION_RECEIVED';
 export const NOTIFICATION_REGISTER = 'feuc/notifications/NOTIFICATION_REGISTER';
 export const NOTIFICATION_REGISTER_PENDING = 'feuc/notifications/NOTIFICATION_REGISTER_PENDING';
 export const NOTIFICATION_REGISTER_FULFILLED = 'feuc/notifications/NOTIFICATION_REGISTER_FULFILLED';
@@ -14,26 +13,31 @@ export const NOTIFICATION_REGISTER_REJECTED = 'feuc/notifications/NOTIFICATION_R
 
 // Initial state
 const initialState = {
-  entities: {},
+  result: [],
   registration: null,
 };
 
 
 // Reducer
-export default handleActions({
-  [NOTIFICATION_REGISTER_FULFILLED]: (state, { payload }) => ({
-    ...state,
-    registration: payload,
-  }),
-  [NOTIFICATION_ADD]: (state, { payload }) => ({
-    ...state,
-    entities: {
-      ...state.entities,
-      ...payload.entities.notifications,
-    },
-  }),
-}, initialState);
-
+export default function reducer(state = initialState, action) {
+  switch (action.type) {
+    case NOTIFICATION_REGISTER_FULFILLED: {
+      return {
+        ...state,
+        registration: action.payload,
+      };
+    }
+    case NOTIFICATION_RECEIVED: {
+      return {
+        ...state,
+        result: action.payload.result,
+      };
+    }
+    default: {
+      return state;
+    }
+  }
+}
 
 // Action creators
 export const registerDevice = data => (dispatch, getState, { client }) => dispatch({
@@ -41,10 +45,13 @@ export const registerDevice = data => (dispatch, getState, { client }) => dispat
   payload: client.register(data),
 });
 
-export const addNotification = createAction(NOTIFICATION_ADD, (notification) => {
-  const notifications = [].concat(notification).map(notif => ({
+export const receiveNotification = (data) => {
+  const notifications = [].concat(data).map(notif => ({
     id: notif.payload.notificationID,
     ...notif,
   }));
-  return normalize(notifications, [schemas.notification]);
-});
+  return {
+    type: NOTIFICATION_RECEIVED,
+    payload: normalize(notifications, [schemas.notification]),
+  };
+};
