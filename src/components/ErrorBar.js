@@ -35,8 +35,8 @@ export default class ErrorBar extends PureComponent {
     } else if (isString(error)) {
       return error;
     } else {
-      console.warn('Do not how to render error:', error); // eslint-disable-line
-      return error;
+      // console.warn('Do not how to render error:', error); // eslint-disable-line
+      return 'Error desconocido';
     }
   }
 

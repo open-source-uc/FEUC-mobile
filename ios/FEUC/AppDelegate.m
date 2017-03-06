@@ -8,12 +8,11 @@
  */
 
 #import "AppDelegate.h"
-#import <ReactNativeConfig/ReactNativeConfig.h>
+#import "ReactNativeConfig.h"
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
-@import GoogleMaps;
 
 @implementation AppDelegate
 
@@ -29,7 +28,7 @@
   /**
    * See: https://github.com/airbnb/react-native-maps/blob/master/docs/installation.md#option-1-cocoapods---same-as-the-included-airmapsexplorer-example
    */
-  [GMSServices provideAPIKey:[ReactNativeConfig envFor:@"GOOGLE_MAPS_API_KEY"]];
+  // [GMSServices provideAPIKey:[ReactNativeConfig envFor:@"GOOGLE_MAPS_API_KEY"]];
 
   NSURL *jsCodeLocation;
 

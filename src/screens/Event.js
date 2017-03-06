@@ -98,6 +98,7 @@ const SubTitle = styled.Text`
   color: ${props => props.theme.colors.E};
   font-size: 13;
   font-weight: 300;
+  margin-bottom: 12;
 `;
 
 const AboutTitle = styled.Text`

@@ -12,6 +12,7 @@ import { Card, RefreshControl, ErrorBar } from '../components/';
 import { fetchEvents } from '../redux/modules/events';
 import * as schemas from '../schemas';
 import Themed, { colors } from '../styles';
+import { getDateProperties } from '../utils/events';
 
 
 const Container = styled.Image`
@@ -209,6 +210,7 @@ export default class EventsToday extends Component {
 
   renderRow = (item, section, row, highlight) => {
     const isSaved = this.props.events.saved.includes(item._id);
+    const date = getDateProperties(item, true);
 
     return (
       <Page>
@@ -222,7 +224,7 @@ export default class EventsToday extends Component {
               <Body>{get(item, 'description.brief')}</Body>
               <Footer>
                 <When>
-                  {'19:00 - 22:00 hrs.'.toUpperCase()}
+                  {date.range.toUpperCase()}
                 </When>
                 <Calendar
                   name={isSaved ? 'ios-calendar' : 'ios-calendar-outline'}

@@ -1,18 +1,15 @@
 package cl.feuc.app;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.facebook.react.ReactApplication;
-import com.react.rnspinkit.RNSpinkitPackage;
-import com.cmcewen.blurview.BlurViewPackage;
-import com.BV.LinearGradient.LinearGradientPackage;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.horcrux.svg.SvgPackage;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.facebook.react.ReactInstanceManager;
+import com.horcrux.svg.SvgPackage;
+import com.react.rnspinkit.RNSpinkitPackage;
+import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+import com.cmcewen.blurview.BlurViewPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -33,14 +30,13 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNSpinkitPackage(),
-            new BlurViewPackage(),
-            new LinearGradientPackage(),
-            new RNDeviceInfo(),
+            new VectorIconsPackage(),
             new SvgPackage(),
-            new ReactNativeConfigPackage(),
+            new RNSpinkitPackage(),
             new ReactNativeOneSignalPackage(),
-            new VectorIconsPackage()
+            new RNDeviceInfo(),
+            new ReactNativeConfigPackage(),
+            new BlurViewPackage()
       );
     }
   };
