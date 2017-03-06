@@ -1,5 +1,4 @@
 // Tabs
-export { default as Home } from './Home';
 export { default as Delegationships } from './Delegationships';
 export { default as Initiatives } from './Initiatives';
 export { default as Events } from './Events';

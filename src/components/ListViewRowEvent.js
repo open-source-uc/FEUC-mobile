@@ -1,11 +1,10 @@
 import React, { PropTypes } from 'react';
 import { Platform } from 'react-native';
-import moment from 'moment';
 import get from 'lodash/get';
-import trim from 'lodash/trim';
 
 import ListViewRow from './ListViewRow';
 import { images } from '../assets/';
+import { getDateProperties } from '../utils/events';
 
 
 function selectImage(item) {
@@ -20,26 +19,7 @@ function selectImage(item) {
 
 
 const ListViewRowBenefit = ({ item, row, ...props }) => {
-  const start = moment(get(item, 'temporality.start')); // required
-  const end = moment(get(item, 'temporality.end')); // required
-
-  const isSameDay = start.isSame(end, 'day');
-  const days = isSameDay ? [start] : [start, end];
-  const isSameMonth = start.isSame(end, 'month');
-  const months = isSameMonth ? [start] : [start, end];
-
-  const display = isSameDay
-    ? `${start.format('HH:mm')} - ${end.format('HH:mm')}`
-    : `${start.format('HH:mm')} (${end.diff(start, 'days') + 1} días) - ${end.format('HH:mm')} hrs`;
-
-  const displayMonth = months.map(m => m.format('MMM'))
-    .map(m => trim(m, '.'))
-    .join(' - ')
-    .toUpperCase();
-
-  const displayDays = days.map(m => m.format('D'))
-    .join('-')
-    .toUpperCase();
+  const date = getDateProperties(item);
 
   return (
     <ListViewRow
@@ -47,11 +27,11 @@ const ListViewRowBenefit = ({ item, row, ...props }) => {
       {...props}
     >
       <ListViewRow.Thumbnail blur source={selectImage(item)}>
-        <ListViewRow.Thumbnail.Upper small={months.length > 1}>
-          {displayMonth}
+        <ListViewRow.Thumbnail.Upper small={date.months.length > 1}>
+          {date.rangeMonth}
         </ListViewRow.Thumbnail.Upper>
-        <ListViewRow.Thumbnail.Main small={days.length > 1}>
-          {displayDays}
+        <ListViewRow.Thumbnail.Main small={date.days.length > 1}>
+          {date.rangeDays}
         </ListViewRow.Thumbnail.Main>
       </ListViewRow.Thumbnail>
       <ListViewRow.Content>
@@ -60,9 +40,9 @@ const ListViewRowBenefit = ({ item, row, ...props }) => {
           {get(item, 'description.brief', item.subtitle)}
         </ListViewRow.Body>
         <ListViewRow.Footer>
-          {display.toUpperCase()}
+          {date.range.toUpperCase()}
           {'    '}
-          {Platform.OS === 'android' ? [displayMonth, displayDays].join(', ') : ''}
+          {Platform.OS === 'android' ? [date.rangeMonth, date.rangeDays].join(', ') : ''}
         </ListViewRow.Footer>
       </ListViewRow.Content>
       <ListViewRow.Disclosure />
