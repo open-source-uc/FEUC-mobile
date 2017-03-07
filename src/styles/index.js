@@ -4,6 +4,7 @@ import styled, { ThemeProvider } from 'styled-components/native';
 import isArray from 'lodash/fp/isArray';
 
 export const colors = {
+  Y: '#F2F2F277',
   X: '#F2F2F2',
   Z: '#FFFFFF',
   A: '#43D1C0',

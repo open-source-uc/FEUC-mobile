@@ -2,6 +2,7 @@
 export { default as Delegationships } from './Delegationships';
 export { default as Initiatives } from './Initiatives';
 export { default as Events } from './Events';
+export { default as SearchView } from './SearchView';
 export { default as EventsSaved } from './EventsSaved';
 export { default as EventsToday } from './EventsToday';
 export { default as About } from './About';
