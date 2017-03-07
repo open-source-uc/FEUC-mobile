@@ -1,4 +1,4 @@
-/* eslint class-methods-use-this: 0, no-console: 0 */
+/* eslint class-methods-use-this: 0 */
 
 import React, { PropTypes, Component } from 'react';
 import { BackAndroid } from 'react-native';
@@ -55,7 +55,6 @@ export default class App extends Component { // eslint-disable-line
   }
 
   handleBackButton = () => {
-    console.log(get(this.props, 'nav.routes.length'));
     if (get(this.props, 'nav.routes.length', 0) <= 1) {
       return BackAndroid.exitApp();
     } else {
