@@ -3,6 +3,7 @@ import { BENEFIT_FETCH_FULFILLED, BENEFIT_FETCH_SAVED_FULFILLED } from './benefi
 import { EVENT_FETCH_FULFILLED, EVENT_FETCH_SAVED_FULFILLED } from './events';
 import { INITIATIVE_FETCH_FULFILLED } from './initiatives';
 import { DELEGATIONSHIP_FETCH_FULFILLED } from './delegationships';
+import { TAG_FETCH_FULFILLED } from './tags';
 import { NOTIFICATION_RECEIVED } from './notifications';
 
 
@@ -49,6 +50,15 @@ export default function reducer(state = initialState, action) {
         delegationships: {
           ...state.delegationships,
           ...action.payload.entities.delegationships,
+        },
+      };
+    }
+    case TAG_FETCH_FULFILLED: {
+      return {
+        ...state,
+        tags: {
+          ...state.tags,
+          ...action.payload.entities.tags,
         },
       };
     }

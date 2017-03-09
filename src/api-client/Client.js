@@ -76,6 +76,11 @@ export default class Client {
     return response;
   }
 
+  async tags(options) {
+    const response = await fetcher(`${this.baseURL}/api/v1/tags`, options);
+    return response;
+  }
+
   async benefits(options) {
     const response = await fetcher(`${this.baseURL}/api/v1/benefits`, options);
     return response;

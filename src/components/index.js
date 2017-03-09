@@ -8,6 +8,8 @@ export { default as Thumbnail } from './Thumbnail';
 export { default as Logo } from './Logo';
 export { default as Arc } from './Arc'; // eslint-disable-line
 export { default as Card } from './Card';
+export { default as SearchTag } from './SearchTag';
+export { default as SearchTags } from './SearchTags';
 export { default as ListView } from './ListView';
 export { default as ListViewRow } from './ListViewRow';
 export { default as ListViewRowBenefit } from './ListViewRowBenefit';

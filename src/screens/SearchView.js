@@ -1,25 +1,67 @@
 import React, { PropTypes, Component } from 'react';
 import { StyleSheet, ListView, Dimensions } from 'react-native';
-import { connect } from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { connect } from 'react-redux';
 import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
 import noop from 'lodash/noop';
 
-import { Loading, ErrorBar } from '../components/';
-import { fetchEvents } from '../redux/modules/events';
+import { Loading, ErrorBar, SearchTags, SearchTag } from '../components/';
+import { fetchTags, selectTag, deselectTag, selectCampus } from '../redux/modules/tags';
 import * as schemas from '../schemas';
-import Themed from '../styles';
+import Themed, { colors } from '../styles';
 
 
-const Container = styled.View`
+const Container = styled(LinearGradient)`
   flex: 1;
   background-color: ${props => props.theme.colors.B};
 `;
 
-const Top = styled.View`
-  height: 60;
+Container.defaultProps = {
+  colors: [colors.A, colors.B],
+  start: { x: 0.0, y: 1.0 },
+  end: { x: 1.0, y: 0.0 },
+};
+
+const SearchBar = styled.View`
+  height: 40;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: stretch;
 `;
+
+const SearchButton = styled.TouchableOpacity`
+  background-color: ${props => props.theme.colors.Z};
+  width: 76;
+  justify-content: center;
+  align-items: center;
+`;
+
+const SearchInput = styled.TextInput`
+  flex: 1;
+  padding: 0 18;
+  color: ${props => props.theme.colors.Z};
+  background-color: #FFFFFF22;
+  font-size: 16;
+  font-weight: 500;
+`;
+
+SearchInput.defaultProps = {
+  placeholderTextColor: colors.X,
+  returnKeyType: 'search',
+  selectionColor: colors.C,
+  underlineColorAndroid: 'transparent',
+};
+
+const SearchIcon = styled(Ionicons)`
+  color: ${props => props.theme.colors.B};
+  font-size: 22;
+`;
+
+SearchIcon.defaultProps = {
+  name: 'ios-search',
+};
 
 const Cell = styled.View`
   height: ${() => Dimensions.get('window').width / 3};
@@ -52,7 +94,7 @@ const CellText = styled.Text`
 const Grid = styled(ListView)`
   background-color: transparent;
   margin-top: 10;
-  flex: 10;
+  flex: 1;
 `;
 
 Grid.defaultProps = {
@@ -65,6 +107,7 @@ Grid.defaultProps = {
 
 const Title = styled.Text`
   color: ${props => props.theme.colors.Z};
+  background-color: transparent;
   font-family: ${props => props.theme.fonts.main};
   text-align: center;
   font-weight: 800;
@@ -112,7 +155,9 @@ CampusCircle.defaultProps = {
 };
 
 const CampusCircleText = styled.Text`
+  font-family: ${props => props.theme.fonts.main};
   color: ${props => (props.selected ? props.theme.colors.C : props.theme.colors.G)};
+  font-weight: 200;
   font-size: 18;
 `;
 
@@ -137,48 +182,44 @@ const CurrentCampusText = styled.Text`
 
 
 const mapStateToProps = state => ({
-  events: state.events,
+  tags: state.tags,
   entities: state.entities,
 });
 
 const mapDispatchToProps = ({
-  fetchEvents,
+  fetchTags,
+  selectCampus,
+  selectTag,
+  deselectTag,
 });
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class SearchView extends Component {
   static propTypes = {
-    events: PropTypes.object,
+    tags: PropTypes.object,
     entities: PropTypes.object, // eslint-disable-line
     // navigation: PropTypes.object,
-    campuses: PropTypes.array,
 
-    fetchEvents: PropTypes.func,
+    fetchTags: PropTypes.func,
+    selectCampus: PropTypes.func,
+    selectTag: PropTypes.func,
+    deselectTag: PropTypes.func,
   }
 
   static defaultProps = {
-    events: {},
+    tags: {},
     entities: {},
     // navigation: null,
-    campuses: [{
-      _id: 1,
-      name: 'San Joaquín',
-      short: 'SJ',
-    }, {
-      _id: 2,
-      name: 'Lo Contador',
-      short: 'LC',
-    }, {
-      _id: 3,
-      name: 'Lo Contador',
-      short: 'LC',
-    }],
-    fetchEvents: noop,
+    fetchTags: noop,
+    selectCampus: noop,
+    selectTag: noop,
+    deselectTag: noop,
   }
 
-  static denormalize = ({ events, entities }) => {
-    const schema = [schemas.event];
-    return denormalize(events.result, schema, entities);
+  static denormalize = ({ tags, entities }) => {
+    const schema = [schemas.tag];
+    const result = denormalize(tags.result, schema, entities);
+    return result.filter(tag => tag && tag.searchable);
   }
 
   static DataSource = new ListView.DataSource({
@@ -186,73 +227,103 @@ export default class SearchView extends Component {
   })
 
   state = {
-    selectedTags: {},
-    selectedCampus: 2,
+    search: '',
     dataSource: this.constructor.DataSource.cloneWithRows(this.constructor.denormalize(this.props)),
   }
 
   componentDidMount = () => {
-    this.props.fetchEvents();
+    this.props.fetchTags();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.entities && nextProps.events) {
+    if (nextProps.entities && nextProps.tags) {
       const items = this.constructor.denormalize(nextProps);
       this.setState({ dataSource: this.constructor.DataSource.cloneWithRows(items) });
     }
   }
 
+  handleSearchPress = () => {
+    // const { search } = this.state;
+    this.setState({ search: '' });
+  }
+
   handleItemSelection = (item) => {
-    const selectedTags = {
-      ...this.state.selectedTags,
-      [item._id]: !this.state.selectedTags[item._id],
-    };
-    this.setState({ selectedTags });
+    const { tags } = this.props;
+    if (tags.selected.includes(item._id)) {
+      this.props.deselectTag(item._id);
+    } else {
+      this.props.selectTag(item._id);
+    }
   }
 
   handleCampusSelection = (item) => {
-    this.setState(state => ({
-      selectedCampus: state.selectedCampus === item._id ? null : item._id,
-    }));
+    const { tags } = this.props;
+    if (tags.campus === item._id) {
+      this.props.selectCampus(null);
+    } else {
+      this.props.selectCampus(item._id);
+    }
   }
 
   renderRow = (item) => {
-    const { selectedTags } = this.state;
+    const { tags } = this.props;
+    const selected = tags.selected.includes(item._id);
 
     return (
-      <Cell selected={selectedTags[item._id]}>
-        <CellTouch selected={selectedTags[item._id]} onPress={() => this.handleItemSelection(item)}>
-          <CellIcon selected={selectedTags[item._id]} name="ios-map" />
-          <CellText selected={selectedTags[item._id]}>Deportes</CellText>
+      <Cell selected={selected}>
+        <CellTouch
+          selected={selected}
+          onPress={() => this.handleItemSelection(item)}
+        >
+          <CellIcon selected={selected} name={item.icon || 'ios-bookmark'} />
+          <CellText selected={selected}>{item.name}</CellText>
         </CellTouch>
       </Cell>
     );
   }
 
   render = () => {
-    const { events: { error, refreshing }, campuses } = this.props;
-    const { dataSource, selectedCampus } = this.state;
+    const { tags, entities } = this.props;
+    const { search, dataSource } = this.state;
 
-    const campus = campuses.find(c => c._id === selectedCampus);
+    const campuses = Object.values(entities.campuses);
+
+    const currentCampus = tags.campus && entities.campuses[tags.campus];
+    const currentTags = denormalize(tags.selected, [schemas.tag], entities);
 
     return (
       <Themed content="dark">
         <Container>
-          <ErrorBar error={error} />
-          <Top>
-
-          </Top>
+          <ErrorBar error={tags.error} />
+          <SearchBar>
+            <SearchInput
+              placeholder="Buscar..."
+              value={search}
+              onChangeText={text => this.setState({ search: text })}
+              onSubmitEditing={this.handleSearchPress}
+            />
+            <SearchButton onPress={this.handleSearchPress}>
+              <SearchIcon />
+            </SearchButton>
+          </SearchBar>
+          <SearchTags>
+            {currentTags.map(tag => (
+              <SearchTag key={tag._id} onPress={() => this.handleItemSelection(tag)}>
+                {(tag.name || tag.title).toUpperCase()}
+              </SearchTag>
+            ))}
+          </SearchTags>
           <Title>Busca por categorías</Title>
           <Grid
             dataSource={dataSource}
             renderRow={this.renderRow}
-            refreshing={refreshing}
-            onRefresh={this.props.fetchEvents}
+            refreshing={tags.refreshing}
+            onRefresh={this.props.fetchTags}
             renderEmpty={() => (
               <Loading>
                 <Loading.Logo />
                 <Loading.Text>
-                  {refreshing ? 'Cargando...' : 'No hay etiquetas para mostrar.'}
+                  {tags.refreshing ? 'Cargando...' : 'No hay etiquetas para mostrar.'}
                 </Loading.Text>
               </Loading>
             )}
@@ -260,19 +331,21 @@ export default class SearchView extends Component {
           <Bottom>
             <Title>Busca por campus</Title>
             <CampusScroll>
-              {campuses.map(c => (
+              {campuses.map(campus => (
                 <CampusCircle
-                  key={c._id}
-                  selected={c._id === selectedCampus}
-                  onPress={() => this.handleCampusSelection(c)}
+                  key={campus._id}
+                  selected={currentCampus && campus._id === currentCampus._id}
+                  onPress={() => this.handleCampusSelection(campus)}
                 >
-                  <CampusCircleText>{c.short}</CampusCircleText>
+                  <CampusCircleText selected={currentCampus && campus._id === currentCampus._id}>
+                    {campus.short || campus.name.split(' ').map(text => text[0]).join('')}
+                  </CampusCircleText>
                 </CampusCircle>
               ))}
             </CampusScroll>
             <CurrentCampus>
               <CurrentCampusText>
-                {campus ? campus.name.toUpperCase() : 'Todos los campus'}
+                {currentCampus ? currentCampus.name.toUpperCase() : 'Todos los campus'}
               </CurrentCampusText>
             </CurrentCampus>
           </Bottom>
