@@ -22,10 +22,6 @@ TabBarIcon.defaultProps = {
   tintColor: colors.A,
 };
 
-TabBarIcon.Home = props => (
-  <TabBarIcon icon="home" {...props} />
-);
-
 TabBarIcon.Events = props => (
   <TabBarIcon icon="home" {...props} />
 );
@@ -40,10 +36,6 @@ TabBarIcon.About = props => (
 
 TabBarIcon.Benefits = props => (
   <TabBarIcon icon="pricetags" {...props} />
-);
-
-TabBarIcon.Enviorement = props => (
-  <TabBarIcon icon="more" {...props} />
 );
 
 export default TabBarIcon;

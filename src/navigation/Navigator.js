@@ -3,8 +3,17 @@ import { StackNavigator } from 'react-navigation';
 
 import Tabs from './Root/';
 
-import { Event, Initiative, Benefit, AboutDetail, Transparence, BenefitActive, Delegationship } from '../screens/';
-import { Logo } from '../components/';
+import {
+  Event,
+  SearchView,
+  Initiative,
+  Benefit,
+  AboutDetail,
+  Transparence,
+  BenefitActive,
+  Delegationship,
+} from '../screens/';
+import { Logo, NavbarButton } from '../components/';
 import { colors } from '../styles';
 
 const options = {
@@ -22,36 +31,23 @@ const options = {
   },
 };
 
-// function getTitle(state) {
-//   const route = state.routes[state.index];
-//   switch (route.routeName) {
-//     case 'EventsTab': return 'Home';
-//     case 'BenefitsTab': return 'Beneficios';
-//     case 'CommunityTab': return 'Comunidad';
-//     case 'AboutTab': return 'FEUC';
-//     case 'EnviorementTab': return 'Huella';
-//     default: return 'FEUC';
-//   }
-// }
-
 const Navigator = StackNavigator({
   Tabs: {
     screen: Tabs,
-    path: '/',
     navigationOptions: {
-      header: ({ state }, defaultHeader) => ({
+      header: ({ state, navigate }, defaultHeader) => ({
         ...defaultHeader,
         title: <Logo center />,
+        right: (
+          <NavbarButton onPress={() => navigate('SearchView')}>
+            <NavbarButton.Icon name="ios-search" />
+          </NavbarButton>
+        ),
       }),
-      // header: (navigation, defaultHeader) => ({
-      //   ...defaultHeader,
-      //   visible: false,
-      // }),
     },
   },
   Initiative: {
     screen: Initiative,
-    path: '/initiative',
     navigationOptions: {
       header: (navigation, defaultHeader) => ({
         ...defaultHeader,
@@ -60,7 +56,6 @@ const Navigator = StackNavigator({
   },
   Event: {
     screen: Event,
-    path: '/event',
     navigationOptions: {
       header: (navigation, defaultHeader) => ({
         ...defaultHeader,
@@ -69,7 +64,6 @@ const Navigator = StackNavigator({
   },
   Delegationship: {
     screen: Delegationship,
-    path: '/delegationship',
     navigationOptions: {
       header: (navigation, defaultHeader) => ({
         ...defaultHeader,
@@ -80,11 +74,9 @@ const Navigator = StackNavigator({
     screen: StackNavigator({
       Benefit: {
         screen: Benefit,
-        path: '/benefit',
       },
       BenefitActive: {
         screen: BenefitActive,
-        path: '/benefit-active',
       },
     }, {
       mode: 'modal',
@@ -99,7 +91,6 @@ const Navigator = StackNavigator({
   },
   AboutDetail: {
     screen: AboutDetail,
-    path: '/aboutdetail',
     navigationOptions: {
       header: (navigation, defaultHeader) => ({
         ...defaultHeader,
@@ -108,10 +99,18 @@ const Navigator = StackNavigator({
   },
   Transparence: {
     screen: Transparence,
-    path: '/transparence',
     navigationOptions: {
       header: (navigation, defaultHeader) => ({
         ...defaultHeader,
+      }),
+    },
+  },
+  SearchView: {
+    screen: SearchView,
+    navigationOptions: {
+      header: (navigation, defaultHeader) => ({
+        ...defaultHeader,
+        title: 'Buscar eventos'.toUpperCase(),
       }),
     },
   },

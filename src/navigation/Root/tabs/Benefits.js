@@ -8,7 +8,6 @@ import { colors, fonts } from '../../../styles';
 export default TabNavigator({
   Benefits: {
     screen: Benefits,
-    path: '/benefits',
     navigationOptions: {
       tabBar: (navigation, defaultTabBar) => ({
         ...defaultTabBar,
@@ -18,7 +17,6 @@ export default TabNavigator({
   },
   BenefitsSaved: {
     screen: BenefitsSaved,
-    path: '/my-benefits',
     navigationOptions: {
       tabBar: (navigation, defaultTabBar) => ({
         ...defaultTabBar,
