@@ -2,6 +2,9 @@
 
 Built with [React-Native](https://facebook.github.io/react-native/).
 
+[![AppStore][appstore-image]][appstore-url]
+[![PlayStore][playstore-image]][playstore-url]
+
 > By [Patricio López Juri](https://lopezjuri.com).
 
 ## Requisites
@@ -15,7 +18,7 @@ Built with [React-Native](https://facebook.github.io/react-native/).
 Clone this repository:
 
 ```sh
-git clone https://github.com/mrpatiwi/FEUC-mobile.git
+git clone https://github.com/open-source-uc/FEUC-mobile.git
 cd FEUC-mobile
 ```
 
@@ -181,3 +184,9 @@ The signed `.apk` will be located at:
 ```sh
 app/build/outputs/apk/app-release.apk
 ```
+
+
+[appstore-image]: http://mrpatiwi.github.io/app-badges/appstore.png
+[appstore-url]: https://itunes.apple.com/cl/app/feuc/id1208588517
+[playstore-image]: http://mrpatiwi.github.io/app-badges/playstore.png
+[playstore-url]: https://play.google.com/store/apps/details?id=cl.feuc.app
