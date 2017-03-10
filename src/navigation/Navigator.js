@@ -31,18 +31,6 @@ const options = {
   },
 };
 
-// function getTitle(state) {
-//   const route = state.routes[state.index];
-//   switch (route.routeName) {
-//     case 'EventsTab': return 'Home';
-//     case 'BenefitsTab': return 'Beneficios';
-//     case 'CommunityTab': return 'Comunidad';
-//     case 'AboutTab': return 'FEUC';
-//     case 'EnviorementTab': return 'Huella';
-//     default: return 'FEUC';
-//   }
-// }
-
 const Navigator = StackNavigator({
   Tabs: {
     screen: Tabs,
@@ -56,10 +44,6 @@ const Navigator = StackNavigator({
           </NavbarButton>
         ),
       }),
-      // header: (navigation, defaultHeader) => ({
-      //   ...defaultHeader,
-      //   visible: false,
-      // }),
     },
   },
   Initiative: {

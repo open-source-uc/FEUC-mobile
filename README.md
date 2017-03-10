@@ -6,9 +6,9 @@ Built with [React-Native](https://facebook.github.io/react-native/).
 
 ## Requisites
 
-* Node.js 6.9 LTS or newer
-* Yarn
-* XCode and Android environment
+*   Node.js 6.9 LTS or newer
+*   Yarn
+*   XCode and Android environment
 
 ## Development
 
@@ -121,14 +121,18 @@ Change the app colors in [`android/app/src/main/res/values/styles.xml`](.android
 
 ## Production
 
-To create a `npm` and `git` version, commit everything on the master branch:
+To create a `npm` and `git` version, commit everything on the master branch, then:
+
+```sh
+npm version major|minor|hotfix
+```
 
 ### iOS
 
-0. Open `ios/UCMaps.xcodeproj` with XCode.
-0. Go to `Project -> Scheme -> Edit Scheme (cmd + <)` and make sure you're in the `Run` tab from the side, and set the `Build Configuration` dropdown to `Release`.
-0. Select `Generic iOS Device`
-0. Go to `Product -> Archive`
+0.  Open `ios/UCMaps.xcodeproj` with XCode.
+0.  Go to `Project -> Scheme -> Edit Scheme (cmd + <)` and make sure you're in the `Run` tab from the side, and set the `Build Configuration` dropdown to `Release`.
+0.  Select `Generic iOS Device`
+0.  Go to `Product -> Archive`
 
 The final file should appear on the `Organizer`.
 

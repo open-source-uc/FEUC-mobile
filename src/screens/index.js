@@ -6,7 +6,6 @@ export { default as SearchView } from './SearchView';
 export { default as EventsSaved } from './EventsSaved';
 export { default as EventsToday } from './EventsToday';
 export { default as About } from './About';
-export { default as Enviorement } from './Enviorement';
 export { default as Benefits } from './Benefits';
 export { default as BenefitsSaved } from './BenefitsSaved';
 

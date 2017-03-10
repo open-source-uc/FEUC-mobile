@@ -8,7 +8,6 @@ import { colors, fonts } from '../../../styles';
 export default TabNavigator({
   Initiatives: {
     screen: Initiatives,
-    path: '/initiatives',
     navigationOptions: {
       tabBar: (navigation, defaultTabBar) => ({
         ...defaultTabBar,
@@ -18,7 +17,6 @@ export default TabNavigator({
   },
   Delegationships: {
     screen: Delegationships,
-    path: '/delegationships',
     navigationOptions: {
       tabBar: (navigation, defaultTabBar) => ({
         ...defaultTabBar,
