@@ -19,7 +19,9 @@ const styles = {
     color: colors.B,
   },
   paragraph: {
-    margin: 0,
+    marginTop: 5,
+    marginBottom: 5,
+    textAlign: 'justify',
   },
 };
 

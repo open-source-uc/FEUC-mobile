@@ -101,7 +101,7 @@ const Body = styled(RichText)`
   font-family: ${props => props.theme.fonts.body};
   color: ${props => props.theme.colors.E};
   font-size: 14;
-  font-weight: 300;
+  font-weight: 400;
 `;
 
 

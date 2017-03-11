@@ -121,7 +121,7 @@ export default class Benefit extends Component {
                 <Arc.BrandImage source={responsableSource} />
               </Arc.ArcLayout>
               <Arc.BrandTitle>
-                {benefit.responsable[benefit.responsable.kind].name}
+                {get(benefit, ['responsable', benefit.responsable.kind, 'name'])}
               </Arc.BrandTitle>
               <Arc.Title>
                 {benefit.title}
