@@ -994,6 +994,10 @@ bin-version@^1.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/binaryextensions/-/binaryextensions-2.0.0.tgz#e597d1a7a6a3558a2d1c7241a16c99965e6aa40f"
 
+bluebird@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.0.tgz#791420d7f551eea2897453a8a77653f96606d67c"
+
 body-parser@~1.13.3:
   version "1.13.3"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.13.3.tgz#c08cf330c3358e151016a05746f13f029c97fa97"
@@ -2353,10 +2357,11 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-generator-rn-toolbox@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/generator-rn-toolbox/-/generator-rn-toolbox-2.0.5.tgz#6aabc3bc03fae180ab68768f7fd2477271af5ef3"
+generator-rn-toolbox@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/generator-rn-toolbox/-/generator-rn-toolbox-2.0.6.tgz#b1e9242ab5ae3be676b62000b88cc458a464755f"
   dependencies:
+    bluebird "^3.5.0"
     color-js "^1.0.4"
     colors "^1.1.2"
     compare-version "^0.1.2"
@@ -4460,9 +4465,9 @@ react-native-config@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.3.1.tgz#981d98eee2c4e467397cd9306f5b6958c501c6e8"
 
-react-native-device-info@^0.9.9:
-  version "0.9.9"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.9.9.tgz#42490719b8be2b8ffe689f3c74d56884ca05c0d7"
+react-native-device-info@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.10.1.tgz#8eb675fa624a356a14455c97ec82590ee1d1fdd8"
 
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"

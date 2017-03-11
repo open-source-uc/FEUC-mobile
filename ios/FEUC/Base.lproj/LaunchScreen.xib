@@ -17,17 +17,17 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="WQG-oa-qi3">
-                    <rect key="frame" x="142" y="188" width="197" height="105"/>
+                    <rect key="frame" x="150" y="183" width="180" height="114"/>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="WQG-oa-qi3" secondAttribute="height" multiplier="197:105" id="2XS-tG-wwk"/>
-                        <constraint firstAttribute="width" constant="197" id="Ikj-Y5-YHb"/>
+                        <constraint firstAttribute="width" secondItem="WQG-oa-qi3" secondAttribute="height" multiplier="221:140" id="3dX-FA-j9p"/>
+                        <constraint firstAttribute="width" constant="180" id="x1u-NS-S8P"/>
                     </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="0.20392156862745098" green="0.65490196078431373" blue="0.61568627450980395" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="WQG-oa-qi3" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="D4s-Jx-J9S"/>
-                <constraint firstItem="WQG-oa-qi3" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="muF-gL-2DT"/>
+                <constraint firstItem="WQG-oa-qi3" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="HRy-fp-ufh"/>
+                <constraint firstItem="WQG-oa-qi3" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="pnC-gF-gOj"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
