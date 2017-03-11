@@ -12,6 +12,7 @@ import { Card, RefreshControl, ErrorBar } from '../components/';
 import { fetchEvents } from '../redux/modules/events';
 import * as schemas from '../schemas';
 import Themed, { colors } from '../styles';
+import { images } from '../assets/';
 import { getDateProperties } from '../utils/events';
 
 
@@ -251,7 +252,7 @@ export default class EventsToday extends Component {
           innerRef={(background) => {
             this.background = background;
           }}
-          source={uri ? { uri } : { uri: 'https://www.lollapalooza.com/wp-www-lollapalooza-com/wp/wp-content/uploads/2013/12/LOL2014-Footer-BG-CHI.png' }}
+          source={uri ? { uri } : images.default.card}
           onLoadEnd={() => this.setState({ viewRef: findNodeHandle(this.background) })}
         >
           <ErrorBar error={error} />
