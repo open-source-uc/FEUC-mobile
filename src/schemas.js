@@ -1,41 +1,61 @@
-import { schema } from 'normalizr';
+const { schema } = require('normalizr');
 
-export const notification = new schema.Entity('notifications');
 
-export const brand = new schema.Entity('brands', {}, {
+exports.notification = new schema.Entity('notifications');
+
+exports.brand = new schema.Entity('brands', {}, {
   idAttribute: '_id',
 });
 
-export const tag = new schema.Entity('tags', {}, {
+exports.tag = new schema.Entity('tags', {}, {
   idAttribute: '_id',
 });
 
-export const campus = new schema.Entity('campuses', {}, {
+exports.place = new schema.Entity('places', {}, {
   idAttribute: '_id',
 });
 
-export const initiative = new schema.Entity('initiatives', {}, {
+exports.campus = new schema.Entity('campuses', {}, {
   idAttribute: '_id',
 });
 
-export const delegationship = new schema.Entity('delegationships', {}, {
+exports.attendance = new schema.Entity('attendances', {}, {
   idAttribute: '_id',
 });
 
-export const benefit = new schema.Entity('benefits', {
+exports.initiative = new schema.Entity('initiatives', {}, {
+  idAttribute: '_id',
+});
+
+exports.delegationship = new schema.Entity('delegationships', {}, {
+  idAttribute: '_id',
+});
+
+exports.device = new schema.Entity('devices', {}, {
+  idAttribute: '_id',
+});
+
+exports.benefit = new schema.Entity('benefits', {
   responsable: {
-    brand,
+    brand: exports.brand,
   },
 }, {
   idAttribute: '_id',
 });
 
-export const event = new schema.Entity('events', {
-  campus,
-  tags: [tag],
+exports.activation = new schema.Entity('activations', {
+  benefit: exports.benefit,
+  // device: exports.device,
+}, {
+  idAttribute: '_id',
+});
+
+exports.event = new schema.Entity('events', {
+  campus: exports.campus,
+  tags: [exports.tag],
   organizer: {
-    initiative,
-    delegationship,
+    initiative: exports.initiative,
+    delegationship: exports.delegationship,
   },
 }, {
   idAttribute: '_id',
