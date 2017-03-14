@@ -244,7 +244,7 @@ export default class EventsToday extends Component {
     const { index, dataSource } = this.state;
 
     const current = entities.events[result[index]];
-    const uri = get(current, 'image.secure_url');
+    const uri = get(current, 'image.secure_url') || get(current, 'banner.secure_url');
 
     return (
       <Themed content="dark">
