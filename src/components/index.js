@@ -13,6 +13,7 @@ export { default as SearchTags } from './SearchTags';
 export { default as ListView } from './ListView';
 export { default as ListViewRow } from './ListViewRow';
 export { default as ListViewRowBenefit } from './ListViewRowBenefit';
+export { default as ListViewRowAttendance } from './ListViewRowAttendance';
 export { default as ListViewRowEvent } from './ListViewRowEvent';
 export { default as ListViewRowInitiative } from './ListViewRowInitiative';
 export { default as ListViewRowDelegationship } from './ListViewRowDelegationship';

@@ -6,25 +6,23 @@ import * as schemas from '../../schemas';
 // Actions
 export const NOTIFICATION_RECEIVED = 'feuc/notifications/NOTIFICATION_RECEIVED';
 export const NOTIFICATION_REGISTER = 'feuc/notifications/NOTIFICATION_REGISTER';
-export const NOTIFICATION_REGISTER_PENDING = 'feuc/notifications/NOTIFICATION_REGISTER_PENDING';
-export const NOTIFICATION_REGISTER_FULFILLED = 'feuc/notifications/NOTIFICATION_REGISTER_FULFILLED';
-export const NOTIFICATION_REGISTER_REJECTED = 'feuc/notifications/NOTIFICATION_REGISTER_REJECTED';
+export const NOTIFICATION_SET_ENABLED = 'feuc/notifications/NOTIFICATION_SET_ENABLED';
 
 
 // Initial state
 const initialState = {
   result: [],
-  registration: null,
+  enabled: false,
 };
 
 
 // Reducer
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case NOTIFICATION_REGISTER_FULFILLED: {
+    case NOTIFICATION_SET_ENABLED: {
       return {
         ...state,
-        registration: action.payload,
+        enabled: action.payload,
       };
     }
     case NOTIFICATION_RECEIVED: {
@@ -40,9 +38,9 @@ export default function reducer(state = initialState, action) {
 }
 
 // Action creators
-export const registerDevice = data => (dispatch, getState, { client }) => dispatch({
-  type: NOTIFICATION_REGISTER,
-  payload: client.register(data),
+export const setEnabled = (isEnabled) => ({
+  type: NOTIFICATION_SET_ENABLED,
+  payload: isEnabled,
 });
 
 export const receiveNotification = (data) => {

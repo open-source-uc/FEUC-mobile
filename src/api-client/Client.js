@@ -1,4 +1,4 @@
-import defaults from 'lodash/defaults';
+import defaultsDeep from 'lodash/defaultsDeep';
 import trim from 'lodash/trim';
 // import orderBy from 'lodash/orderBy';
 import stringify from 'qs/lib/stringify';
@@ -16,7 +16,7 @@ const DEFAULT = {
 
 
 export async function fetcher(uri, options) {
-  const opts = defaults({}, options, DEFAULT);
+  const opts = defaultsDeep({}, options, DEFAULT);
   const url = opts.qs ? `${uri}?${stringify(opts.qs)}` : uri;
 
   const response = await fetch(url, {
@@ -43,10 +43,11 @@ export default class Client {
     this.baseURL = trim(baseURL, '/');
   }
 
-  async register(data) {
+  async register(data, options = {}) {
     const response = await fetcher(`${this.baseURL}/api/v1/devices`, {
       method: 'POST',
       body: data,
+      ...options,
     });
     return response;
   }
@@ -81,6 +82,11 @@ export default class Client {
     return response;
   }
 
+  async attendances(options) {
+    const response = await fetcher(`${this.baseURL}/api/v1/attendances`, options);
+    return response;
+  }
+
   async benefits(options) {
     const response = await fetcher(`${this.baseURL}/api/v1/benefits`, options);
     return response;
@@ -88,6 +94,15 @@ export default class Client {
 
   async benefit(identifier, options) {
     const response = await fetcher(`${this.baseURL}/api/v1/benefits/${identifier}`, options);
+    return response;
+  }
+
+  async benefitActivate(identifier, data, options) {
+    const response = await fetcher(`${this.baseURL}/api/v1/benefits/${identifier}/activate`, {
+      method: 'POST',
+      body: data,
+      ...options,
+    });
     return response;
   }
 }
