@@ -12,7 +12,8 @@ import {
   Delegationship,
   Attendances,
 } from '../screens/';
-import { Logo, NavbarButton } from '../components/';
+import { Logo } from '../components/';
+// import { Logo, NavbarButton } from '../components/';
 import { colors } from '../styles';
 
 const options = {
@@ -37,11 +38,11 @@ const Navigator = StackNavigator({
       header: ({ state, navigate }, defaultHeader) => ({
         ...defaultHeader,
         title: <Logo center />,
-        right: (
-          <NavbarButton onPress={() => navigate('SearchView')}>
-            <NavbarButton.Icon name="ios-search" />
-          </NavbarButton>
-        ),
+        // right: (
+        //   <NavbarButton onPress={() => navigate('SearchView')}>
+        //     <NavbarButton.Icon name="ios-search" />
+        //   </NavbarButton>
+        // ),
       }),
     },
   },
