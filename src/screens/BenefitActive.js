@@ -155,10 +155,7 @@ const mapDispatchToProps = null;
 @connect(mapStateToProps, mapDispatchToProps)
 export default class BenefitActive extends Component {
   static navigationOptions = {
-    title: 'Beneficio Activado'.toUpperCase(),
-    header: ({ state }, defaultHeader) => ({
-      ...defaultHeader,
-    }),
+    title: ({ state }) => (state.params.raffle ? 'Participando' : 'Activado').toUpperCase(),
   }
 
   static propTypes = {
@@ -211,6 +208,8 @@ export default class BenefitActive extends Component {
         const timeleft = isInTime && moment.duration(diff, 'seconds').format('d[d] h:mm:ss');
         this.setState({ deadline, isInTime, timeleft, ready: true });
       }, 1000);
+    } else {
+      this.setState({ ready: true });
     }
   }
 
@@ -281,12 +280,12 @@ export default class BenefitActive extends Component {
                       Cargando...
                     </Restriction>
                   )}
-                  {deadline && isInTime && timeleft && (
+                  {ready && deadline && isInTime && timeleft && (
                     <Restriction>
                       {`Valido por ${timeleft}`.toUpperCase()}
                     </Restriction>
                   )}
-                  {deadline && !isInTime && (
+                  {ready && deadline && !isInTime && (
                     <Restriction>
                       Expirado
                     </Restriction>

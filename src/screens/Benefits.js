@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
 import noop from 'lodash/noop';
+import keyBy from 'lodash/keyBy';
+import get from 'lodash/get';
 
 import { ListViewRowBenefit, ListView, Loading, ErrorBar } from '../components/';
 import { fetchBenefits } from '../redux/modules/benefits';
@@ -18,8 +20,13 @@ const Container = styled.View`
 
 
 const mapStateToProps = state => ({
-  benefits: state.benefits,
-  entities: state.entities,
+  error: state.benefits.error,
+  refreshing: state.benefits.refreshing,
+  benefits: denormalize(state.benefits.result, [schemas.benefit], state.entities),
+  activated: keyBy(
+    denormalize(state.benefits.saved, [schemas.activation], state.entities),
+    act => get(act, 'benefit._id'), // normalize by benefit._id
+  ),
 });
 
 const mapDispatchToProps = ({
@@ -29,24 +36,23 @@ const mapDispatchToProps = ({
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Benefits extends Component {
   static propTypes = {
-    benefits: PropTypes.object,
-    entities: PropTypes.object, // eslint-disable-line
+    benefits: PropTypes.array,
+    activated: PropTypes.object,
+    error: PropTypes.object,
+    refreshing: PropTypes.bool,
     navigation: PropTypes.object,
 
     fetchBenefits: PropTypes.func,
   }
 
   static defaultProps = {
-    benefits: {},
-    entities: {},
+    benefits: [],
+    activated: {},
+    error: null,
+    refreshing: false,
     navigation: null,
 
     fetchBenefits: noop,
-  }
-
-  static denormalize = ({ benefits, entities }) => {
-    const schema = [schemas.benefit];
-    return denormalize(benefits.result, schema, entities);
   }
 
   static DataSource = new ListView.DataSource({
@@ -54,7 +60,8 @@ export default class Benefits extends Component {
   })
 
   state = {
-    dataSource: this.constructor.DataSource.cloneWithRows(this.constructor.denormalize(this.props)),
+    dataSource: this.constructor.DataSource.cloneWithRows(this.props.benefits),
+    activated: this.props.activated,
   }
 
   componentDidMount = () => {
@@ -62,37 +69,43 @@ export default class Benefits extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.entities && nextProps.benefits) {
-      const items = this.constructor.denormalize(nextProps);
-      this.setState({ dataSource: this.constructor.DataSource.cloneWithRows(items) });
+    if (nextProps.benefits) {
+      this.setState({
+        dataSource: this.constructor.DataSource.cloneWithRows(nextProps.benefits),
+        activated: nextProps.activated,
+      });
     }
   }
 
-  handlePress = (item) => {
+  handlePress = (item, activation = {}) => {
     const { navigation } = this.props;
 
     const expiredBy = isExpired(item);
-
-    if (item && navigation && !expiredBy.overall) {
+    if (activation.valid || !expiredBy.overall) {
       navigation.navigate('Benefit', { benefitId: item._id, title: item.title });
-    } else if (item && expiredBy.overall) {
+    } else {
       alert('Ya no está disponible.'); // eslint-disable-line
     }
   }
 
-  renderRow = (item, section, row, highlight) => (
-    <ListViewRowBenefit
-      item={item}
-      row={row}
-      highlight={highlight}
-      onPress={() => this.handlePress(item)}
-      first={Number(row) === 0}
-      last={this.state.dataSource.getRowCount() - 1 === Number(row)}
-    />
-  )
+  renderRow = (item, section, row, highlight) => {
+    const activation = this.state.activated[item._id];
+
+    return (
+      <ListViewRowBenefit
+        item={item}
+        activation={activation}
+        row={row}
+        highlight={highlight}
+        onPress={() => this.handlePress(item, activation)}
+        first={Number(row) === 0}
+        last={this.state.dataSource.getRowCount() - 1 === Number(row)}
+      />
+    );
+  }
 
   render = () => {
-    const { error, refreshing } = this.props.benefits;
+    const { error, refreshing } = this.props;
     const { dataSource } = this.state;
 
     return (

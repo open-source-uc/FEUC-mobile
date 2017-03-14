@@ -7,7 +7,7 @@ import get from 'lodash/get';
 import noop from 'lodash/noop';
 
 import { Arc, Button, ErrorBar } from '../components/';
-import { saveBenefit } from '../redux/modules/benefits';
+import { activateBenefit, fetchBenefit } from '../redux/modules/benefits';
 import * as schemas from '../schemas';
 import Themed from '../styles';
 
@@ -38,14 +38,20 @@ const ButtonText = styled(Button.Text)`
 
 const mapStateToProps = ({ nav, entities, benefits }) => {
   const id = get(nav, ['routes', nav.index, 'params', 'benefitId']);
+  const activation = denormalize(benefits.saved, [schemas.activation], entities)
+    .filter(Boolean)
+    .find(act => get(act, 'benefit._id') === id);
+
   return {
     benefit: id ? denormalize(id, schemas.benefit, entities) : null,
-    isSaved: benefits.saved.includes(id),
+    status: benefits.status[id],
+    activation,
   };
 };
 
 const mapDispatchToProps = {
-  saveBenefit,
+  activateBenefit,
+  fetchBenefit,
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -60,8 +66,9 @@ export default class Benefit extends Component {
 
   static propTypes = {
     navigation: PropTypes.object,
-    saveBenefit: PropTypes.func,
-    isSaved: PropTypes.bool,
+    activateBenefit: PropTypes.func,
+    fetchBenefit: PropTypes.func,
+    status: PropTypes.string,
     benefit: PropTypes.object,
     error: PropTypes.object,
     bannerHeight: PropTypes.number,
@@ -69,8 +76,9 @@ export default class Benefit extends Component {
 
   static defaultProps = {
     navigation: null,
-    saveBenefit: noop,
-    isSaved: false,
+    activateBenefit: noop,
+    fetchBenefit: noop,
+    status: null,
     benefit: null,
     error: null,
     bannerHeight: 230,
@@ -78,31 +86,37 @@ export default class Benefit extends Component {
 
   state = {
     benefit: this.props.benefit,
-    isSaved: this.props.isSaved,
+    status: this.props.status,
+    email: '',
+  }
+
+  componentDidMount() {
+    if (this.props.benefit) {
+      this.props.fetchBenefit(this.props.benefit._id);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { benefit, isSaved } = nextProps;
+    const { benefit, status } = nextProps;
     if (benefit) {
-      this.setState({ benefit, isSaved });
+      this.setState({ benefit, status });
     }
   }
 
   handleActivate = () => {
     const { navigation } = this.props;
-    const { benefit, isSaved } = this.state;
+    const { benefit, status, email } = this.state;
 
-    if (benefit && !isSaved) {
-      this.props.saveBenefit(benefit._id);
-    }
-    if (benefit && navigation) {
-      navigation.navigate('BenefitActive', { benefitId: benefit._id, title: 'Activado' });
+    if (benefit && status !== 'saved') {
+      this.props.activateBenefit(benefit._id, { email });
+    } else if (benefit && navigation) {
+      navigation.navigate('BenefitActive', { benefitId: benefit._id, raffle: benefit.benefit.raffle });
     }
   }
 
   render() {
     const { bannerHeight, error } = this.props;
-    const { benefit, isSaved } = this.state;
+    const { benefit, status } = this.state;
 
     const responsableSource = {
       uri: get(benefit, ['responsable', benefit.responsable.kind, 'image', 'secure_url']),
@@ -126,9 +140,6 @@ export default class Benefit extends Component {
               <Arc.Title>
                 {benefit.title}
               </Arc.Title>
-              <Arc.Lead>
-                {/* {`${benefit.uses} dcts. activados`.toUpperCase()} */}
-              </Arc.Lead>
               <Arc.DropTexts>
                 {benefit.benefit.limited && (
                   <Arc.DropText>
@@ -160,7 +171,10 @@ export default class Benefit extends Component {
             <Bottom>
               <Button color="B" onPress={this.handleActivate}>
                 <ButtonText color="Z">
-                  {isSaved ? 'Abrir' : 'Activar'}
+                  {!status ? get(benefit, 'messages.activate', 'Activar') : ''}
+                  {status === 'loading' ? get(benefit, 'messages.loading', 'Cargando...') : ''}
+                  {status === 'saved' ? get(benefit, 'messages.open', 'Abrir') : ''}
+                  {status === 'error' ? get(benefit, 'messages.error', 'Ocurrió un error :(') : ''}
                 </ButtonText>
               </Button>
             </Bottom>

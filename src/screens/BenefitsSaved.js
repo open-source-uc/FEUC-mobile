@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { denormalize } from 'normalizr';
 import styled from 'styled-components/native';
 import noop from 'lodash/noop';
+import get from 'lodash/get';
 
 import { ListViewRowBenefit, ListView, Loading, ErrorBar } from '../components/';
 import { fetchBenefitsSaved } from '../redux/modules/benefits';
@@ -18,35 +19,34 @@ const Container = styled.View`
 
 
 const mapStateToProps = state => ({
-  benefits: state.benefits,
-  entities: state.entities,
+  error: state.benefits.error,
+  refreshing: state.benefits.refreshing,
+  activated: denormalize(state.benefits.saved, [schemas.activation], state.entities),
 });
 
 const mapDispatchToProps = ({
-  fetchBenefits: fetchBenefitsSaved,
+  fetchBenefitsSaved,
 });
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class Benefits extends Component {
+export default class BenefitsSaved extends Component {
   static propTypes = {
-    benefits: PropTypes.object,
-    entities: PropTypes.object, // eslint-disable-line
+    // benefits: PropTypes.array,
+    activated: PropTypes.array,
+    error: PropTypes.object,
+    refreshing: PropTypes.bool,
     navigation: PropTypes.object,
 
-    fetchBenefits: PropTypes.func,
+    fetchBenefitsSaved: PropTypes.func,
   }
 
   static defaultProps = {
-    benefits: {},
-    entities: {},
+    activated: [],
+    error: null,
+    refreshing: false,
     navigation: null,
 
-    fetchBenefits: noop,
-  }
-
-  static denormalize = ({ benefits, entities }) => {
-    const schema = [schemas.benefit];
-    return denormalize(benefits.saved, schema, entities);
+    fetchBenefitsSaved: noop,
   }
 
   static DataSource = new ListView.DataSource({
@@ -54,45 +54,55 @@ export default class Benefits extends Component {
   })
 
   state = {
-    dataSource: this.constructor.DataSource.cloneWithRows(this.constructor.denormalize(this.props)),
+    dataSource: this.constructor.DataSource.cloneWithRows(this.props.activated),
   }
 
   componentDidMount = () => {
-    this.props.fetchBenefits();
+    this.fetchBenefitsSaved();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.entities && nextProps.benefits) {
-      const items = this.constructor.denormalize(nextProps);
-      this.setState({ dataSource: this.constructor.DataSource.cloneWithRows(items) });
+    if (nextProps.activated) {
+      this.setState({
+        dataSource: this.constructor.DataSource.cloneWithRows(nextProps.activated),
+      });
     }
   }
 
-  handlePress = (item) => {
+  handlePress = (item, activation = {}) => {
     const { navigation } = this.props;
 
     const expiredBy = isExpired(item);
-
-    if (item && navigation && !expiredBy.overall) {
+    if (activation.valid || !expiredBy.overall) {
       navigation.navigate('Benefit', { benefitId: item._id, title: item.title });
-    } else if (item && expiredBy.overall) {
+    } else {
       alert('Ya no está disponible.'); // eslint-disable-line
     }
   }
 
-  renderRow = (item, section, row, highlight) => (
-    <ListViewRowBenefit
-      item={item}
-      row={row}
-      highlight={highlight}
-      onPress={() => this.handlePress(item)}
-      first={Number(row) === 0}
-      last={this.state.dataSource.getRowCount() - 1 === Number(row)}
-    />
-  )
+  fetchBenefitsSaved = () => {
+    const ids = this.props.activated.map(act => get(act, 'benefit._id'));
+    this.props.fetchBenefitsSaved(ids);
+  }
+
+  renderRow = (activation, section, row, highlight) => {
+    const item = activation.benefit;
+
+    return (
+      <ListViewRowBenefit
+        item={item}
+        activation={activation}
+        row={row}
+        highlight={highlight}
+        onPress={() => this.handlePress(item, activation)}
+        first={Number(row) === 0}
+        last={this.state.dataSource.getRowCount() - 1 === Number(row)}
+      />
+    );
+  }
 
   render = () => {
-    const { error, refreshing } = this.props.benefits;
+    const { error, refreshing } = this.props;
     const { dataSource } = this.state;
 
     return (
@@ -103,12 +113,12 @@ export default class Benefits extends Component {
             dataSource={dataSource}
             renderRow={this.renderRow}
             refreshing={refreshing}
-            onRefresh={this.props.fetchBenefits}
+            onRefresh={this.fetchBenefitsSaved}
             renderEmpty={() => (
               <Loading>
                 <Loading.Logo />
                 <Loading.Text>
-                  {refreshing ? 'Cargando...' : 'Aquí se guardarán los beneficios que vayas adquiriendo'}
+                  {refreshing ? 'Cargando...' : 'Sin descuentos por el momento, vuelve pronto a revisar ;)'}
                 </Loading.Text>
               </Loading>
             )}

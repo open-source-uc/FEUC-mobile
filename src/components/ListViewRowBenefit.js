@@ -16,7 +16,7 @@ const FooterRow = styled.View`
 `;
 
 function selectImage(item) {
-  let uri = get(item, 'thumbnail.secure_url');
+  let uri = get(item, 'image.secure_url');
   if (uri) return { uri };
 
   uri = get(item, ['responsable', item.responsable.kind, 'image', 'secure_url']);
@@ -26,16 +26,16 @@ function selectImage(item) {
 }
 
 
-const ListViewRowBenefit = ({ item, row, ...props }) => {
+const ListViewRowBenefit = ({ item, activation, row, ...props }) => {
   const { limited, stock, expires, deadline } = item.benefit;
 
   const didExpire = isExpired(item);
 
   const restrictions = [
-    limited && `Quedan ${Math.max(0, Number(stock) - Number(item.uses))}`,
+    limited && `Limitado a ${Math.max(0, Number(stock))}`,
     expires && `Expiración ${moment(deadline).fromNow()}`,
     !limited && !expires && 'Disponible',
-  ].filter(Boolean).map(s => s.toUpperCase());
+  ].filter(Boolean);
 
   return (
     <ListViewRow
@@ -50,16 +50,21 @@ const ListViewRowBenefit = ({ item, row, ...props }) => {
       <ListViewRow.Content>
         <FooterRow>
           <ListViewRow.Footer color={didExpire.overall ? 'error' : 'B'}>
-            {restrictions.join('  |  ')}
+            {restrictions.join('  |  ').toUpperCase()}
           </ListViewRow.Footer>
         </FooterRow>
         <ListViewRow.Title>{item.title}</ListViewRow.Title>
         <ListViewRow.Body>
           {item.description.brief || 'Sin descripción.'}
         </ListViewRow.Body>
-        <ListViewRow.Footer>
-          {`${item.uses} veces activado`.toUpperCase()}
-        </ListViewRow.Footer>
+        {activation && (
+          <ListViewRow.Footer>
+            {[
+              activation.valid ? 'Activado' : 'Invalidado',
+              activation.exchanged ? 'Reclamado' : undefined,
+            ].filter(Boolean).join(' - ')}
+          </ListViewRow.Footer>
+        )}
       </ListViewRow.Content>
       <ListViewRow.Disclosure />
     </ListViewRow>
@@ -67,8 +72,13 @@ const ListViewRowBenefit = ({ item, row, ...props }) => {
 };
 
 ListViewRowBenefit.propTypes = {
+  activation: PropTypes.object,
   item: PropTypes.object.isRequired,
   row: PropTypes.any.isRequired,
+};
+
+ListViewRowBenefit.defaultProps = {
+  activation: null,
 };
 
 export default ListViewRowBenefit;

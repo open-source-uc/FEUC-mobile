@@ -19,6 +19,19 @@ const ArcLead = styled(Arc.Lead)`
   margin-bottom: 18;
 `;
 
+const Button = styled.TouchableOpacity`
+  height: 44;
+  background-color: ${props => props.theme.colors.A};
+  justify-content: center;
+  align-items: center;
+`;
+
+const ButtonText = styled.Text`
+  text-align: center;
+  font-family: ${props => props.theme.fonts.headers};
+  color: ${props => props.theme.colors.Z};
+`;
+
 
 const mapStateToProps = state => state.about;
 
@@ -37,7 +50,7 @@ export default class About extends Component {
   }
 
   static propTypes = {
-    // navigation: PropTypes.object,
+    navigation: PropTypes.object,
     fetchAbout: PropTypes.func,
     content: PropTypes.object,
     error: PropTypes.object,
@@ -45,7 +58,7 @@ export default class About extends Component {
   }
 
   static defaultProps = {
-    // navigation: null,
+    navigation: null,
     fetchAbout: noop,
     content: null,
     error: null,
@@ -67,7 +80,9 @@ export default class About extends Component {
   }
 
   handleAttendancePress = () => {
-
+    if (this.props.navigation) {
+      this.props.navigation.navigate('Attendances');
+    }
   }
 
   handleSocialPress = ({ url }) => {
@@ -119,6 +134,11 @@ export default class About extends Component {
               <Social key={url} url={url} onPress={this.handleSocialPress} />
             ))}
           </Social.Bar>
+          <Button onPress={this.handleAttendancePress}>
+            <ButtonText>
+              Revisa el libro de asistencias
+            </ButtonText>
+          </Button>
         </Container>
       </Themed>
     );

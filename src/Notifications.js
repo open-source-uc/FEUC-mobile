@@ -7,45 +7,50 @@ import { connect } from 'react-redux';
 import noop from 'lodash/noop';
 import get from 'lodash/get';
 
-import { registerDevice, receiveNotification } from './redux/modules/notifications';
+import { receiveNotification, setEnabled } from './redux/modules/notifications';
+import { register } from './redux/modules/session';
 
 
-const mapStateToProps = state => ({
-  notifications: state.notifications,
-});
+const mapStateToProps = null;
 
 const mapDispatchToProps = ({
   receiveNotification,
-  registerDevice,
+  setEnabled,
+  register,
 });
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Notifications extends Component {
   static propTypes = {
-    // notifications: PropTypes.object,
     children: PropTypes.node,
-    registerDevice: PropTypes.func,
+    register: PropTypes.func,
     receiveNotification: PropTypes.func,
+    setEnabled: PropTypes.func,
   }
 
   static defaultProps = {
     children: null,
-    registerDevice: noop,
+    register: noop,
     receiveNotification: noop,
+    setEnabled: noop,
   }
 
   componentWillMount = () => {
     OneSignal.addEventListener('received', this.onReceived);
     OneSignal.addEventListener('opened', this.onOpened);
     OneSignal.addEventListener('registered', this.onRegistered);
-    OneSignal.addEventListener('ids', this.onIds);
+    OneSignal.addEventListener('ids', this.register);
+  }
+
+  componentDidMount() {
+    this.register();
   }
 
   componentWillUnmount = () => {
     OneSignal.removeEventListener('received', this.onReceived);
     OneSignal.removeEventListener('opened', this.onOpened);
     OneSignal.removeEventListener('registered', this.onRegistered);
-    OneSignal.removeEventListener('ids', this.onIds);
+    OneSignal.removeEventListener('ids', this.register);
   }
 
   onReceived = (notification) => {
@@ -53,19 +58,20 @@ export default class Notifications extends Component {
   }
 
   onOpened(openResult) {
-    console.log('Message: ', openResult.notification.payload.body);
-    console.log('Data: ', openResult.notification.payload.additionalData);
-    console.log('isActive: ', openResult.notification.isAppInFocus);
-    console.log('openResult: ', openResult);
+    // console.log('Message: ', openResult.notification.payload.body);
+    // console.log('Data: ', openResult.notification.payload.additionalData);
+    // console.log('isActive: ', openResult.notification.isAppInFocus);
+    // console.log('openResult: ', openResult);
     const id = get(openResult, 'notification.payload.notificationID');
-    console.log(id);
+    console.log('Open:', id);
   }
 
   onRegistered(notifData) {
+    this.props.setEnabled(true);
     console.log('Device had been registered for push notifications!', notifData);
   }
 
-  onIds = async (device) => {
+  register = (device = {}) => {
     const data = {
       userId: device.userId,
       uid: DeviceInfo.getUniqueID(),  // e.g. FCDBD8EF-62FC-4ECB-B2F5-92C9E79AC7F9
@@ -86,7 +92,7 @@ export default class Notifications extends Component {
       timezone: DeviceInfo.getTimezone(), // e.g America/Mexico_City
     };
 
-    await this.props.registerDevice(data);
+    return this.props.register(data);
   }
 
   render() {

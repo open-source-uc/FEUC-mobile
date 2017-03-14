@@ -8,10 +8,9 @@ import {
   SearchView,
   Initiative,
   Benefit,
-  AboutDetail,
-  Transparence,
   BenefitActive,
   Delegationship,
+  Attendances,
 } from '../screens/';
 import { Logo, NavbarButton } from '../components/';
 import { colors } from '../styles';
@@ -89,16 +88,8 @@ const Navigator = StackNavigator({
       }),
     },
   },
-  AboutDetail: {
-    screen: AboutDetail,
-    navigationOptions: {
-      header: (navigation, defaultHeader) => ({
-        ...defaultHeader,
-      }),
-    },
-  },
-  Transparence: {
-    screen: Transparence,
+  Attendances: {
+    screen: Attendances,
     navigationOptions: {
       header: (navigation, defaultHeader) => ({
         ...defaultHeader,
