@@ -1,41 +1,41 @@
 import React, { PropTypes } from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import styled from 'styled-components/native';
 
 import { colors } from '../styles';
+import { images } from '../assets/';
 
 
-const TabBarIcon = ({ tintColor, focused, icon }) => (
-  <Ionicons
-    name={focused ? `ios-${icon}` : `ios-${icon}-outline`}
-    size={26}
-    style={{ color: tintColor }}
-  />
-);
+const TabBarIcon = styled.Image`
+  height: ${props => props.size};
+  width: ${props => props.size};
+  tint-color: ${props => props.tintColor};
+`;
 
 TabBarIcon.propTypes = {
   tintColor: PropTypes.any.isRequired,
   focused: PropTypes.bool.isRequired,
-  icon: PropTypes.string.isRequired,
+  size: PropTypes.number,
 };
 
 TabBarIcon.defaultProps = {
   tintColor: colors.A,
+  size: 22,
 };
 
 TabBarIcon.Events = props => (
-  <TabBarIcon icon="home" {...props} />
+  <TabBarIcon source={images.nav.events} {...props} />
 );
 
 TabBarIcon.Community = props => (
-  <TabBarIcon icon="people" {...props} />
+  <TabBarIcon source={images.nav.community} {...props} />
 );
 
 TabBarIcon.About = props => (
-  <TabBarIcon icon="help" {...props} />
+  <TabBarIcon source={images.nav.feuc} {...props} />
 );
 
 TabBarIcon.Benefits = props => (
-  <TabBarIcon icon="pricetags" {...props} />
+  <TabBarIcon source={images.nav.benefit} {...props} />
 );
 
 export default TabBarIcon;

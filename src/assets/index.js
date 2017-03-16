@@ -14,6 +14,12 @@ export const images = {
   },
   eventBookmark: require('./images/event-bookmark.png'),
   arc: require('./images/arc.png'),
+  nav: {
+    benefit: require('./images/nav/benefit.png'),
+    community: require('./images/nav/community.png'),
+    events: require('./images/nav/events.png'),
+    feuc: require('./images/nav/feuc.png'),
+  },
 };
 
 export const fonts = {
