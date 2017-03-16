@@ -2357,9 +2357,9 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-generator-rn-toolbox@^2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/generator-rn-toolbox/-/generator-rn-toolbox-2.0.6.tgz#b1e9242ab5ae3be676b62000b88cc458a464755f"
+generator-rn-toolbox@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/generator-rn-toolbox/-/generator-rn-toolbox-2.0.8.tgz#f24e7b00f37b93db43f9717d73212a38173f60a3"
   dependencies:
     bluebird "^3.5.0"
     color-js "^1.0.4"
@@ -4760,9 +4760,9 @@ redux-logger@^2.8.1:
   dependencies:
     deep-diff "0.3.4"
 
-redux-persist@^4.4.2:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-4.4.2.tgz#0e874284f3d155215d1f33f48fadfc850526618e"
+redux-persist@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-4.5.0.tgz#9730c93c1e3b3782cecf68ae5f4753d65d50c2b7"
   dependencies:
     json-stringify-safe "^5.0.1"
     lodash "^4.17.4"
