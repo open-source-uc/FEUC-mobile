@@ -1,11 +1,10 @@
-import React, { PropTypes, Component } from 'react';
-import { Dimensions, InteractionManager } from 'react-native';
-import MapView from 'react-native-maps';
-import styled from 'styled-components/native';
+import React, { PropTypes, Component } from "react";
+import { Dimensions, InteractionManager } from "react-native";
+import MapView from "react-native-maps";
+import styled from "styled-components/native";
 
-import Loading from './Loading';
-import { map as mapStyle } from '../styles';
-
+import Loading from "./Loading";
+import { map as mapStyle } from "../styles";
 
 const Container = styled.View`
   flex: 1;
@@ -20,19 +19,18 @@ const StyledMap = styled(MapView)`
   left: 0;
 `;
 
-
 export default class MapViewComponent extends Component {
   static propTypes = {
     children: PropTypes.node,
-  }
+  };
 
   static defaultProps = {
     children: null,
-  }
+  };
 
   state = {
     loading: true,
-  }
+  };
 
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
@@ -44,7 +42,7 @@ export default class MapViewComponent extends Component {
     const { children, ...props } = this.props;
     const { loading } = this.state;
 
-    const { width, height } = Dimensions.get('window');
+    const { width, height } = Dimensions.get("window");
     const ratio = width / height;
 
     const coordinates = {
@@ -56,13 +54,13 @@ export default class MapViewComponent extends Component {
 
     return (
       <Container {...props}>
-        {loading ? <Loading /> : (
-          <StyledMap
-            initialRegion={coordinates}
-            provider={MapView.PROVIDER_GOOGLE}
-            customMapStyle={mapStyle}
-          />
-        )}
+        {loading
+          ? <Loading />
+          : <StyledMap
+              initialRegion={coordinates}
+              provider={MapView.PROVIDER_GOOGLE}
+              customMapStyle={mapStyle}
+            />}
         {Loading && children}
       </Container>
     );

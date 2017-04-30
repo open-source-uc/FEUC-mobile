@@ -1,7 +1,7 @@
-import moment from 'moment';
+import moment from "moment";
 
-
-export const isExpired = (item) => { // eslint-disable-line
+export const isExpired = item => {
+  // eslint-disable-line
   const { limited, stock, expires, deadline } = item.benefit;
   const expiredBy = {};
 

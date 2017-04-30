@@ -1,5 +1,4 @@
-import styled from 'styled-components/native';
-
+import styled from "styled-components/native";
 
 const Tags = styled.ScrollView`
   padding: 3 8 18;

@@ -1,14 +1,13 @@
-import uniq from 'lodash/uniq';
-
+import uniq from "lodash/uniq";
 
 // Actions
-export const TAG_FETCH = 'feuc/tags/TAG_FETCH';
-export const TAG_FETCH_PENDING = 'feuc/tags/TAG_FETCH_PENDING';
-export const TAG_FETCH_FULFILLED = 'feuc/tags/TAG_FETCH_FULFILLED';
-export const TAG_FETCH_REJECTED = 'feuc/tags/TAG_FETCH_REJECTED';
-export const TAG_SELECTION = 'feuc/tags/TAG_SELECTION';
-export const TAG_DESELECTION = 'feuc/tags/TAG_DESELECTION';
-export const TAG_CAMPUS_SELECTION = 'feuc/tags/TAG_CAMPUS_SELECTION';
+export const TAG_FETCH = "feuc/tags/TAG_FETCH";
+export const TAG_FETCH_PENDING = "feuc/tags/TAG_FETCH_PENDING";
+export const TAG_FETCH_FULFILLED = "feuc/tags/TAG_FETCH_FULFILLED";
+export const TAG_FETCH_REJECTED = "feuc/tags/TAG_FETCH_REJECTED";
+export const TAG_SELECTION = "feuc/tags/TAG_SELECTION";
+export const TAG_DESELECTION = "feuc/tags/TAG_DESELECTION";
+export const TAG_CAMPUS_SELECTION = "feuc/tags/TAG_CAMPUS_SELECTION";
 
 // Initial state
 const initialState = {
@@ -66,12 +65,12 @@ export default function reducer(state = initialState, action) {
   }
 }
 
-
 // Action creators
-export const fetchTags = options => (dispatch, getState, { client }) => dispatch({
-  type: TAG_FETCH,
-  payload: client.tags(options),
-});
+export const fetchTags = options => (dispatch, getState, { client }) =>
+  dispatch({
+    type: TAG_FETCH,
+    payload: client.tags(options),
+  });
 
 export const selectTag = tagId => ({
   type: TAG_SELECTION,

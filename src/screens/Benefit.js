@@ -1,16 +1,15 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
-import { denormalize } from 'normalizr';
-import styled from 'styled-components/native';
-import moment from 'moment';
-import get from 'lodash/get';
-import noop from 'lodash/noop';
+import React, { PropTypes, Component } from "react";
+import { connect } from "react-redux";
+import { denormalize } from "normalizr";
+import styled from "styled-components/native";
+import moment from "moment";
+import get from "lodash/get";
+import noop from "lodash/noop";
 
-import { Arc, Button, ErrorBar } from '../components/';
-import { activateBenefit, fetchBenefit } from '../redux/modules/benefits';
-import * as schemas from '../schemas';
-import Themed from '../styles';
-
+import { Arc, Button, ErrorBar } from "../components/";
+import { activateBenefit, fetchBenefit } from "../redux/modules/benefits";
+import * as schemas from "../schemas";
+import Themed from "../styles";
 
 const Container = styled.View`
   flex: 1;
@@ -35,12 +34,11 @@ const ButtonText = styled(Button.Text)`
   font-weight: 800;
 `;
 
-
 const mapStateToProps = ({ nav, entities, benefits }) => {
-  const id = get(nav, ['routes', nav.index, 'params', 'benefitId']);
+  const id = get(nav, ["routes", nav.index, "params", "benefitId"]);
   const activation = denormalize(benefits.saved, [schemas.activation], entities)
     .filter(Boolean)
-    .find(act => get(act, 'benefit._id') === id);
+    .find(act => get(act, "benefit._id") === id);
 
   return {
     benefit: id ? denormalize(id, schemas.benefit, entities) : null,
@@ -57,12 +55,12 @@ const mapDispatchToProps = {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Benefit extends Component {
   static navigationOptions = {
-    title: 'Beneficio'.toUpperCase(),
+    title: "Beneficio".toUpperCase(),
     header: ({ state }, defaultHeader) => ({
       ...defaultHeader,
-      title: 'Beneficio'.toUpperCase(),
+      title: "Beneficio".toUpperCase(),
     }),
-  }
+  };
 
   static propTypes = {
     navigation: PropTypes.object,
@@ -72,7 +70,7 @@ export default class Benefit extends Component {
     benefit: PropTypes.object,
     error: PropTypes.object,
     bannerHeight: PropTypes.number,
-  }
+  };
 
   static defaultProps = {
     navigation: null,
@@ -82,13 +80,13 @@ export default class Benefit extends Component {
     benefit: null,
     error: null,
     bannerHeight: 230,
-  }
+  };
 
   state = {
     benefit: this.props.benefit,
     status: this.props.status,
-    email: '',
-  }
+    email: "",
+  };
 
   componentDidMount() {
     if (this.props.benefit) {
@@ -107,78 +105,92 @@ export default class Benefit extends Component {
     const { navigation } = this.props;
     const { benefit, status, email } = this.state;
 
-    if (benefit && status !== 'saved') {
+    if (benefit && status !== "saved") {
       this.props.activateBenefit(benefit._id, { email });
     } else if (benefit && navigation) {
-      navigation.navigate('BenefitActive', { benefitId: benefit._id, raffle: benefit.benefit.raffle });
+      navigation.navigate("BenefitActive", {
+        benefitId: benefit._id,
+        raffle: benefit.benefit.raffle,
+      });
     }
-  }
+  };
 
   render() {
     const { bannerHeight, error } = this.props;
     const { benefit, status } = this.state;
 
     const responsableSource = {
-      uri: get(benefit, ['responsable', benefit.responsable.kind, 'image', 'secure_url']),
+      uri: get(benefit, [
+        "responsable",
+        benefit.responsable.kind,
+        "image",
+        "secure_url",
+      ]),
     };
     const bannerSource = {
-      uri: get(benefit, 'banner.secure_url'),
+      uri: get(benefit, "banner.secure_url"),
     };
 
     return (
       <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
-          {benefit && (
+          {benefit &&
             <Arc bannerSource={bannerSource} bannerHeight={bannerHeight}>
               <Arc.ArcLayout>
                 <Arc.BrandImage source={responsableSource} />
               </Arc.ArcLayout>
               <Arc.BrandTitle>
-                {get(benefit, ['responsable', benefit.responsable.kind, 'name'])}
+                {get(benefit, [
+                  "responsable",
+                  benefit.responsable.kind,
+                  "name",
+                ])}
               </Arc.BrandTitle>
               <Arc.Title>
                 {benefit.title}
               </Arc.Title>
               <Arc.DropTexts>
-                {benefit.benefit.limited && (
+                {benefit.benefit.limited &&
                   <Arc.DropText>
                     {`Solo ${benefit.benefit.stock} disponibles`}
-                  </Arc.DropText>
-                )}
-                {benefit.benefit.limited && (
+                  </Arc.DropText>}
+                {benefit.benefit.limited &&
                   <Arc.DropText>
                     {`${benefit.uses} personas lo han usado`}
-                  </Arc.DropText>
-                )}
-                {benefit.benefit.expires && (
+                  </Arc.DropText>}
+                {benefit.benefit.expires &&
                   <Arc.DropText>
-                    {`Válido hasta ${moment(benefit.benefit.deadline).format('D/MM/YYY [a las] HH:mm')}`}
-                  </Arc.DropText>
-                )}
+                    {`Válido hasta ${moment(benefit.benefit.deadline).format("D/MM/YYY [a las] HH:mm")}`}
+                  </Arc.DropText>}
               </Arc.DropTexts>
               <Arc.Content>
                 <AboutTitle>
                   Sobre el descuento
                 </AboutTitle>
                 <Arc.Body>
-                  {get(benefit, 'description.full.md') || benefit.description.brief}
+                  {get(benefit, "description.full.md") ||
+                    benefit.description.brief}
                 </Arc.Body>
               </Arc.Content>
-            </Arc>
-          )}
-          {benefit && (
+            </Arc>}
+          {benefit &&
             <Bottom>
               <Button color="B" onPress={this.handleActivate}>
                 <ButtonText color="Z">
-                  {!status ? get(benefit, 'messages.activate', 'Activar') : ''}
-                  {status === 'loading' ? get(benefit, 'messages.loading', 'Cargando...') : ''}
-                  {status === 'saved' ? get(benefit, 'messages.open', 'Abrir') : ''}
-                  {status === 'error' ? get(benefit, 'messages.error', 'Ocurrió un error :(') : ''}
+                  {!status ? get(benefit, "messages.activate", "Activar") : ""}
+                  {status === "loading"
+                    ? get(benefit, "messages.loading", "Cargando...")
+                    : ""}
+                  {status === "saved"
+                    ? get(benefit, "messages.open", "Abrir")
+                    : ""}
+                  {status === "error"
+                    ? get(benefit, "messages.error", "Ocurrió un error :(")
+                    : ""}
                 </ButtonText>
               </Button>
-            </Bottom>
-          )}
+            </Bottom>}
         </Container>
       </Themed>
     );

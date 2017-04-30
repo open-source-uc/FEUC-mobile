@@ -1,66 +1,66 @@
 /* eslint class-methods-use-this: 0 */
 
-import React, { PropTypes, Component } from 'react';
-import { BackAndroid } from 'react-native';
-import { Provider, connect } from 'react-redux';
-import { NavigationActions } from 'react-navigation';
-import noop from 'lodash/noop';
-import get from 'lodash/get';
+import React, { PropTypes, Component } from "react";
+import { BackAndroid } from "react-native";
+import { Provider, connect } from "react-redux";
+import { NavigationActions } from "react-navigation";
+import noop from "lodash/noop";
+import get from "lodash/get";
 
-import Navigator from './redux/Navigator';
-import I18n from './I18n';
-import Notifications from './Notifications';
+import Navigator from "./redux/Navigator";
+import I18n from "./I18n";
+import Notifications from "./Notifications";
 
-import * as hydratation from './redux/modules/hydratation';
-
+import * as hydratation from "./redux/modules/hydratation";
 
 const mapStateToProps = state => ({
   hydratation: state.hydratation,
   nav: state.nav,
 });
 
-const mapDispatchToProps = ({
+const mapDispatchToProps = {
   hydrate: hydratation.hydrate,
   back: NavigationActions.back,
-});
+};
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class App extends Component { // eslint-disable-line
+export default class App extends Component {
+  // eslint-disable-line
   static propTypes = {
     store: PropTypes.object.isRequired,
     hydratation: PropTypes.object.isRequired,
     hydrate: PropTypes.func.isRequired,
     back: PropTypes.func.isRequired,
     options: PropTypes.object,
-  }
+  };
 
   static defaultProps = {
     hydrate: noop,
     back: noop,
     options: {},
-  }
+  };
 
   componentWillMount = () => {
     const { store, hydrate, options } = this.props;
 
     hydrate(store, options.hydratation);
-  }
+  };
 
   componentDidMount() {
-    BackAndroid.addEventListener('backPress', this.handleBackButton);
+    BackAndroid.addEventListener("backPress", this.handleBackButton);
   }
 
   componentWillUnmount() {
-    BackAndroid.removeEventListener('backPress', this.handleBackButton);
+    BackAndroid.removeEventListener("backPress", this.handleBackButton);
   }
 
   handleBackButton = () => {
-    if (get(this.props, 'nav.routes.length', 0) <= 1) {
+    if (get(this.props, "nav.routes.length", 0) <= 1) {
       return BackAndroid.exitApp();
     } else {
       return this.props.back();
     }
-  }
+  };
 
   render() {
     if (this.props.hydratation && this.props.hydratation.done) {

@@ -1,13 +1,12 @@
-import React, { PureComponent } from 'react';
-import { Dimensions, Image } from 'react-native';
-import styled from 'styled-components/native';
+import React, { PureComponent } from "react";
+import { Dimensions, Image } from "react-native";
+import styled from "styled-components/native";
 
-import EventDate from './EventDate';
-
+import EventDate from "./EventDate";
 
 const Container = styled.View`
   background-color: ${props => props.theme.colors.Z};
-  width: ${() => Dimensions.get('window').width * 0.75};
+  width: ${() => Dimensions.get("window").width * 0.75};
   border-radius: 10;
   flex: 1;
   overflow: hidden;
@@ -56,15 +55,12 @@ const Bottom = styled.View`
   flex: 4;
 `;
 
-
 export default class Card extends PureComponent {
   static Cover = Cover;
   static Bottom = Bottom;
   static EventDate = AbsoluteEventDate;
 
   render() {
-    return (
-      <Container {...this.props} />
-    );
+    return <Container {...this.props} />;
   }
 }

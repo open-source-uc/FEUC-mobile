@@ -1,12 +1,10 @@
-import { persistStore } from 'redux-persist';
-
+import { persistStore } from "redux-persist";
 
 // Actions
-export const HYDRATATION = 'feuc/hydratation/HYDRATATION';
-export const HYDRATATION_PENDING = 'feuc/hydratation/HYDRATATION_PENDING';
-export const HYDRATATION_FULFILLED = 'feuc/hydratation/HYDRATATION_FULFILLED';
-export const HYDRATATION_REJECTED = 'feuc/hydratation/HYDRATATION_REJECTED';
-
+export const HYDRATATION = "feuc/hydratation/HYDRATATION";
+export const HYDRATATION_PENDING = "feuc/hydratation/HYDRATATION_PENDING";
+export const HYDRATATION_FULFILLED = "feuc/hydratation/HYDRATATION_FULFILLED";
+export const HYDRATATION_REJECTED = "feuc/hydratation/HYDRATATION_REJECTED";
 
 // Initial state
 const initialState = {
@@ -14,7 +12,6 @@ const initialState = {
   persistor: null,
   error: null,
 };
-
 
 // Reducer
 export default function reducer(state = initialState, action) {
@@ -49,7 +46,7 @@ export default function reducer(state = initialState, action) {
 // Action creators
 export const hydrate = (store, options) => {
   const promise = new Promise((resolve, reject) => {
-    const persistor = persistStore(store, options, (err) => {
+    const persistor = persistStore(store, options, err => {
       if (err) reject(err);
       else resolve(persistor);
     });

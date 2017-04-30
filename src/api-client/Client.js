@@ -1,19 +1,18 @@
-import defaultsDeep from 'lodash/defaultsDeep';
-import trim from 'lodash/trim';
+import defaultsDeep from "lodash/defaultsDeep";
+import trim from "lodash/trim";
 // import orderBy from 'lodash/orderBy';
-import stringify from 'qs/lib/stringify';
+import stringify from "qs/lib/stringify";
 
 const DEFAULT = {
-  method: 'GET',
+  method: "GET",
   body: undefined,
   headers: {
-    'Accept': 'application/json', // eslint-disable-line
-    'Content-Type': 'application/json',
+    Accept: "application/json", // eslint-disable-line
+    "Content-Type": "application/json",
   },
   qs: undefined,
   json: true,
 };
-
 
 export async function fetcher(uri, options) {
   const opts = defaultsDeep({}, options, DEFAULT);
@@ -40,12 +39,12 @@ export async function fetcher(uri, options) {
 
 export default class Client {
   constructor(baseURL) {
-    this.baseURL = trim(baseURL, '/');
+    this.baseURL = trim(baseURL, "/");
   }
 
   async register(data, options = {}) {
     const response = await fetcher(`${this.baseURL}/api/v1/devices`, {
-      method: 'POST',
+      method: "POST",
       body: data,
       ...options,
     });
@@ -58,17 +57,26 @@ export default class Client {
   }
 
   async event(identifier, options) {
-    const response = await fetcher(`${this.baseURL}/api/v1/events/${identifier}`, options);
+    const response = await fetcher(
+      `${this.baseURL}/api/v1/events/${identifier}`,
+      options
+    );
     return response;
   }
 
   async initiatives(options) {
-    const response = await fetcher(`${this.baseURL}/api/v1/initiatives`, options);
+    const response = await fetcher(
+      `${this.baseURL}/api/v1/initiatives`,
+      options
+    );
     return response;
   }
 
   async delegationships(options) {
-    const response = await fetcher(`${this.baseURL}/api/v1/delegationships`, options);
+    const response = await fetcher(
+      `${this.baseURL}/api/v1/delegationships`,
+      options
+    );
     return response;
   }
 
@@ -83,7 +91,10 @@ export default class Client {
   }
 
   async attendances(options) {
-    const response = await fetcher(`${this.baseURL}/api/v1/attendances`, options);
+    const response = await fetcher(
+      `${this.baseURL}/api/v1/attendances`,
+      options
+    );
     return response;
   }
 
@@ -93,16 +104,22 @@ export default class Client {
   }
 
   async benefit(identifier, options) {
-    const response = await fetcher(`${this.baseURL}/api/v1/benefits/${identifier}`, options);
+    const response = await fetcher(
+      `${this.baseURL}/api/v1/benefits/${identifier}`,
+      options
+    );
     return response;
   }
 
   async benefitActivate(identifier, data, options) {
-    const response = await fetcher(`${this.baseURL}/api/v1/benefits/${identifier}/activate`, {
-      method: 'POST',
-      body: data,
-      ...options,
-    });
+    const response = await fetcher(
+      `${this.baseURL}/api/v1/benefits/${identifier}/activate`,
+      {
+        method: "POST",
+        body: data,
+        ...options,
+      }
+    );
     return response;
   }
 }

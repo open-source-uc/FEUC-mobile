@@ -1,29 +1,32 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
-import { denormalize } from 'normalizr';
-import styled from 'styled-components/native';
-import noop from 'lodash/noop';
+import React, { PropTypes, Component } from "react";
+import { connect } from "react-redux";
+import { denormalize } from "normalizr";
+import styled from "styled-components/native";
+import noop from "lodash/noop";
 
-import { ListView, ListViewRowInitiative, Loading, ErrorBar } from '../components/';
-import { fetchInitiatives } from '../redux/modules/initiatives';
-import * as schemas from '../schemas';
-import Themed from '../styles';
-
+import {
+  ListView,
+  ListViewRowInitiative,
+  Loading,
+  ErrorBar,
+} from "../components/";
+import { fetchInitiatives } from "../redux/modules/initiatives";
+import * as schemas from "../schemas";
+import Themed from "../styles";
 
 const Container = styled.View`
   flex: 1;
   background-color: ${props => props.theme.colors.background};
 `;
 
-
 const mapStateToProps = state => ({
   initiatives: state.initiatives,
   entities: state.entities,
 });
 
-const mapDispatchToProps = ({
+const mapDispatchToProps = {
   fetchInitiatives,
-});
+};
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Initiatives extends Component {
@@ -33,7 +36,7 @@ export default class Initiatives extends Component {
     navigation: PropTypes.object,
 
     fetchInitiatives: PropTypes.func,
-  }
+  };
 
   static defaultProps = {
     initiatives: {},
@@ -41,39 +44,46 @@ export default class Initiatives extends Component {
     navigation: null,
 
     fetchInitiatives: noop,
-  }
+  };
 
   static denormalize = ({ initiatives, entities }) => {
     const schema = [schemas.initiative];
     return denormalize(initiatives.result, schema, entities);
-  }
+  };
 
   static DataSource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1._id !== r2._id,
-  })
+  });
 
   state = {
-    dataSource: this.constructor.DataSource.cloneWithRows(this.constructor.denormalize(this.props)),
-  }
+    dataSource: this.constructor.DataSource.cloneWithRows(
+      this.constructor.denormalize(this.props)
+    ),
+  };
 
   componentDidMount = () => {
     this.props.fetchInitiatives();
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.entities && nextProps.initiatives) {
       const items = this.constructor.denormalize(nextProps);
-      this.setState({ dataSource: this.constructor.DataSource.cloneWithRows(items) });
+      this.setState({
+        dataSource: this.constructor.DataSource.cloneWithRows(items),
+      });
     }
   }
 
-  handlePress = (item) => {
+  handlePress = item => {
     const { navigation } = this.props;
 
     if (item && navigation) {
-      navigation.navigate('Initiative', { initiativeId: item._id, title: item.name });
+      navigation.navigate("Initiative", {
+        initiativeId: item._id,
+        title: item.name,
+      });
     }
-  }
+  };
 
   renderRow = (item, section, row, highlight) => (
     <ListViewRowInitiative
@@ -84,7 +94,7 @@ export default class Initiatives extends Component {
       first={Number(row) === 0}
       last={this.state.dataSource.getRowCount() - 1 === Number(row)}
     />
-  )
+  );
 
   render = () => {
     const { error, refreshing } = this.props.initiatives;
@@ -103,7 +113,9 @@ export default class Initiatives extends Component {
               <Loading>
                 <Loading.Logo />
                 <Loading.Text>
-                  {refreshing ? 'Cargando...' : 'No hay comunidades para mostrar'}
+                  {refreshing
+                    ? "Cargando..."
+                    : "No hay comunidades para mostrar"}
                 </Loading.Text>
               </Loading>
             )}
@@ -111,5 +123,5 @@ export default class Initiatives extends Component {
         </Container>
       </Themed>
     );
-  }
+  };
 }

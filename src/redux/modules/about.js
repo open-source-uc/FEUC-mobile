@@ -1,9 +1,8 @@
 // Actions
-export const ABOUT_FETCH = 'feuc/about/ABOUT_FETCH';
-export const ABOUT_FETCH_PENDING = 'feuc/about/ABOUT_FETCH_PENDING';
-export const ABOUT_FETCH_FULFILLED = 'feuc/about/ABOUT_FETCH_FULFILLED';
-export const ABOUT_FETCH_REJECTED = 'feuc/about/ABOUT_FETCH_REJECTED';
-
+export const ABOUT_FETCH = "feuc/about/ABOUT_FETCH";
+export const ABOUT_FETCH_PENDING = "feuc/about/ABOUT_FETCH_PENDING";
+export const ABOUT_FETCH_FULFILLED = "feuc/about/ABOUT_FETCH_FULFILLED";
+export const ABOUT_FETCH_REJECTED = "feuc/about/ABOUT_FETCH_REJECTED";
 
 // Initial state
 const initialState = {
@@ -40,9 +39,9 @@ export default function reducer(state = initialState, action) {
   }
 }
 
-
 // Action creators
-export const fetchAbout = options => (dispatch, getState, { client }) => dispatch({
-  type: ABOUT_FETCH,
-  payload: client.about(options),
-});
+export const fetchAbout = options => (dispatch, getState, { client }) =>
+  dispatch({
+    type: ABOUT_FETCH,
+    payload: client.about(options),
+  });

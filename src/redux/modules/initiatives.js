@@ -1,9 +1,11 @@
 // Actions
-export const INITIATIVE_FETCH = 'feuc/initiatives/INITIATIVE_FETCH';
-export const INITIATIVE_FETCH_PENDING = 'feuc/initiatives/INITIATIVE_FETCH_PENDING';
-export const INITIATIVE_FETCH_FULFILLED = 'feuc/initiatives/INITIATIVE_FETCH_FULFILLED';
-export const INITIATIVE_FETCH_REJECTED = 'feuc/initiatives/INITIATIVE_FETCH_REJECTED';
-
+export const INITIATIVE_FETCH = "feuc/initiatives/INITIATIVE_FETCH";
+export const INITIATIVE_FETCH_PENDING =
+  "feuc/initiatives/INITIATIVE_FETCH_PENDING";
+export const INITIATIVE_FETCH_FULFILLED =
+  "feuc/initiatives/INITIATIVE_FETCH_FULFILLED";
+export const INITIATIVE_FETCH_REJECTED =
+  "feuc/initiatives/INITIATIVE_FETCH_REJECTED";
 
 // Initial state
 const initialState = {
@@ -42,9 +44,9 @@ export default function reducer(state = initialState, action) {
   }
 }
 
-
 // Action creators
-export const fetchInitiatives = options => (dispatch, getState, { client }) => dispatch({
-  type: INITIATIVE_FETCH,
-  payload: client.initiatives(options),
-});
+export const fetchInitiatives = options => (dispatch, getState, { client }) =>
+  dispatch({
+    type: INITIATIVE_FETCH,
+    payload: client.initiatives(options),
+  });

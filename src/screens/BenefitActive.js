@@ -1,19 +1,25 @@
-import React, { PropTypes, Component } from 'react';
-import { Image, Platform, Dimensions, Animated, Easing, findNodeHandle } from 'react-native';
-import { BlurView } from 'react-native-blur';
-import Spinner from 'react-native-spinkit';
-import { connect } from 'react-redux';
-import { denormalize } from 'normalizr';
-import styled from 'styled-components/native';
-import get from 'lodash/get';
-import max from 'lodash/max';
-import moment from 'moment';
-import 'moment-duration-format';
+import React, { PropTypes, Component } from "react";
+import {
+  Image,
+  Platform,
+  Dimensions,
+  Animated,
+  Easing,
+  findNodeHandle,
+} from "react-native";
+import { BlurView } from "react-native-blur";
+import Spinner from "react-native-spinkit";
+import { connect } from "react-redux";
+import { denormalize } from "normalizr";
+import styled from "styled-components/native";
+import get from "lodash/get";
+import max from "lodash/max";
+import moment from "moment";
+import "moment-duration-format";
 
-import { ErrorBar, Bookmark } from '../components/';
-import * as schemas from '../schemas';
-import Themed, { colors } from '../styles';
-
+import { ErrorBar, Bookmark } from "../components/";
+import * as schemas from "../schemas";
+import Themed, { colors } from "../styles";
 
 const Container = styled.View`
   flex: 1;
@@ -23,8 +29,8 @@ const Container = styled.View`
 `;
 
 const Background = styled(Animated.Image)`
-  width: ${max(Object.values(Dimensions.get('window'))) * 1.2};
-  height: ${max(Object.values(Dimensions.get('window'))) * 1.2};
+  width: ${max(Object.values(Dimensions.get("window"))) * 1.2};
+  height: ${max(Object.values(Dimensions.get("window"))) * 1.2};
   background-color: ${props => props.theme.colors.background};
 `;
 
@@ -49,13 +55,13 @@ const Blurred = styled(BlurView)`
 `;
 
 Blurred.defaultProps = {
-  blurType: 'dark',
+  blurType: "dark",
   blurAmount: 50,
 };
 
 const Card = styled.View`
   background-color: ${props => props.theme.colors.Z};
-  width: ${Dimensions.get('window').width * 0.75};
+  width: ${Dimensions.get("window").width * 0.75};
   border-radius: 10;
   height: 380;
   overflow: hidden;
@@ -142,9 +148,8 @@ const Restriction = styled.Text`
   margin-bottom: 12;
 `;
 
-
 const mapStateToProps = ({ nav, entities }) => {
-  const id = get(nav, ['routes', nav.index, 'params', 'benefitId']);
+  const id = get(nav, ["routes", nav.index, "params", "benefitId"]);
   return {
     benefit: id ? denormalize(id, schemas.benefit, entities) : null,
   };
@@ -155,18 +160,19 @@ const mapDispatchToProps = null;
 @connect(mapStateToProps, mapDispatchToProps)
 export default class BenefitActive extends Component {
   static navigationOptions = {
-    title: ({ state }) => (state.params.raffle ? 'Participando' : 'Activado').toUpperCase(),
-  }
+    title: ({ state }) =>
+      (state.params.raffle ? "Participando" : "Activado").toUpperCase(),
+  };
 
   static propTypes = {
     benefit: PropTypes.object,
     error: PropTypes.object,
-  }
+  };
 
   static defaultProps = {
     benefit: null,
     error: null,
-  }
+  };
 
   state = {
     benefit: this.props.benefit,
@@ -174,7 +180,7 @@ export default class BenefitActive extends Component {
     isInTime: false,
     timeleft: null,
     ready: false,
-  }
+  };
 
   componentWillMount() {
     this.animatedValue = new Animated.Value(0);
@@ -196,22 +202,23 @@ export default class BenefitActive extends Component {
     clearTimeout(this.timer);
   }
 
-  setupTimer = (benefit) => {
+  setupTimer = benefit => {
     if (this.timer) clearTimeout(this.timer);
 
     const deadline = benefit.benefit.expires && benefit.benefit.deadline;
     if (deadline) {
       this.timer = setInterval(() => {
         const now = moment();
-        const diff = moment(deadline).diff(now, 'seconds');
+        const diff = moment(deadline).diff(now, "seconds");
         const isInTime = diff > 0;
-        const timeleft = isInTime && moment.duration(diff, 'seconds').format('d[d] h:mm:ss');
+        const timeleft =
+          isInTime && moment.duration(diff, "seconds").format("d[d] h:mm:ss");
         this.setState({ deadline, isInTime, timeleft, ready: true });
       }, 1000);
     } else {
       this.setState({ ready: true });
     }
-  }
+  };
 
   startAnimation = () => {
     this.animatedValue.setValue(0);
@@ -220,7 +227,7 @@ export default class BenefitActive extends Component {
       duration: 4000,
       easing: Easing.linear,
     }).start(this.startAnimation);
-  }
+  };
 
   render() {
     const { error } = this.props;
@@ -228,12 +235,12 @@ export default class BenefitActive extends Component {
 
     const spin = this.animatedValue.interpolate({
       inputRange: [0, 100],
-      outputRange: ['0deg', '360deg'],
+      outputRange: ["0deg", "360deg"],
     });
     const transform = [{ rotate: spin }];
 
     const bannerSource = {
-      uri: get(benefit, 'banner.secure_url'),
+      uri: get(benefit, "banner.secure_url"),
     };
 
     return (
@@ -241,27 +248,26 @@ export default class BenefitActive extends Component {
         <Container>
           <Background
             source={bannerSource}
-            style={Platform.OS === 'ios' ? { transform } : null}
-            innerRef={(background) => {
+            style={Platform.OS === "ios" ? { transform } : null}
+            innerRef={background => {
               this.background = background;
             }}
-            onLoadEnd={() => this.setState({ viewRef: findNodeHandle(this.background) })}
+            onLoadEnd={() =>
+              this.setState({ viewRef: findNodeHandle(this.background) })}
           >
             <Blurred viewRef={this.state.viewRef} />
           </Background>
           <ErrorBar error={error} />
           <Content>
-            {benefit && (
+            {benefit &&
               <Card>
-                <Cover
-                  source={bannerSource}
-                >
-                  {benefit.benefit.expires && false && ( // TODO
+                <Cover source={bannerSource}>
+                  {benefit.benefit.expires &&
+                  false && // TODO
                     <AbsoluteBookmark>
                       <Bookmark.Lead>NRO</Bookmark.Lead>
                       <Bookmark.Title>24</Bookmark.Title>
-                    </AbsoluteBookmark>
-                  )}
+                    </AbsoluteBookmark>}
                 </Cover>
                 <Bottom>
                   <Center>
@@ -275,24 +281,25 @@ export default class BenefitActive extends Component {
                   <Title>
                     {benefit.title}
                   </Title>
-                  {!ready && (
+                  {!ready &&
                     <Restriction>
                       Cargando...
-                    </Restriction>
-                  )}
-                  {ready && deadline && isInTime && timeleft && (
+                    </Restriction>}
+                  {ready &&
+                    deadline &&
+                    isInTime &&
+                    timeleft &&
                     <Restriction>
                       {`Valido por ${timeleft}`.toUpperCase()}
-                    </Restriction>
-                  )}
-                  {ready && deadline && !isInTime && (
+                    </Restriction>}
+                  {ready &&
+                    deadline &&
+                    !isInTime &&
                     <Restriction>
                       Expirado
-                    </Restriction>
-                  )}
+                    </Restriction>}
                 </Bottom>
-              </Card>
-            )}
+              </Card>}
           </Content>
         </Container>
       </Themed>

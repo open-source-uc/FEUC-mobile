@@ -1,4 +1,4 @@
-import Navigator from '../../navigation/Navigator';
+import Navigator from "../../navigation/Navigator";
 
 export default function reducer(state, action) {
   const newState = Navigator.router.getStateForAction(action, state);

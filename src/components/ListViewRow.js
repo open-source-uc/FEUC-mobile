@@ -1,11 +1,10 @@
-import React, { PropTypes, PureComponent } from 'react';
-import { Platform, StyleSheet } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import styled from 'styled-components/native';
-import isArray from 'lodash/fp/isArray';
+import React, { PropTypes, PureComponent } from "react";
+import { Platform, StyleSheet } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import styled from "styled-components/native";
+import isArray from "lodash/fp/isArray";
 
-import Thumbnail from './Thumbnail';
-
+import Thumbnail from "./Thumbnail";
 
 const ContainerIOS = styled.TouchableOpacity`
   flex-direction: row;
@@ -21,7 +20,7 @@ const ContainerIOS = styled.TouchableOpacity`
 `;
 
 ContainerIOS.defaultProps = {
-  background: 'white',
+  background: "white",
 };
 
 const ContainerAndroid = styled.TouchableOpacity`
@@ -34,7 +33,7 @@ const ContainerAndroid = styled.TouchableOpacity`
 `;
 
 ContainerAndroid.defaultProps = {
-  background: 'white',
+  background: "white",
 };
 
 const Children = styled.View`
@@ -95,45 +94,40 @@ const Disclosure = styled(Ionicons)`
 
 Disclosure.defaultProps = {
   size: 15,
-  name: 'ios-arrow-forward',
+  name: "ios-arrow-forward",
 };
 
-
 export default class ListViewRow extends PureComponent {
-  static Content = Content
-  static Thumbnail = Thumbnail
-  static Title = Title
-  static Footer = Footer
-  static Body = Body
-  static Disclosure = Disclosure
+  static Content = Content;
+  static Thumbnail = Thumbnail;
+  static Title = Title;
+  static Footer = Footer;
+  static Body = Body;
+  static Disclosure = Disclosure;
 
   static propTypes = {
     children: PropTypes.any,
     background: PropTypes.string.isRequired,
-  }
+  };
 
   static defaultProps = {
     children: null,
-    background: 'white',
-  }
+    background: "white",
+  };
 
   render() {
     const { children, ...props } = this.props;
 
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === "ios") {
       return (
         <ContainerIOS {...props}>
-          {isArray(children) ? (
-            <Children>{children}</Children>
-          ) : children}
+          {isArray(children) ? <Children>{children}</Children> : children}
         </ContainerIOS>
       );
     } else {
       return (
         <ContainerAndroid {...props}>
-          {isArray(children) ? (
-            <Children>{children}</Children>
-          ) : children}
+          {isArray(children) ? <Children>{children}</Children> : children}
         </ContainerAndroid>
       );
     }

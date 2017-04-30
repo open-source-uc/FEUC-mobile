@@ -1,7 +1,6 @@
-import React, { PropTypes, PureComponent } from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import styled from 'styled-components/native';
-
+import React, { PropTypes, PureComponent } from "react";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import styled from "styled-components/native";
 
 const Container = styled.TouchableOpacity`
   background-color: ${props => props.theme.colors.Z};
@@ -26,9 +25,8 @@ const Close = styled(Ionicons)`
 `;
 
 Close.defaultProps = {
-  name: 'ios-close',
+  name: "ios-close",
 };
-
 
 export default class SearchTag extends PureComponent {
   static Text = Text;
@@ -36,11 +34,11 @@ export default class SearchTag extends PureComponent {
 
   static propTypes = {
     children: PropTypes.node,
-  }
+  };
 
   static defaultProps = {
     children: null,
-  }
+  };
 
   render() {
     const { children, ...props } = this.props;

@@ -1,19 +1,19 @@
-'use strict';
+"use strict";
 
-import React from 'react';
-import { AsyncStorage } from 'react-native';
-import Config from 'react-native-config';
-import moment from 'moment';
+import React from "react";
+import { AsyncStorage } from "react-native";
+import Config from "react-native-config";
+import moment from "moment";
 
-import App from './App';
-import Client from './api-client/Client';
-import configureStore from './redux/store';
+import App from "./App";
+import Client from "./api-client/Client";
+import configureStore from "./redux/store";
 
 // Moment.js I18n
-moment.updateLocale('es', require('moment/locale/es'));
+moment.updateLocale("es", require("moment/locale/es"));
 
 // HTTP Client
-const client = new Client(Config.FEUC_API_URL || 'http://localhost:3000');
+const client = new Client(Config.FEUC_API_URL || "http://localhost:3000");
 
 // Redux required objects
 const initialState = {};
@@ -23,13 +23,11 @@ const store = configureStore(initialState, { client });
 const options = {
   hydratation: {
     storage: AsyncStorage,
-    blacklist: ['hydratation', 'nav'],
+    blacklist: ["hydratation", "nav"],
   },
 };
 
 // Composed and complete app
-const FEUC = () => (
-  <App store={store} options={options} />
-);
+const FEUC = () => <App store={store} options={options} />;
 
 export default FEUC;

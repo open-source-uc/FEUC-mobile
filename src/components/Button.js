@@ -1,11 +1,10 @@
-import React, { PropTypes, PureComponent } from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import styled from 'styled-components/native';
-
+import React, { PropTypes, PureComponent } from "react";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import styled from "styled-components/native";
 
 const Container = styled.TouchableOpacity`
   flex: 1;
-  background-color: ${props => (props.theme.colors[props.color] || props.theme.colors.E)};
+  background-color: ${props => props.theme.colors[props.color] || props.theme.colors.E};
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -13,7 +12,7 @@ const Container = styled.TouchableOpacity`
 `;
 
 const Text = styled.Text`
-  color: ${props => (props.theme.colors[props.color] || props.theme.colors.E)};
+  color: ${props => props.theme.colors[props.color] || props.theme.colors.E};
   background-color: transparent;
   text-align: ${props => props.align};
   font-size: 12;
@@ -22,22 +21,21 @@ const Text = styled.Text`
 `;
 
 Text.defaultProps = {
-  align: 'left',
+  align: "left",
 };
 
 const Icon = styled(Ionicons)`
-  color: ${props => (props.theme.colors[props.color] || props.theme.colors.E)};
+  color: ${props => props.theme.colors[props.color] || props.theme.colors.E};
   font-size: ${12 + 4};
   padding-top: 1;
-  margin: ${props => (props.position === 'right' ? '0 8 0 18' : '0 18 0 8')};
-  margin-right: ${props => (props.position === 'right' ? 18 : 8)};
-  margin-left: ${props => (props.position === 'right' ? 8 : 18)};
+  margin: ${props => (props.position === "right" ? "0 8 0 18" : "0 18 0 8")};
+  margin-right: ${props => (props.position === "right" ? 18 : 8)};
+  margin-left: ${props => (props.position === "right" ? 8 : 18)};
 `;
 
 Icon.defaultProps = {
-  name: 'ios-arrow-dropright',
+  name: "ios-arrow-dropright",
 };
-
 
 export default class Button extends PureComponent {
   static Text = Text;
@@ -46,11 +44,11 @@ export default class Button extends PureComponent {
   static propTypes = {
     ...Container.propTypes,
     color: PropTypes.string,
-  }
+  };
 
   static defaultProps = {
     color: null,
-  }
+  };
 
   render() {
     const { children, color, ...props } = this.props;

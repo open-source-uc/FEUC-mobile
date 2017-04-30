@@ -4,15 +4,14 @@ import {
   BENEFITS_FETCH_FULFILLED,
   BENEFITS_FETCH_SAVED_FULFILLED,
   BENEFIT_ACTIVATION_FULFILLED,
-} from './benefits';
-import { EVENT_FETCH_FULFILLED, EVENT_FETCH_SAVED_FULFILLED } from './events';
-import { INITIATIVE_FETCH_FULFILLED } from './initiatives';
-import { ATTENDANCES_FETCH_FULFILLED } from './attendances';
-import { DELEGATIONSHIP_FETCH_FULFILLED } from './delegationships';
-import { TAG_FETCH_FULFILLED } from './tags';
-import { SESSION_REGISTER_FULFILLED } from './session';
-import { NOTIFICATION_RECEIVED } from './notifications';
-
+} from "./benefits";
+import { EVENT_FETCH_FULFILLED, EVENT_FETCH_SAVED_FULFILLED } from "./events";
+import { INITIATIVE_FETCH_FULFILLED } from "./initiatives";
+import { ATTENDANCES_FETCH_FULFILLED } from "./attendances";
+import { DELEGATIONSHIP_FETCH_FULFILLED } from "./delegationships";
+import { TAG_FETCH_FULFILLED } from "./tags";
+import { SESSION_REGISTER_FULFILLED } from "./session";
+import { NOTIFICATION_RECEIVED } from "./notifications";
 
 // Initial state
 const initialState = {

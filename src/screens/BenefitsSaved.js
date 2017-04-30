@@ -1,32 +1,39 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
-import { denormalize } from 'normalizr';
-import styled from 'styled-components/native';
-import noop from 'lodash/noop';
-import get from 'lodash/get';
+import React, { PropTypes, Component } from "react";
+import { connect } from "react-redux";
+import { denormalize } from "normalizr";
+import styled from "styled-components/native";
+import noop from "lodash/noop";
+import get from "lodash/get";
 
-import { ListViewRowBenefit, ListView, Loading, ErrorBar } from '../components/';
-import { fetchBenefitsSaved } from '../redux/modules/benefits';
-import * as schemas from '../schemas';
-import { isExpired } from '../utils/benefits';
-import Themed from '../styles';
-
+import {
+  ListViewRowBenefit,
+  ListView,
+  Loading,
+  ErrorBar,
+} from "../components/";
+import { fetchBenefitsSaved } from "../redux/modules/benefits";
+import * as schemas from "../schemas";
+import { isExpired } from "../utils/benefits";
+import Themed from "../styles";
 
 const Container = styled.View`
   flex: 1;
   background-color: ${props => props.theme.colors.background};
 `;
 
-
 const mapStateToProps = state => ({
   error: state.benefits.error,
   refreshing: state.benefits.refreshing,
-  activated: denormalize(state.benefits.saved, [schemas.activation], state.entities),
+  activated: denormalize(
+    state.benefits.saved,
+    [schemas.activation],
+    state.entities
+  ),
 });
 
-const mapDispatchToProps = ({
+const mapDispatchToProps = {
   fetchBenefitsSaved,
-});
+};
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class BenefitsSaved extends Component {
@@ -38,7 +45,7 @@ export default class BenefitsSaved extends Component {
     navigation: PropTypes.object,
 
     fetchBenefitsSaved: PropTypes.func,
-  }
+  };
 
   static defaultProps = {
     activated: [],
@@ -47,24 +54,26 @@ export default class BenefitsSaved extends Component {
     navigation: null,
 
     fetchBenefitsSaved: noop,
-  }
+  };
 
   static DataSource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1._id !== r2._id,
-  })
+  });
 
   state = {
     dataSource: this.constructor.DataSource.cloneWithRows(this.props.activated),
-  }
+  };
 
   componentDidMount = () => {
     this.fetchBenefitsSaved();
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.activated) {
       this.setState({
-        dataSource: this.constructor.DataSource.cloneWithRows(nextProps.activated),
+        dataSource: this.constructor.DataSource.cloneWithRows(
+          nextProps.activated
+        ),
       });
     }
   }
@@ -74,16 +83,19 @@ export default class BenefitsSaved extends Component {
 
     const expiredBy = isExpired(item);
     if (activation.valid || !expiredBy.overall) {
-      navigation.navigate('Benefit', { benefitId: item._id, title: item.title });
+      navigation.navigate("Benefit", {
+        benefitId: item._id,
+        title: item.title,
+      });
     } else {
-      alert('Ya no está disponible.'); // eslint-disable-line
+      alert("Ya no está disponible."); // eslint-disable-line
     }
-  }
+  };
 
   fetchBenefitsSaved = () => {
-    const ids = this.props.activated.map(act => get(act, 'benefit._id'));
+    const ids = this.props.activated.map(act => get(act, "benefit._id"));
     this.props.fetchBenefitsSaved(ids);
-  }
+  };
 
   renderRow = (activation, section, row, highlight) => {
     const item = activation.benefit;
@@ -99,7 +111,7 @@ export default class BenefitsSaved extends Component {
         last={this.state.dataSource.getRowCount() - 1 === Number(row)}
       />
     );
-  }
+  };
 
   render = () => {
     const { error, refreshing } = this.props;
@@ -118,7 +130,9 @@ export default class BenefitsSaved extends Component {
               <Loading>
                 <Loading.Logo />
                 <Loading.Text>
-                  {refreshing ? 'Cargando...' : 'Sin descuentos por el momento, vuelve pronto a revisar ;)'}
+                  {refreshing
+                    ? "Cargando..."
+                    : "Sin descuentos por el momento, vuelve pronto a revisar ;)"}
                 </Loading.Text>
               </Loading>
             )}
@@ -126,5 +140,5 @@ export default class BenefitsSaved extends Component {
         </Container>
       </Themed>
     );
-  }
+  };
 }

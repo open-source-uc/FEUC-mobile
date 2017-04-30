@@ -1,9 +1,8 @@
-import React, { PropTypes, PureComponent } from 'react';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import styled from 'styled-components/native';
-import socialUrl from 'social-url';
-import noop from 'lodash/noop';
-
+import React, { PropTypes, PureComponent } from "react";
+import EvilIcons from "react-native-vector-icons/EvilIcons";
+import styled from "styled-components/native";
+import socialUrl from "social-url";
+import noop from "lodash/noop";
 
 const Container = styled.TouchableOpacity`
   background-color: ${props => props.theme.colors[props.network] || props.theme.colors.B};
@@ -26,38 +25,37 @@ const Icon = styled(EvilIcons)`
   font-size: 27;
 `;
 
-
 export default class Social extends PureComponent {
-  static Bar = Bar
+  static Bar = Bar;
 
   static propTypes = {
     children: PropTypes.node,
     url: PropTypes.string,
     defaultIcon: PropTypes.string,
     onPress: PropTypes.func,
-  }
+  };
 
   static defaultProps = {
     children: null,
     url: null,
-    defaultIcon: 'link',
+    defaultIcon: "link",
     onPress: noop,
-  }
+  };
 
-  static parse = (url) => {
+  static parse = url => {
     try {
       const parsed = socialUrl.parse(url);
       return {
         url,
-        network: (parsed.network || '').toLowerCase(),
-        user: (parsed.user || '').toLowerCase(),
+        network: (parsed.network || "").toLowerCase(),
+        user: (parsed.user || "").toLowerCase(),
       };
     } catch (err) {
       return { url, network: null, user: null };
     }
-  }
+  };
 
-  state = Social.parse(this.props.url)
+  state = Social.parse(this.props.url);
 
   componentWillReceiveProps(nextProps) {
     this.setState(Social.parse(nextProps.url));
@@ -65,7 +63,7 @@ export default class Social extends PureComponent {
 
   handlePress = () => {
     this.props.onPress(this.state);
-  }
+  };
 
   render() {
     const { defaultIcon, children, ...props } = this.props;
