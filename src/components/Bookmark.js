@@ -1,13 +1,12 @@
-import React, { PropTypes, PureComponent } from 'react';
-import { Image, Platform } from 'react-native';
-import styled from 'styled-components/native';
+import React, { PropTypes, PureComponent } from "react";
+import { Image, Platform } from "react-native";
+import styled from "styled-components/native";
 
-import { images } from '../assets/';
-
+import { images } from "../assets/";
 
 const Container = styled.Image`
   width: 56;
-  height: ${Platform.OS === 'ios' ? 95 : 105};
+  height: ${Platform.OS === "ios" ? 95 : 105};
   resize-mode: ${Image.resizeMode.stretch};
 `;
 
@@ -39,22 +38,21 @@ const Title = styled(Lead)`
   color: ${props => props.theme.colors.G};
   font-size: 25;
   font-weight: 200;
-  height: ${Platform.OS === 'ios' ? 20 : 25};
-  line-height: ${Platform.OS === 'ios' ? 25 : 24};
+  height: ${Platform.OS === "ios" ? 20 : 25};
+  line-height: ${Platform.OS === "ios" ? 25 : 24};
 `;
 
-
 export default class EventDate extends PureComponent {
-  static Lead = Lead
-  static Title = Title
+  static Lead = Lead;
+  static Title = Title;
 
   static propTypes = {
     children: PropTypes.any,
-  }
+  };
 
   static defaultProps = {
     children: null,
-  }
+  };
 
   render() {
     const { children, ...props } = this.props;

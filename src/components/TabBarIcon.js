@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react';
-import styled from 'styled-components/native';
+/* eslint react/display-name: 0 */
 
-import { colors } from '../styles';
-import { images } from '../assets/';
+import React, { PropTypes } from "react";
+import styled from "styled-components/native";
 
+import { colors } from "../styles";
+import { images } from "../assets/";
 
 const TabBarIcon = styled.Image`
   height: ${props => props.size};
@@ -30,9 +31,7 @@ TabBarIcon.Community = props => (
   <TabBarIcon source={images.nav.community} {...props} />
 );
 
-TabBarIcon.About = props => (
-  <TabBarIcon source={images.nav.feuc} {...props} />
-);
+TabBarIcon.About = props => <TabBarIcon source={images.nav.feuc} {...props} />;
 
 TabBarIcon.Benefits = props => (
   <TabBarIcon source={images.nav.benefit} {...props} />

@@ -1,9 +1,11 @@
 // Actions
-export const ATTENDANCES_FETCH = 'feuc/attendances/ATTENDANCES_FETCH';
-export const ATTENDANCES_FETCH_PENDING = 'feuc/attendances/ATTENDANCES_FETCH_PENDING';
-export const ATTENDANCES_FETCH_FULFILLED = 'feuc/attendances/ATTENDANCES_FETCH_FULFILLED';
-export const ATTENDANCES_FETCH_REJECTED = 'feuc/attendances/ATTENDANCES_FETCH_REJECTED';
-
+export const ATTENDANCES_FETCH = "feuc/attendances/ATTENDANCES_FETCH";
+export const ATTENDANCES_FETCH_PENDING =
+  "feuc/attendances/ATTENDANCES_FETCH_PENDING";
+export const ATTENDANCES_FETCH_FULFILLED =
+  "feuc/attendances/ATTENDANCES_FETCH_FULFILLED";
+export const ATTENDANCES_FETCH_REJECTED =
+  "feuc/attendances/ATTENDANCES_FETCH_REJECTED";
 
 // Initial state
 const initialState = {
@@ -42,9 +44,9 @@ export default function reducer(state = initialState, action) {
   }
 }
 
-
 // Action creators
-export const fetchAttendances = options => (dispatch, getState, { client }) => dispatch({
-  type: ATTENDANCES_FETCH,
-  payload: client.attendances(options),
-});
+export const fetchAttendances = options => (dispatch, getState, { client }) =>
+  dispatch({
+    type: ATTENDANCES_FETCH,
+    payload: client.attendances(options),
+  });

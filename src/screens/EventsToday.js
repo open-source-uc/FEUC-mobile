@@ -1,20 +1,19 @@
-import React, { PropTypes, Component } from 'react';
-import { ListView, Dimensions, findNodeHandle } from 'react-native';
-import { BlurView } from 'react-native-blur';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { connect } from 'react-redux';
-import { denormalize } from 'normalizr';
-import styled from 'styled-components/native';
-import get from 'lodash/get';
-import noop from 'lodash/noop';
+import React, { PropTypes, Component } from "react";
+import { ListView, Dimensions, findNodeHandle } from "react-native";
+import { BlurView } from "react-native-blur";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { connect } from "react-redux";
+import { denormalize } from "normalizr";
+import styled from "styled-components/native";
+import get from "lodash/get";
+import noop from "lodash/noop";
 
-import { Card, RefreshControl, ErrorBar } from '../components/';
-import { fetchEvents } from '../redux/modules/events';
-import * as schemas from '../schemas';
-import Themed, { colors } from '../styles';
-import { images } from '../assets/';
-import { getDateProperties } from '../utils/events';
-
+import { Card, RefreshControl, ErrorBar } from "../components/";
+import { fetchEvents } from "../redux/modules/events";
+import * as schemas from "../schemas";
+import Themed, { colors } from "../styles";
+import { images } from "../assets/";
+import { getDateProperties } from "../utils/events";
 
 const Container = styled.Image`
   background-color: ${props => props.theme.colors.D};
@@ -33,7 +32,7 @@ const Blurred = styled(BlurView)`
 `;
 
 Blurred.defaultProps = {
-  blurType: 'light',
+  blurType: "light",
   blurAmount: 20,
 };
 
@@ -47,7 +46,7 @@ const VerticalScrollView = styled.ScrollView`
 
 VerticalScrollView.defaultProps = {
   contentContainerStyle: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
@@ -66,7 +65,7 @@ HorizontalListView.defaultProps = {
 };
 
 const Page = styled.View`
-  width: ${() => Dimensions.get('window').width};
+  width: ${() => Dimensions.get("window").width};
   justify-content: center;
   flex-direction: row;
   flex: 1;
@@ -137,15 +136,14 @@ const When = styled.Text`
   font-size: 11;
 `;
 
-
 const mapStateToProps = state => ({
   events: state.events,
   entities: state.entities,
 });
 
-const mapDispatchToProps = ({
+const mapDispatchToProps = {
   fetchEvents,
-});
+};
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class EventsToday extends Component {
@@ -155,7 +153,7 @@ export default class EventsToday extends Component {
     navigation: PropTypes.object,
 
     fetchEvents: PropTypes.func,
-  }
+  };
 
   static defaultProps = {
     events: {},
@@ -163,51 +161,55 @@ export default class EventsToday extends Component {
     navigation: null,
 
     fetchEvents: noop,
-  }
+  };
 
   static denormalize = ({ events, entities }) => {
     const schema = [schemas.event];
     return denormalize(events.result, schema, entities);
-  }
+  };
 
   static DataSource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1._id !== r2._id,
-  })
+  });
 
   state = {
-    dataSource: this.constructor.DataSource.cloneWithRows(this.constructor.denormalize(this.props)),
-    index: get(this.props, 'events.result.length', 0) > 0 ? 0 : null,
-  }
+    dataSource: this.constructor.DataSource.cloneWithRows(
+      this.constructor.denormalize(this.props)
+    ),
+    index: get(this.props, "events.result.length", 0) > 0 ? 0 : null,
+  };
 
   componentDidMount = () => {
     this.props.fetchEvents();
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.entities && nextProps.events) {
       const items = this.constructor.denormalize(nextProps);
-      this.setState({ dataSource: this.constructor.DataSource.cloneWithRows(items) });
+      this.setState({
+        dataSource: this.constructor.DataSource.cloneWithRows(items),
+      });
     }
   }
 
-  handlePress = (item) => {
+  handlePress = item => {
     const { navigation } = this.props;
 
     if (item && navigation) {
-      navigation.navigate('Event', { eventId: item._id, title: item.title });
+      navigation.navigate("Event", { eventId: item._id, title: item.title });
     }
-  }
+  };
 
-  handleScroll = (event) => {
+  handleScroll = event => {
     const { index } = this.state; // current
     const { x } = event.nativeEvent.contentOffset;
-    const { width } = Dimensions.get('window');
+    const { width } = Dimensions.get("window");
 
     const page = Math.max(0, Math.floor(x / width));
     if (page !== index) {
       this.setState({ index: page });
     }
-  }
+  };
 
   renderRow = (item, section, row, highlight) => {
     const isSaved = this.props.events.saved.includes(item._id);
@@ -216,19 +218,22 @@ export default class EventsToday extends Component {
     return (
       <Page>
         <Card highlight={highlight}>
-          <Card.Cover source={{ uri: get(item, 'banner.secure_url') }} onPress={() => this.handlePress(item)}>
-            <Card.EventDate date={new Date(get(item, 'temporality.start'))} />
+          <Card.Cover
+            source={{ uri: get(item, "banner.secure_url") }}
+            onPress={() => this.handlePress(item)}
+          >
+            <Card.EventDate date={new Date(get(item, "temporality.start"))} />
           </Card.Cover>
           <Card.Bottom>
             <CardContent>
-              <Title>{get(item, 'title', 'Sin título').toUpperCase()}</Title>
-              <Body>{get(item, 'description.brief')}</Body>
+              <Title>{get(item, "title", "Sin título").toUpperCase()}</Title>
+              <Body>{get(item, "description.brief")}</Body>
               <Footer>
                 <When>
                   {date.range.toUpperCase()}
                 </When>
                 <Calendar
-                  name={isSaved ? 'ios-calendar' : 'ios-calendar-outline'}
+                  name={isSaved ? "ios-calendar" : "ios-calendar-outline"}
                   active={isSaved}
                 />
               </Footer>
@@ -237,38 +242,33 @@ export default class EventsToday extends Component {
         </Card>
       </Page>
     );
-  }
+  };
 
   render = () => {
     const { events: { error, refreshing, result }, entities } = this.props;
     const { index, dataSource } = this.state;
 
     const current = entities.events[result[index]];
-    const uri = get(current, 'image.secure_url') || get(current, 'banner.secure_url');
+    const uri =
+      get(current, "image.secure_url") || get(current, "banner.secure_url");
 
     return (
       <Themed content="dark">
         <Container
-          innerRef={(background) => {
+          innerRef={background => {
             this.background = background;
           }}
           source={uri ? { uri } : images.default.card}
-          onLoadEnd={() => this.setState({ viewRef: findNodeHandle(this.background) })}
+          onLoadEnd={() =>
+            this.setState({ viewRef: findNodeHandle(this.background) })}
         >
           <ErrorBar error={error} />
           <Blurred viewRef={this.state.viewRef} />
-          {index > 0 && (
-            <Arrow name="ios-arrow-back" left />
-          )}
-          {index > 0 && (
-            <Nothing />
-          )}
-          {index <= get(result, 'length', 0) && (
-            <Nothing />
-          )}
-          {index < get(result, 'length', 0) - 1 && (
-            <Arrow name="ios-arrow-forward" right />
-          )}
+          {index > 0 && <Arrow name="ios-arrow-back" left />}
+          {index > 0 && <Nothing />}
+          {index <= get(result, "length", 0) && <Nothing />}
+          {index < get(result, "length", 0) - 1 &&
+            <Arrow name="ios-arrow-forward" right />}
           <VerticalScrollView
             refreshControl={
               <RefreshControl
@@ -289,5 +289,5 @@ export default class EventsToday extends Component {
         </Container>
       </Themed>
     );
-  }
+  };
 }

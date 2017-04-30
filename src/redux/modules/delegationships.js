@@ -1,9 +1,11 @@
 // Actions
-export const DELEGATIONSHIP_FETCH = 'feuc/delegationships/DELEGATIONSHIP_FETCH';
-export const DELEGATIONSHIP_FETCH_PENDING = 'feuc/delegationships/DELEGATIONSHIP_FETCH_PENDING';
-export const DELEGATIONSHIP_FETCH_FULFILLED = 'feuc/delegationships/DELEGATIONSHIP_FETCH_FULFILLED';
-export const DELEGATIONSHIP_FETCH_REJECTED = 'feuc/delegationships/DELEGATIONSHIP_FETCH_REJECTED';
-
+export const DELEGATIONSHIP_FETCH = "feuc/delegationships/DELEGATIONSHIP_FETCH";
+export const DELEGATIONSHIP_FETCH_PENDING =
+  "feuc/delegationships/DELEGATIONSHIP_FETCH_PENDING";
+export const DELEGATIONSHIP_FETCH_FULFILLED =
+  "feuc/delegationships/DELEGATIONSHIP_FETCH_FULFILLED";
+export const DELEGATIONSHIP_FETCH_REJECTED =
+  "feuc/delegationships/DELEGATIONSHIP_FETCH_REJECTED";
 
 // Initial state
 const initialState = {
@@ -42,9 +44,13 @@ export default function reducer(state = initialState, action) {
   }
 }
 
-
 // Action creators
-export const fetchDelegationships = options => (dispatch, getState, { client }) => dispatch({
-  type: DELEGATIONSHIP_FETCH,
-  payload: client.delegationships(options),
-});
+export const fetchDelegationships = options => (
+  dispatch,
+  getState,
+  { client }
+) =>
+  dispatch({
+    type: DELEGATIONSHIP_FETCH,
+    payload: client.delegationships(options),
+  });

@@ -1,29 +1,27 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
-import { denormalize } from 'normalizr';
-import styled from 'styled-components/native';
-import noop from 'lodash/noop';
+import React, { PropTypes, Component } from "react";
+import { connect } from "react-redux";
+import { denormalize } from "normalizr";
+import styled from "styled-components/native";
+import noop from "lodash/noop";
 
-import { ListView, ListViewRowEvent, Loading, ErrorBar } from '../components/';
-import { fetchEvents } from '../redux/modules/events';
-import * as schemas from '../schemas';
-import Themed from '../styles';
-
+import { ListView, ListViewRowEvent, Loading, ErrorBar } from "../components/";
+import { fetchEvents } from "../redux/modules/events";
+import * as schemas from "../schemas";
+import Themed from "../styles";
 
 const Container = styled.View`
   flex: 1;
   background-color: ${props => props.theme.colors.background};
 `;
 
-
 const mapStateToProps = state => ({
   events: state.events,
   entities: state.entities,
 });
 
-const mapDispatchToProps = ({
+const mapDispatchToProps = {
   fetchEvents,
-});
+};
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Events extends Component {
@@ -33,7 +31,7 @@ export default class Events extends Component {
     navigation: PropTypes.object,
 
     fetchEvents: PropTypes.func,
-  }
+  };
 
   static defaultProps = {
     events: {},
@@ -41,39 +39,43 @@ export default class Events extends Component {
     navigation: null,
 
     fetchEvents: noop,
-  }
+  };
 
   static denormalize = ({ events, entities }) => {
     const schema = [schemas.event];
     return denormalize(events.result, schema, entities);
-  }
+  };
 
   static DataSource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1._id !== r2._id,
-  })
+  });
 
   state = {
-    dataSource: this.constructor.DataSource.cloneWithRows(this.constructor.denormalize(this.props)),
-  }
+    dataSource: this.constructor.DataSource.cloneWithRows(
+      this.constructor.denormalize(this.props)
+    ),
+  };
 
   componentDidMount = () => {
     this.props.fetchEvents();
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.entities && nextProps.events) {
       const items = this.constructor.denormalize(nextProps);
-      this.setState({ dataSource: this.constructor.DataSource.cloneWithRows(items) });
+      this.setState({
+        dataSource: this.constructor.DataSource.cloneWithRows(items),
+      });
     }
   }
 
-  handlePress = (item) => {
+  handlePress = item => {
     const { navigation } = this.props;
 
     if (item && navigation) {
-      navigation.navigate('Event', { eventId: item._id, title: item.title });
+      navigation.navigate("Event", { eventId: item._id, title: item.title });
     }
-  }
+  };
 
   renderRow = (item, section, row, highlight) => (
     <ListViewRowEvent
@@ -84,7 +86,7 @@ export default class Events extends Component {
       first={Number(row) === 0}
       last={this.state.dataSource.getRowCount() - 1 === Number(row)}
     />
-  )
+  );
 
   render = () => {
     const { error, refreshing } = this.props.events;
@@ -103,7 +105,9 @@ export default class Events extends Component {
               <Loading>
                 <Loading.Logo />
                 <Loading.Text>
-                  {refreshing ? 'Cargando...' : 'No hay eventos para mostrar, vuelve pronto a revisar ;)'}
+                  {refreshing
+                    ? "Cargando..."
+                    : "No hay eventos para mostrar, vuelve pronto a revisar ;)"}
                 </Loading.Text>
               </Loading>
             )}
@@ -111,5 +115,5 @@ export default class Events extends Component {
         </Container>
       </Themed>
     );
-  }
+  };
 }

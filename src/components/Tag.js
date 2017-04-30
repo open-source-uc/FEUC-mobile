@@ -1,7 +1,6 @@
-import React, { PropTypes, PureComponent } from 'react';
-import styled from 'styled-components/native';
-import isString from 'lodash/isString';
-
+import React, { PropTypes, PureComponent } from "react";
+import styled from "styled-components/native";
+import isString from "lodash/isString";
 
 const Container = styled.TouchableOpacity`
   background-color: ${props => props.theme.colors.E};
@@ -19,27 +18,22 @@ const Name = styled.Text`
   font-weight: bold;
 `;
 
-
 export default class Tag extends PureComponent {
-  static Name = Name
+  static Name = Name;
 
   static propTypes = {
     children: PropTypes.any,
-  }
+  };
 
   static defaultProps = {
     children: null,
-  }
+  };
 
   render() {
     const { children, ...props } = this.props;
     return (
       <Container {...props}>
-        {isString(children) ? (
-          <Name>{children.toUpperCase()}</Name>
-        ) : (
-          children
-        )}
+        {isString(children) ? <Name>{children.toUpperCase()}</Name> : children}
       </Container>
     );
   }

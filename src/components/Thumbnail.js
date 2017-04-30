@@ -1,15 +1,14 @@
-import React, { PropTypes, PureComponent } from 'react';
-import { View, Image, Platform } from 'react-native';
-import { BlurView } from 'react-native-blur';
-import styled from 'styled-components/native';
-
+import React, { PropTypes, PureComponent } from "react";
+import { View, Image, Platform } from "react-native";
+import { BlurView } from "react-native-blur";
+import styled from "styled-components/native";
 
 const ThumbnailContainer = styled.View`
   background-color: ${props => props.theme.colors[props.background] || props.theme.colors.D};
   width: ${props => props.size};
   height: ${props => props.size};
   border-radius: ${props => (props.circle ? props.size / 2 : 0)};
-  shadow-color: ${props => (props.shadow ? props.theme.colors.G : 'transparent')};
+  shadow-color: ${props => (props.shadow ? props.theme.colors.G : "transparent")};
   shadow-offset: 1 1;
   shadow-opacity: ${props => (props.shadow ? 0.1 : 0)};
   shadow-radius: ${props => (props.shadow ? 1.0 : 0)};
@@ -35,7 +34,7 @@ const Blurred = styled(BlurView)`
 `;
 
 Blurred.defaultProps = {
-  blurType: 'light',
+  blurType: "light",
   blurAmount: 4,
 };
 
@@ -75,8 +74,8 @@ const Main = styled.Text`
 Main.defaultProps = Upper.defaultProps;
 
 export default class Thumbnail extends PureComponent {
-  static Upper = Upper
-  static Main = Main
+  static Upper = Upper;
+  static Main = Main;
 
   static propTypes = {
     ...View.propTypes,
@@ -86,7 +85,7 @@ export default class Thumbnail extends PureComponent {
     source: PropTypes.any.isRequired,
     tint: PropTypes.string,
     mode: PropTypes.any,
-  }
+  };
 
   static defaultProps = {
     size: 65,
@@ -95,18 +94,31 @@ export default class Thumbnail extends PureComponent {
     tint: undefined,
     elevation: 5,
     mode: Image.resizeMode.cover,
-  }
+  };
 
-  state = {
-
-  }
+  state = {};
 
   render() {
-    const { children, blur, size, circle, shadow, tint, source, mode, ...props } = this.props;
+    const {
+      children,
+      blur,
+      size,
+      circle,
+      shadow,
+      tint,
+      source,
+      mode,
+      ...props
+    } = this.props;
 
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === "ios") {
       return (
-        <ThumbnailContainer size={size} circle={circle} shadow={shadow} {...props}>
+        <ThumbnailContainer
+          size={size}
+          circle={circle}
+          shadow={shadow}
+          {...props}
+        >
           <ThumbnailImage
             source={source}
             mode={mode}

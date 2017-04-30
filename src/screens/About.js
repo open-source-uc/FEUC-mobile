@@ -1,14 +1,13 @@
-import React, { PropTypes, Component } from 'react';
-import { Linking } from 'react-native';
-import { connect } from 'react-redux';
-import styled from 'styled-components/native';
-import noop from 'lodash/noop';
-import get from 'lodash/get';
+import React, { PropTypes, Component } from "react";
+import { Linking } from "react-native";
+import { connect } from "react-redux";
+import styled from "styled-components/native";
+import noop from "lodash/noop";
+import get from "lodash/get";
 
-import { Arc, ErrorBar, Social } from '../components/';
-import { fetchAbout } from '../redux/modules/about';
-import Themed from '../styles';
-
+import { Arc, ErrorBar, Social } from "../components/";
+import { fetchAbout } from "../redux/modules/about";
+import Themed from "../styles";
 
 const Container = styled.View`
   flex: 1;
@@ -32,22 +31,21 @@ const ButtonText = styled.Text`
   color: ${props => props.theme.colors.Z};
 `;
 
-
 const mapStateToProps = state => state.about;
 
-const mapDispatchToProps = ({
+const mapDispatchToProps = {
   fetchAbout,
-});
+};
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class About extends Component {
   static navigationOptions = {
-    title: 'FEUC',
+    title: "FEUC",
     header: ({ state }, defaultHeader) => ({
       ...defaultHeader,
-      title: state.params ? state.params.title : 'FEUC',
+      title: state.params ? state.params.title : "FEUC",
     }),
-  }
+  };
 
   static propTypes = {
     navigation: PropTypes.object,
@@ -55,7 +53,7 @@ export default class About extends Component {
     content: PropTypes.object,
     error: PropTypes.object,
     bannerHeight: PropTypes.number,
-  }
+  };
 
   static defaultProps = {
     navigation: null,
@@ -63,11 +61,11 @@ export default class About extends Component {
     content: null,
     error: null,
     bannerHeight: 190,
-  }
+  };
 
   state = {
     content: this.props.content,
-  }
+  };
 
   componentDidMount() {
     this.props.fetchAbout();
@@ -81,34 +79,34 @@ export default class About extends Component {
 
   handleAttendancePress = () => {
     if (this.props.navigation) {
-      this.props.navigation.navigate('Attendances');
+      this.props.navigation.navigate("Attendances");
     }
-  }
+  };
 
   handleSocialPress = ({ url }) => {
     try {
       Linking.openURL(url);
     } catch (err) {
-      alert('Hubo un problema abriendo la URL.') // eslint-disable-line
+      alert("Hubo un problema abriendo la URL."); // eslint-disable-line
     }
-  }
+  };
 
   render() {
     const { bannerHeight, error } = this.props;
     const { content } = this.state;
 
     const logo = {
-      uri: get(content, 'logo.secure_url'),
+      uri: get(content, "logo.secure_url"),
     };
     const bannerSource = {
-      uri: get(content, 'banner.secure_url'),
+      uri: get(content, "banner.secure_url"),
     };
 
     return (
       <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
-          {content && (
+          {content &&
             <Arc bannerSource={bannerSource} bannerHeight={bannerHeight}>
               <Arc.ArcLayout>
                 <Arc.BrandImage shadow background="Z" source={logo} />
@@ -124,15 +122,21 @@ export default class About extends Component {
               </ArcLead>
               <Arc.Content>
                 <Arc.Body>
-                  {get(content, 'content.full.md') || content.content.brief}
+                  {get(content, "content.full.md") || content.content.brief}
                 </Arc.Body>
               </Arc.Content>
-            </Arc>
-          )}
+            </Arc>}
           <Social.Bar>
-            {content && get(content, 'social', []).filter(Boolean).map(url => (
-              <Social key={url} url={url} onPress={this.handleSocialPress} />
-            ))}
+            {content &&
+              get(content, "social", [])
+                .filter(Boolean)
+                .map(url => (
+                  <Social
+                    key={url}
+                    url={url}
+                    onPress={this.handleSocialPress}
+                  />
+                ))}
           </Social.Bar>
           <Button onPress={this.handleAttendancePress}>
             <ButtonText>

@@ -1,18 +1,17 @@
-import React, { PropTypes, PureComponent } from 'react';
-import moment from 'moment';
-import trim from 'lodash/trim';
+import React, { PropTypes, PureComponent } from "react";
+import moment from "moment";
+import trim from "lodash/trim";
 
-import Bookmark from './Bookmark';
-
+import Bookmark from "./Bookmark";
 
 export default class EventDate extends PureComponent {
   static propTypes = {
     date: PropTypes.instanceOf(Date),
-  }
+  };
 
   static defaultProps = {
     date: new Date(),
-  }
+  };
 
   render() {
     const { date, ...props } = this.props;
@@ -20,9 +19,15 @@ export default class EventDate extends PureComponent {
 
     return (
       <Bookmark {...props}>
-        <Bookmark.Lead>{trim(when.format('ddd'), '.').toUpperCase()}</Bookmark.Lead>
-        <Bookmark.Title>{trim(when.format('DD'), '.').toUpperCase()}</Bookmark.Title>
-        <Bookmark.Lead>{trim(when.format('MMM'), '.').toUpperCase()}</Bookmark.Lead>
+        <Bookmark.Lead>
+          {trim(when.format("ddd"), ".").toUpperCase()}
+        </Bookmark.Lead>
+        <Bookmark.Title>
+          {trim(when.format("DD"), ".").toUpperCase()}
+        </Bookmark.Title>
+        <Bookmark.Lead>
+          {trim(when.format("MMM"), ".").toUpperCase()}
+        </Bookmark.Lead>
       </Bookmark>
     );
   }

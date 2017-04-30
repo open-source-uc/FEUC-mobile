@@ -1,23 +1,37 @@
-import React, { PropTypes, Component } from 'react';
-import { StyleSheet, Image, Linking, Alert, Dimensions, Platform } from 'react-native';
-import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import { Svg as SVG, Polygon } from 'react-native-svg';
-import { connect } from 'react-redux';
-import { denormalize } from 'normalizr';
-import { translate } from 'react-i18next';
-import styled from 'styled-components/native';
-import stringify from 'qs/lib/stringify';
-import moment from 'moment';
-import get from 'lodash/get';
-import identity from 'lodash/identity';
-import noop from 'lodash/noop';
-import startCase from 'lodash/startCase';
+import React, { PropTypes, Component } from "react";
+import {
+  StyleSheet,
+  Image,
+  Linking,
+  Alert,
+  Dimensions,
+  Platform,
+} from "react-native";
+import ParallaxScrollView from "react-native-parallax-scroll-view";
+import { Svg as SVG, Polygon } from "react-native-svg";
+import { connect } from "react-redux";
+import { denormalize } from "normalizr";
+import { translate } from "react-i18next";
+import styled from "styled-components/native";
+import stringify from "qs/lib/stringify";
+import moment from "moment";
+import get from "lodash/get";
+import identity from "lodash/identity";
+import noop from "lodash/noop";
+import startCase from "lodash/startCase";
 
-import { Button, ErrorBar, Tag, EventDate, RichText, Social, Loading } from '../components/';
-import { saveEvent, removeEvent } from '../redux/modules/events';
-import * as schemas from '../schemas';
-import Themed, { colors } from '../styles';
-
+import {
+  Button,
+  ErrorBar,
+  Tag,
+  EventDate,
+  RichText,
+  Social,
+  Loading,
+} from "../components/";
+import { saveEvent, removeEvent } from "../redux/modules/events";
+import * as schemas from "../schemas";
+import Themed, { colors } from "../styles";
 
 const Container = styled.View`
   flex: 1;
@@ -30,7 +44,7 @@ const StyledParallaxScrollView = styled(ParallaxScrollView)`
 `;
 
 const Banner = styled.Image`
-  width: ${Dimensions.get('window').width};
+  width: ${Dimensions.get("window").width};
   background-color: ${props => props.theme.colors.F};
   resize-mode: ${Image.resizeMode.cover};
   height: ${props => props.height || 256};
@@ -51,7 +65,7 @@ const BannerContentAndroid = styled.View`
 `;
 
 const StyledSVG = styled(SVG)`
-  width: ${Dimensions.get('window').width};
+  width: ${Dimensions.get("window").width};
   height: ${props => props.height};
 `;
 
@@ -72,10 +86,10 @@ const Content = styled.View`
 
 const Row = styled.View`
   justify-content: flex-start;
-  flex-direction: ${props => props.direction || 'row'};
+  flex-direction: ${props => props.direction || "row"};
   flex-wrap: wrap;
   align-items: stretch;
-  padding-vertical: ${props => (props.vertical === 'fit' ? 0 : 5)};
+  padding-vertical: ${props => (props.vertical === "fit" ? 0 : 5)};
   padding-horizontal: ${props => (props.fluid ? 0 : 18)};
   border-bottom-width: ${props => (props.separator ? StyleSheet.hairlineWidth : 0)};
   border-bottom-color: ${props => props.theme.colors.E};
@@ -128,19 +142,18 @@ ActionText.defaultProps = {
   numberOfLines: 0,
 };
 
-
 const mapStateToProps = ({ nav, entities, events }) => {
-  const id = get(nav, ['routes', nav.index, 'params', 'eventId']);
+  const id = get(nav, ["routes", nav.index, "params", "eventId"]);
   return {
     event: id ? denormalize(id, schemas.event, entities) : null,
     isSaved: events.saved.includes(id),
   };
 };
 
-const mapDispatchToProps = ({
+const mapDispatchToProps = {
   saveEvent,
   removeEvent,
-});
+};
 
 @connect(mapStateToProps, mapDispatchToProps)
 @translate()
@@ -148,9 +161,9 @@ export default class Event extends Component {
   static navigationOptions = {
     header: ({ state }, defaultHeader) => ({
       ...defaultHeader,
-      title: get(state, 'params.title', 'Evento').toUpperCase(),
+      title: get(state, "params.title", "Evento").toUpperCase(),
     }),
-  }
+  };
 
   static propTypes = {
     // navigation: PropTypes.any,
@@ -162,7 +175,7 @@ export default class Event extends Component {
     error: PropTypes.object,
     bannerHeight: PropTypes.number,
     triangleHeight: PropTypes.number,
-  }
+  };
 
   static defaultProps = {
     // navigation: null,
@@ -174,12 +187,12 @@ export default class Event extends Component {
     error: null,
     bannerHeight: 256,
     triangleHeight: 40,
-  }
+  };
 
   state = {
     event: this.props.event,
     isSaved: this.props.isSaved,
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     const { event, isSaved } = nextProps;
@@ -189,20 +202,20 @@ export default class Event extends Component {
   }
 
   alertError = (error, url) => {
-    Alert.alert('Hubo un error abriendo la URL:', String(url));
-  }
+    Alert.alert("Hubo un error abriendo la URL:", String(url));
+  };
 
-  formatTimeRange = (event) => {
-    const start = moment(get(event, 'temporality.start')); // required
-    const end = moment(get(event, 'temporality.end')); // required
+  formatTimeRange = event => {
+    const start = moment(get(event, "temporality.start")); // required
+    const end = moment(get(event, "temporality.end")); // required
 
-    if (start.isSame(end, 'day')) {
-      return `${start.format('HH:mm')} - ${end.format('HH:mm')}`;
+    if (start.isSame(end, "day")) {
+      return `${start.format("HH:mm")} - ${end.format("HH:mm")}`;
     } else {
-      const days = end.diff(start, 'days') + 1;
-      return `${start.format('HH:mm')} (${days} días)`;
+      const days = end.diff(start, "days") + 1;
+      return `${start.format("HH:mm")} (${days} días)`;
     }
-  }
+  };
 
   handleToogleCalendar = () => {
     const { event, isSaved } = this.state;
@@ -211,7 +224,7 @@ export default class Event extends Component {
     } else {
       this.props.saveEvent(event._id);
     }
-  }
+  };
 
   handleSocialPress = async ({ url }) => {
     try {
@@ -219,7 +232,7 @@ export default class Event extends Component {
     } catch (err) {
       this.alertError(err);
     }
-  }
+  };
 
   handleAdmissionPress = async () => {
     const url = this.state.event.admission.url;
@@ -228,17 +241,19 @@ export default class Event extends Component {
     } catch (err) {
       this.alertError(err);
     }
-  }
+  };
 
   handleLocationPress = async () => {
     const { event } = this.state;
 
-    const parts = ['street1', 'suburb', 'country'];
-    const got = parts.map(part => get(event, ['location', part])).filter(Boolean);
+    const parts = ["street1", "suburb", "country"];
+    const got = parts
+      .map(part => get(event, ["location", part]))
+      .filter(Boolean);
     if (got.length === 0) return;
 
     // TODO: Open in native app
-    const query = stringify({ q: got.join(', ') });
+    const query = stringify({ q: got.join(", ") });
     const url = `http://maps.google.com/?${query}`;
 
     try {
@@ -246,28 +261,33 @@ export default class Event extends Component {
     } catch (err) {
       this.alertError(err);
     }
-  }
+  };
 
-  renderBackground = (children) => {
+  renderBackground = children => {
     const { bannerHeight } = this.props;
     const { event } = this.state;
 
     return (
-      <Banner source={{ uri: get(event, 'banner.secure_url') }} height={bannerHeight}>
+      <Banner
+        source={{ uri: get(event, "banner.secure_url") }}
+        height={bannerHeight}
+      >
         {children}
       </Banner>
     );
-  }
+  };
 
-  renderLocation = (event) => {
-    const parts = ['street1', 'suburb'];
-    const got = parts.map(part => get(event, ['location', part])).filter(Boolean);
+  renderLocation = event => {
+    const parts = ["street1", "suburb"];
+    const got = parts
+      .map(part => get(event, ["location", part]))
+      .filter(Boolean);
     if (got.length) {
-      return got.join(', ');
+      return got.join(", ");
     } else {
       return null;
     }
-  }
+  };
 
   renderContent = () => {
     const { t } = this.props;
@@ -289,10 +309,13 @@ export default class Event extends Component {
               {this.formatTimeRange(event)}
             </Button.Text>
           </Button>
-          <Button color={isSaved ? 'Z' : 'A'} onPress={this.handleToogleCalendar}>
-            <Button.Icon color={isSaved ? 'A' : 'Z'} name="ios-calendar" />
-            <Button.Text color={isSaved ? 'A' : 'Z'}>
-              {isSaved ? 'Quitar de agenda' : 'Agregar a agenda'}
+          <Button
+            color={isSaved ? "Z" : "A"}
+            onPress={this.handleToogleCalendar}
+          >
+            <Button.Icon color={isSaved ? "A" : "Z"} name="ios-calendar" />
+            <Button.Text color={isSaved ? "A" : "Z"}>
+              {isSaved ? "Quitar de agenda" : "Agregar a agenda"}
             </Button.Text>
           </Button>
         </Row>
@@ -300,18 +323,24 @@ export default class Event extends Component {
           <Button color="Z" onPress={this.handleLocationPress}>
             <Button.Icon color="A" name="ios-map-outline" />
             <Button.Text color="F">
-              {location || 'Lugar por definir'}
+              {location || "Lugar por definir"}
             </Button.Text>
-            {location && (
-              <Button.Icon color="A" position="right" name="ios-arrow-forward" />
-            )}
+            {location &&
+              <Button.Icon
+                color="A"
+                position="right"
+                name="ios-arrow-forward"
+              />}
           </Button>
         </Row>
         <Row fluid separator vertical="fit">
           <Button color="Z" onPress={this.handleAdmissionPress}>
             <Button.Icon color="A" name="ios-barcode-outline" />
             <Button.Text color="F">
-              {event.admission.note || t(['events', 'admission', event.admission.ticket].join('.')).toUpperCase()}
+              {event.admission.note ||
+                t(
+                  ["events", "admission", event.admission.ticket].join(".")
+                ).toUpperCase()}
             </Button.Text>
             <Button.Icon color="A" position="right" name="ios-arrow-forward" />
           </Button>
@@ -323,51 +352,55 @@ export default class Event extends Component {
         </Row>
         <Row>
           <AboutText>
-            {get(event, 'description.full.md') || get(event, 'description.brief') || 'Sin descripción.'}
+            {get(event, "description.full.md") ||
+              get(event, "description.brief") ||
+              "Sin descripción."}
           </AboutText>
         </Row>
         <Row>
-          {event.tags && event.tags.filter(Boolean).map(tag => (
-            <Tag key={tag._id}>{tag.name}</Tag>
-          ))}
+          {event.tags &&
+            event.tags
+              .filter(Boolean)
+              .map(tag => <Tag key={tag._id}>{tag.name}</Tag>)}
         </Row>
         <Row fluid fit direction="column">
-          {get(event, 'social', []).filter(Boolean).map((url) => {
+          {get(event, "social", []).filter(Boolean).map(url => {
             const obj = Social.parse(url);
             return (
               <Social key={url} url={url} onPress={this.handleSocialPress}>
-                <ActionText color="Z">Abrir en {startCase(obj.network)}</ActionText>
-                <Button.Icon color="Z" position="left" name="ios-arrow-forward" />
+                <ActionText color="Z">
+                  Abrir en {startCase(obj.network)}
+                </ActionText>
+                <Button.Icon
+                  color="Z"
+                  position="left"
+                  name="ios-arrow-forward"
+                />
               </Social>
             );
           })}
         </Row>
       </Content>
     );
-  }
+  };
 
   render() {
     const { error, bannerHeight, triangleHeight } = this.props;
     const { event } = this.state;
 
     // Triangle dimensions
-    const width = Dimensions.get('window').width;
+    const width = Dimensions.get("window").width;
     const height = triangleHeight;
 
-    const points = [
-      [0, height],
-      [width, height],
-      [width, 0],
-    ];
+    const points = [[0, height], [width, height], [width, 0]];
 
     return (
       <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
-          {!event && (
-            <Loading />
-          )}
-          {event && Platform.OS === 'ios' && (
+          {!event && <Loading />}
+          {event &&
+            Platform.OS === "ios" &&
             <StyledParallaxScrollView
               contentBackgroundColor={colors.white}
               renderBackground={this.renderBackground}
@@ -376,31 +409,36 @@ export default class Event extends Component {
               <BannerContentIOS offset={triangleHeight}>
                 <StyledSVG height={height}>
                   <Polygon
-                    points={points.reduce((string, [x, y]) => `${string} ${x},${y}`, '')}
+                    points={points.reduce(
+                      (string, [x, y]) => `${string} ${x},${y}`,
+                      ""
+                    )}
                     fill={colors.Z}
                   />
                 </StyledSVG>
                 <AbsoluteEventDate date={new Date(event.temporality.start)} />
               </BannerContentIOS>
               {this.renderContent()}
-            </StyledParallaxScrollView>
-          )}
-          {event && Platform.OS === 'android' && (
+            </StyledParallaxScrollView>}
+          {event &&
+            Platform.OS === "android" &&
             <ScrollView>
               {this.renderBackground(
                 <BannerContentAndroid offset={bannerHeight}>
                   <StyledSVG height={height}>
                     <Polygon
-                      points={points.reduce((string, [x, y]) => `${string} ${x},${y}`, '')}
+                      points={points.reduce(
+                        (string, [x, y]) => `${string} ${x},${y}`,
+                        ""
+                      )}
                       fill={colors.Z}
                     />
                   </StyledSVG>
                   <AbsoluteEventDate date={new Date(event.temporality.start)} />
-                </BannerContentAndroid>,
+                </BannerContentAndroid>
               )}
               {this.renderContent()}
-            </ScrollView>
-          )}
+            </ScrollView>}
         </Container>
       </Themed>
     );

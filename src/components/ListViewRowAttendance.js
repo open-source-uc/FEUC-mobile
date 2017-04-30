@@ -1,11 +1,10 @@
-import React, { PropTypes } from 'react';
-import { Platform } from 'react-native';
-import styled from 'styled-components/native';
-import get from 'lodash/get';
+import React, { PropTypes } from "react";
+import { Platform } from "react-native";
+import styled from "styled-components/native";
+import get from "lodash/get";
 
-import ListViewRow from './ListViewRow';
-import { images } from '../assets/';
-
+import ListViewRow from "./ListViewRow";
+import { images } from "../assets/";
 
 const Text = styled.Text`
   color: ${props => props.theme.colors.B};
@@ -14,27 +13,26 @@ const Text = styled.Text`
   text-align: right;
 `;
 
-
 const ListViewRowAttendance = ({ item, row, ...props }) => {
-  const uri = get(item, ['image', 'secure_url']);
+  const uri = get(item, ["image", "secure_url"]);
 
   return (
     <ListViewRow
-      background={Platform.OS === 'android' && row % 2 ? 'X' : 'Z'}
+      background={Platform.OS === "android" && row % 2 ? "X" : "Z"}
       {...props}
     >
       <ListViewRow.Thumbnail
         shadow
         circle
-        source={uri ? ({ uri }) : images.default.attendance}
+        source={uri ? { uri } : images.default.attendance}
       />
       <ListViewRow.Content>
         <ListViewRow.Title>{item.name}</ListViewRow.Title>
         <ListViewRow.Footer color="E">
-          {get(item, 'movement', '').toUpperCase()}
+          {get(item, "movement", "").toUpperCase()}
         </ListViewRow.Footer>
         <ListViewRow.Body>
-          {get(item, 'description.brief', 'Sin descripción.')}
+          {get(item, "description.brief", "Sin descripción.")}
         </ListViewRow.Body>
       </ListViewRow.Content>
       <Text>

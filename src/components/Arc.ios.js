@@ -1,13 +1,12 @@
-import React, { PropTypes, PureComponent } from 'react';
-import { Image, Dimensions } from 'react-native';
-import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import styled from 'styled-components/native';
+import React, { PropTypes, PureComponent } from "react";
+import { Image, Dimensions } from "react-native";
+import ParallaxScrollView from "react-native-parallax-scroll-view";
+import styled from "styled-components/native";
 
-import Thumbnail from './Thumbnail';
-import RichText from './RichText';
-import { colors } from '../styles';
-import { images } from '../assets/';
-
+import Thumbnail from "./Thumbnail";
+import RichText from "./RichText";
+import { colors } from "../styles";
+import { images } from "../assets/";
 
 const StyledParallaxScrollView = styled(ParallaxScrollView)`
   flex: 1;
@@ -45,7 +44,7 @@ const ArcLayout = styled.Image`
   justify-content: flex-start;
   align-items: center;
   resize-mode: ${Image.resizeMode.cover};
-  width: ${Dimensions.get('window').width};
+  width: ${Dimensions.get("window").width};
   height: 26;
   top: -26;
 `;
@@ -104,38 +103,35 @@ const Body = styled(RichText)`
   font-weight: 400;
 `;
 
-
 export default class ArcView extends PureComponent {
-  static Banner = Banner
-  static BrandImage = BrandImage
-  static BrandTitle = BrandTitle
-  static ArcLayout = ArcLayout
-  static Lead = Lead
-  static Title = Title
-  static DropText = DropText
-  static DropTexts = DropTexts
-  static Content = Content
-  static Body = Body
+  static Banner = Banner;
+  static BrandImage = BrandImage;
+  static BrandTitle = BrandTitle;
+  static ArcLayout = ArcLayout;
+  static Lead = Lead;
+  static Title = Title;
+  static DropText = DropText;
+  static DropTexts = DropTexts;
+  static Content = Content;
+  static Body = Body;
 
   static propTypes = {
     children: PropTypes.any,
     bannerSource: PropTypes.any,
     bannerHeight: PropTypes.number,
-  }
+  };
 
   static defaultProps = {
     children: null,
     bannerSource: null,
     bannerHeight: 256,
-  }
+  };
 
   renderBackground = () => {
     const { bannerSource, bannerHeight } = this.props;
 
-    return (
-      <Banner height={bannerHeight} source={bannerSource} />
-    );
-  }
+    return <Banner height={bannerHeight} source={bannerSource} />;
+  };
 
   render() {
     const { children, bannerHeight, ...props } = this.props;

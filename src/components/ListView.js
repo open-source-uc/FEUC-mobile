@@ -1,9 +1,8 @@
-import React, { PureComponent } from 'react';
-import { ListView, StyleSheet, Platform } from 'react-native';
-import styled from 'styled-components/native';
+import React, { PureComponent } from "react";
+import { ListView, StyleSheet, Platform } from "react-native";
+import styled from "styled-components/native";
 
-import RefreshControl from './RefreshControl';
-
+import RefreshControl from "./RefreshControl";
 
 export const Separator = styled.View`
   border-top-color: ${props => props.theme.colors.E};
@@ -27,10 +26,9 @@ const Back = styled.View`
 `;
 
 const StyledListView = styled.ListView`
-  padding-top: ${Platform.OS === 'ios' ? 28 : 0};
+  padding-top: ${Platform.OS === "ios" ? 28 : 0};
   background-color: ${props => props.theme.colors.transparent};
 `;
-
 
 export default class MyListView extends PureComponent {
   static Separator = Separator;
@@ -47,29 +45,34 @@ export default class MyListView extends PureComponent {
   };
 
   render() {
-    const { refreshing, onRefresh, renderEmpty, dataSource, ...props } = this.props;
+    const {
+      refreshing,
+      onRefresh,
+      renderEmpty,
+      dataSource,
+      ...props
+    } = this.props;
     const count = dataSource ? dataSource.getRowCount() : 0;
     const separators = count - 1;
 
-    const ios = Platform.OS === 'ios';
+    const ios = Platform.OS === "ios";
 
     return (
       <Container>
-        {renderEmpty && count === 0 && (
+        {renderEmpty &&
+          count === 0 &&
           <Back>
             {renderEmpty()}
-          </Back>
-        )}
+          </Back>}
         <StyledListView
           dataSource={dataSource}
-          renderSeparator={(section, row) => (
-            ios && (row < separators) && (
-              <Separator key={row} />
-            )
-          )}
-          refreshControl={onRefresh ? (
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          ) : undefined}
+          renderSeparator={(section, row) =>
+            ios && row < separators && <Separator key={row} />}
+          refreshControl={
+            onRefresh
+              ? <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              : undefined
+          }
           {...props}
         />
       </Container>

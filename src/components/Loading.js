@@ -1,9 +1,8 @@
-import React, { PureComponent } from 'react';
-import { Image } from 'react-native';
-import styled from 'styled-components/native';
+import React, { PureComponent } from "react";
+import { Image } from "react-native";
+import styled from "styled-components/native";
 
-import { images } from '../assets/';
-
+import { images } from "../assets/";
 
 const Container = styled.View`
   flex: 1;
@@ -21,7 +20,6 @@ Logo.defaultProps = {
   source: images.logo.outline,
 };
 
-
 const Text = styled.Text`
   background-color: transparent;
   color: ${props => props.theme.colors.E};
@@ -31,14 +29,11 @@ const Text = styled.Text`
   height: 70;
 `;
 
-
 export default class Loading extends PureComponent {
-  static Logo = Logo
-  static Text = Text
+  static Logo = Logo;
+  static Text = Text;
 
   render() {
-    return (
-      <Container {...this.props} />
-    );
+    return <Container {...this.props} />;
   }
 }

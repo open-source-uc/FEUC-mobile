@@ -1,15 +1,14 @@
-import React, { PropTypes, Component } from 'react';
-import { Linking } from 'react-native';
-import { connect } from 'react-redux';
-import { denormalize } from 'normalizr';
-import styled from 'styled-components/native';
-import get from 'lodash/get';
+import React, { PropTypes, Component } from "react";
+import { Linking } from "react-native";
+import { connect } from "react-redux";
+import { denormalize } from "normalizr";
+import styled from "styled-components/native";
+import get from "lodash/get";
 
-import { Arc, ErrorBar, Social } from '../components/';
-import * as schemas from '../schemas';
-import Themed from '../styles';
-import { images } from '../assets/';
-
+import { Arc, ErrorBar, Social } from "../components/";
+import * as schemas from "../schemas";
+import Themed from "../styles";
+import { images } from "../assets/";
 
 const Container = styled.View`
   flex: 1;
@@ -20,11 +19,12 @@ const ArcLead = styled(Arc.Lead)`
   margin-bottom: 18;
 `;
 
-
 const mapStateToProps = ({ nav, entities }) => {
-  const id = get(nav, ['routes', nav.index, 'params', 'delegationshipId']);
+  const id = get(nav, ["routes", nav.index, "params", "delegationshipId"]);
   return {
-    delegationship: id ? denormalize(id, schemas.delegationship, entities) : null,
+    delegationship: id
+      ? denormalize(id, schemas.delegationship, entities)
+      : null,
   };
 };
 
@@ -33,30 +33,30 @@ const mapDispatchToProps = null;
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Delegationship extends Component {
   static navigationOptions = {
-    title: 'FEUC',
+    title: "FEUC",
     header: ({ state }, defaultHeader) => ({
       ...defaultHeader,
-      title: state.params ? state.params.title : 'Delegationship',
+      title: state.params ? state.params.title : "Delegationship",
     }),
-  }
+  };
 
   static propTypes = {
     // navigation: PropTypes.object,
     delegationship: PropTypes.object,
     error: PropTypes.object,
     bannerHeight: PropTypes.number,
-  }
+  };
 
   static defaultProps = {
     // navigation: null,
     delegationship: null,
     error: null,
     bannerHeight: 190,
-  }
+  };
 
   state = {
     delegationship: this.props.delegationship,
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.delegationship) {
@@ -68,9 +68,9 @@ export default class Delegationship extends Component {
     try {
       Linking.openURL(url);
     } catch (err) {
-      alert('Hubo un problema abriendo la URL.') // eslint-disable-line
+      alert("Hubo un problema abriendo la URL."); // eslint-disable-line
     }
-  }
+  };
 
   render() {
     const { bannerHeight, error } = this.props;
@@ -78,17 +78,22 @@ export default class Delegationship extends Component {
 
     const delegationshipSource = images.logo.square;
     const bannerSource = {
-      uri: get(delegationship, 'banner.secure_url'),
+      uri: get(delegationship, "banner.secure_url"),
     };
 
     return (
       <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
-          {delegationship && (
+          {delegationship &&
             <Arc bannerSource={bannerSource} bannerHeight={bannerHeight}>
               <Arc.ArcLayout>
-                <Arc.BrandImage shadow background="Z" tint={delegationship.color} source={delegationshipSource} />
+                <Arc.BrandImage
+                  shadow
+                  background="Z"
+                  tint={delegationship.color}
+                  source={delegationshipSource}
+                />
               </Arc.ArcLayout>
               <Arc.BrandTitle>
                 Vocalías
@@ -101,15 +106,22 @@ export default class Delegationship extends Component {
               </ArcLead>
               <Arc.Content>
                 <Arc.Body>
-                  {get(delegationship, 'description.full.md') || delegationship.description.brief}
+                  {get(delegationship, "description.full.md") ||
+                    delegationship.description.brief}
                 </Arc.Body>
               </Arc.Content>
-            </Arc>
-          )}
+            </Arc>}
           <Social.Bar>
-            {delegationship && get(delegationship, 'social', []).filter(Boolean).map(url => (
-              <Social key={url} url={url} onPress={this.handleSocialPress} />
-            ))}
+            {delegationship &&
+              get(delegationship, "social", [])
+                .filter(Boolean)
+                .map(url => (
+                  <Social
+                    key={url}
+                    url={url}
+                    onPress={this.handleSocialPress}
+                  />
+                ))}
           </Social.Bar>
         </Container>
       </Themed>

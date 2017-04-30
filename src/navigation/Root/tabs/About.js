@@ -1,4 +1,3 @@
-import { About } from '../../../screens/';
-
+import { About } from "../../../screens/";
 
 export default About;
