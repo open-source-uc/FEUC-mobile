@@ -1,6 +1,7 @@
 /* eslint class-methods-use-this: 0, no-console: 0 */
 
-import { PropTypes, Component } from "react";
+import { Component } from "react";
+import PropTypes from "prop-types";
 import OneSignal from "react-native-onesignal";
 import DeviceInfo from "react-native-device-info";
 import { connect } from "react-redux";

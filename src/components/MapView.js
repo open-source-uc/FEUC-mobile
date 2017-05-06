@@ -1,5 +1,6 @@
-import React, { PropTypes, Component } from "react";
+import React, { Component } from "react";
 import { Dimensions, InteractionManager } from "react-native";
+import PropTypes from "prop-types";
 import MapView from "react-native-maps";
 import styled from "styled-components/native";
 

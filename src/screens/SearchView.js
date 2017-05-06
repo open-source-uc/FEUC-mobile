@@ -1,5 +1,6 @@
-import React, { PropTypes, Component } from "react";
+import React, { Component } from "react";
 import { StyleSheet, ListView, Dimensions } from "react-native";
+import PropTypes from "prop-types";
 import LinearGradient from "react-native-linear-gradient";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";

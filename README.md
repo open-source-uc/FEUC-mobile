@@ -46,6 +46,18 @@ Create development server:
 yarn start
 ```
 
+**It is recommended to have an IDE with an [ESLint](https://github.com/eslint/eslint) plugin.** To run the linter:
+
+```sh
+yarn run lint
+```
+
+To quick-fix warnings:
+
+```sh
+yarn run lint -- --fix
+```
+
 ### iOS
 
 Run an iOS emulator with:

@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import Markdown from "react-native-simple-markdown";
 import styled from "styled-components/native";
 import has from "lodash/has";

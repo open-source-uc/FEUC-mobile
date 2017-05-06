@@ -1,5 +1,6 @@
-import React, { PropTypes } from "react";
+import React from "react";
 import { Image, Platform } from "react-native";
+import PropTypes from "prop-types";
 import get from "lodash/get";
 import trimStart from "lodash/trimStart";
 
