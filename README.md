@@ -126,7 +126,7 @@ Change the app colors in [`android/app/src/main/res/values/styles.xml`](.android
 
 ## Production
 
-To create a `npm` and `git` version, commit everything on the master branch, then:
+To create a `npm` and `git` version, commit everything on the master branch and then:
 
 ```sh
 npm version major|minor|hotfix
