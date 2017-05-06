@@ -1,5 +1,6 @@
-import React, { PropTypes, PureComponent } from "react";
+import React, { PureComponent } from "react";
 import { Image, Platform } from "react-native";
+import PropTypes from "prop-types";
 import styled from "styled-components/native";
 
 import { images } from "../assets/";

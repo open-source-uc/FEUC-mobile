@@ -1,7 +1,8 @@
 /* eslint class-methods-use-this: 0 */
 
-import React, { PropTypes, Component } from "react";
+import React, { Component } from "react";
 import { BackAndroid } from "react-native";
+import PropTypes from "prop-types";
 import { Provider, connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
 import noop from "lodash/noop";

@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 

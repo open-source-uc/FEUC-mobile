@@ -1,4 +1,5 @@
-import React, { PropTypes, PureComponent } from "react";
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 import styled from "styled-components/native";
 import socialUrl from "social-url";

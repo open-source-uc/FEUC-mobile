@@ -1,5 +1,6 @@
-import React, { PropTypes, PureComponent } from "react";
+import React, { PureComponent } from "react";
 import { Platform, StyleSheet } from "react-native";
+import PropTypes from "prop-types";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import styled from "styled-components/native";
 import isArray from "lodash/fp/isArray";

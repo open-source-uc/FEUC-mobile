@@ -1,4 +1,5 @@
-import React, { PropTypes, PureComponent } from "react";
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
 import moment from "moment";
 import trim from "lodash/trim";
 

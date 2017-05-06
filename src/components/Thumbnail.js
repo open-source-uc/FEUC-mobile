@@ -1,5 +1,6 @@
-import React, { PropTypes, PureComponent } from "react";
+import React, { PureComponent } from "react";
 import { View, Image, Platform } from "react-native";
+import PropTypes from "prop-types";
 import { BlurView } from "react-native-blur";
 import styled from "styled-components/native";
 

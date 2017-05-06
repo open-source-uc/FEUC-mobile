@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   Image,
@@ -7,6 +7,7 @@ import {
   Dimensions,
   Platform,
 } from "react-native";
+import PropTypes from "prop-types";
 import ParallaxScrollView from "react-native-parallax-scroll-view";
 import { Svg as SVG, Polygon } from "react-native-svg";
 import { connect } from "react-redux";

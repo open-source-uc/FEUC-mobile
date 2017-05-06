@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from "react";
+import React, { Component } from "react";
 import {
   Image,
   Platform,
@@ -7,6 +7,7 @@ import {
   Easing,
   findNodeHandle,
 } from "react-native";
+import PropTypes from "prop-types";
 import { BlurView } from "react-native-blur";
 import Spinner from "react-native-spinkit";
 import { connect } from "react-redux";

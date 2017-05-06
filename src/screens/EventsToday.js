@@ -1,5 +1,6 @@
-import React, { PropTypes, Component } from "react";
+import React, { Component } from "react";
 import { ListView, Dimensions, findNodeHandle } from "react-native";
+import PropTypes from "prop-types";
 import { BlurView } from "react-native-blur";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
