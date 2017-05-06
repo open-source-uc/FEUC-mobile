@@ -6,7 +6,7 @@ import socialUrl from "social-url";
 import noop from "lodash/noop";
 
 const Container = styled.TouchableOpacity`
-  background-color: ${props => props.theme.colors[props.network] || props.theme.colors.B};
+  background-color: ${props => props.theme.colors[props.network] || props.theme.colors.A};
   flex: 1;
   flex-direction: row;
   justify-content: center;

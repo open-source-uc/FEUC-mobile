@@ -177,7 +177,7 @@ export default class Benefit extends Component {
             </Arc>}
           {benefit &&
             <Bottom>
-              <Button color="B" onPress={this.handleActivate}>
+              <Button color="A" onPress={this.handleActivate}>
                 <ButtonText color="Z">
                   {!status ? get(benefit, "messages.activate", "Activar") : ""}
                   {status === "loading"
