@@ -277,7 +277,11 @@ export default class BenefitActive extends Component {
                     </Circle>
                   </Center>
                   <BrandTitle>
-                    {benefit.responsable[benefit.responsable.kind].name}
+                    {get(benefit, [
+                      "responsable",
+                      benefit.responsable.kind,
+                      "name",
+                    ])}
                   </BrandTitle>
                   <Title>
                     {benefit.title}
