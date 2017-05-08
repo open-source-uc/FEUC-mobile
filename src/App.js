@@ -26,7 +26,6 @@ const mapDispatchToProps = {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class App extends Component {
-  // eslint-disable-line
   static propTypes = {
     store: PropTypes.object.isRequired,
     hydratation: PropTypes.object.isRequired,

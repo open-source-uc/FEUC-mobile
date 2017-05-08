@@ -10,6 +10,7 @@ import initiatives from "./modules/initiatives";
 import delegationships from "./modules/delegationships";
 import attendances from "./modules/attendances";
 import tags from "./modules/tags";
+import surveys from "./modules/surveys";
 import notifications from "./modules/notifications";
 import about from "./modules/about";
 
@@ -24,6 +25,7 @@ const reducer = combineReducers({
   delegationships,
   attendances,
   tags,
+  surveys,
   notifications,
   about,
 });

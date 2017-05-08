@@ -11,6 +11,7 @@ import {
   BenefitActive,
   Delegationship,
   Attendances,
+  Survey,
 } from "../screens/";
 import { Logo } from "../components/";
 // import { Logo, NavbarButton } from '../components/';
@@ -57,6 +58,14 @@ const Navigator = StackNavigator(
     },
     Event: {
       screen: Event,
+      navigationOptions: {
+        header: (navigation, defaultHeader) => ({
+          ...defaultHeader,
+        }),
+      },
+    },
+    Survey: {
+      screen: Survey,
       navigationOptions: {
         header: (navigation, defaultHeader) => ({
           ...defaultHeader,

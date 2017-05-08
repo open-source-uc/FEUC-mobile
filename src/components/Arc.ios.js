@@ -60,7 +60,7 @@ const Title = styled.Text`
   font-family: ${props => props.theme.fonts.headers};
   font-weight: 500;
   font-size: 20;
-  margin-bottom: 8;
+  margin: 0 18 8;
 `;
 
 Title.defaultProps = {

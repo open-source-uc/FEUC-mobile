@@ -9,6 +9,7 @@ import { EVENT_FETCH_FULFILLED, EVENT_FETCH_SAVED_FULFILLED } from "./events";
 import { INITIATIVE_FETCH_FULFILLED } from "./initiatives";
 import { ATTENDANCES_FETCH_FULFILLED } from "./attendances";
 import { DELEGATIONSHIP_FETCH_FULFILLED } from "./delegationships";
+import { SURVEY_FETCH_FULFILLED } from "./surveys";
 import { TAG_FETCH_FULFILLED } from "./tags";
 import { SESSION_REGISTER_FULFILLED } from "./session";
 import { NOTIFICATION_RECEIVED } from "./notifications";
@@ -22,6 +23,7 @@ const initialState = {
   activations: {},
   initiatives: {},
   brands: {},
+  surveys: {},
   tags: {},
   campuses: {},
   notifications: {},
@@ -83,6 +85,15 @@ export default function reducer(state = initialState, action) {
         tags: {
           ...state.tags,
           ...action.payload.entities.tags,
+        },
+      };
+    }
+    case SURVEY_FETCH_FULFILLED: {
+      return {
+        ...state,
+        surveys: {
+          ...state.surveys,
+          ...action.payload.entities.surveys,
         },
       };
     }

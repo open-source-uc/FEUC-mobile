@@ -60,7 +60,7 @@ export default function reducer(state = initialState, action) {
         error: null,
       };
     }
-    case BENEFITS_FETCH_SAVED_REJECTED:
+    case BENEFITS_FETCH_SAVED_REJECTED: // TODO: own reducer?
     case BENEFITS_FETCH_REJECTED: {
       return {
         ...state,

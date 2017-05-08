@@ -1,4 +1,5 @@
 const { schema } = require("normalizr");
+// const assert = require("assert"); // Ensure non-circular dependencies and undefined objects.
 
 exports.notification = new schema.Entity("notifications");
 
@@ -66,11 +67,16 @@ exports.device = new schema.Entity(
   }
 );
 
+// assert(exports.brand);
+// assert(exports.delegationship);
+// assert(exports.initiative);
 exports.benefit = new schema.Entity(
   "benefits",
   {
     responsable: {
       brand: exports.brand,
+      delegationship: exports.delegationship,
+      initiative: exports.initiative,
     },
   },
   {
@@ -78,6 +84,24 @@ exports.benefit = new schema.Entity(
   }
 );
 
+// assert(exports.brand);
+// assert(exports.delegationship);
+// assert(exports.initiative);
+exports.survey = new schema.Entity(
+  "surveys",
+  {
+    responsable: {
+      brand: exports.brand,
+      delegationship: exports.delegationship,
+      initiative: exports.initiative,
+    },
+  },
+  {
+    idAttribute: "_id",
+  }
+);
+
+// assert(exports.benefit);
 exports.activation = new schema.Entity(
   "activations",
   {
@@ -89,6 +113,10 @@ exports.activation = new schema.Entity(
   }
 );
 
+// assert(exports.campus);
+// assert(exports.tag);
+// assert(exports.initiative);
+// assert(exports.delegationship);
 exports.event = new schema.Entity(
   "events",
   {
