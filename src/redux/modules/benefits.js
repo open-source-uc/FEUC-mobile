@@ -1,3 +1,4 @@
+import Bluebird from "bluebird";
 import uniq from "lodash/uniq";
 
 // Actions
@@ -18,6 +19,7 @@ export const BENEFITS_FETCH_SAVED_FULFILLED =
 export const BENEFITS_FETCH_SAVED_REJECTED =
   "feuc/benefits/BENEFITS_FETCH_SAVED_REJECTED";
 
+export const BENEFIT_ACTIVATION = "feuc/benefits/BENEFIT_ACTIVATION";
 export const BENEFIT_ACTIVATION_PENDING =
   "feuc/benefits/BENEFIT_ACTIVATION_PENDING";
 export const BENEFIT_ACTIVATION_FULFILLED =
@@ -73,7 +75,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         status: {
           ...state.status,
-          [action.payload.benefitId]: "loading",
+          [action.meta.benefitId]: "loading",
         },
       };
     }
@@ -82,7 +84,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         status: {
           ...state.status,
-          [action.payload.benefitId]: "error",
+          [action.meta.benefitId]: "error",
         },
       };
     }
@@ -92,7 +94,7 @@ export default function reducer(state = initialState, action) {
         saved: uniq([...state.saved, action.payload.result]).filter(Boolean),
         status: {
           ...state.status,
-          [action.payload.benefitId]: "saved",
+          [action.meta.benefitId]: "saved",
         },
       };
     }
@@ -139,33 +141,18 @@ export const activateBenefit = (benefitId, data) => (
   getState,
   { client }
 ) => {
-  dispatch({
-    type: BENEFIT_ACTIVATION_PENDING,
-    payload: {
-      benefitId,
+  const promise = client.benefitActivate(benefitId, data, {
+    headers: {
+      "X-FEUC-ID": getState().session.result,
     },
   });
 
-  return client
-    .benefitActivate(benefitId, data, {
-      headers: {
-        "X-FEUC-ID": getState().session.result,
-      },
-    })
-    .then(response =>
-      dispatch({
-        type: BENEFIT_ACTIVATION_FULFILLED,
-        payload: { ...response, benefitId },
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: BENEFIT_ACTIVATION_REJECTED,
-        payload: {
-          ...err,
-          benefitId,
-        },
-        error: true,
-      })
-    );
+  return dispatch({
+    type: BENEFIT_ACTIVATION,
+    meta: { benefitId },
+    // Make always take from 1500 ms and up (UX)
+    payload: Bluebird.all([promise, Bluebird.delay(1500)]).then(
+      array => array[0]
+    ),
+  });
 };

@@ -117,7 +117,7 @@ export const selectSurveyOption = (surveyId, vote) => (
     },
   });
 
-  dispatch({
+  return dispatch({
     type: SURVEY_SELECTION,
     meta: { surveyId },
     // Make always take from 1500 ms and up (UX)
