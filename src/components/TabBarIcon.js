@@ -38,4 +38,8 @@ TabBarIcon.Benefits = props => (
   <TabBarIcon source={images.nav.benefit} {...props} />
 );
 
+TabBarIcon.Surveys = props => (
+  <TabBarIcon source={images.nav.survey} {...props} />
+);
+
 export default TabBarIcon;

@@ -115,7 +115,7 @@ export default TabNavigator(
         tabBar: (navigation, defaultTabBar) => ({
           ...defaultTabBar,
           label: "Encuestas",
-          icon: props => <TabBarIcon.Benefits {...props} />,
+          icon: props => <TabBarIcon.Surveys {...props} />,
         }),
         header: ({ state }, defaultHeader) => ({
           // FIXME: not working
@@ -133,8 +133,8 @@ export default TabNavigator(
     animationEnabled: false,
     initialRouteName: "EventsTab",
     order: [
-      "SurveysTab",
       "CommunityTab",
+      "SurveysTab",
       "EventsTab",
       "BenefitsTab",
       "AboutTab",
