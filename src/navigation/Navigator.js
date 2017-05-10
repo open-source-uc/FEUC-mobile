@@ -12,9 +12,9 @@ import {
   Delegationship,
   Attendances,
   Survey,
+  Notifications,
 } from "../screens/";
-import { Logo } from "../components/";
-// import { Logo, NavbarButton } from '../components/';
+import { Logo, NavbarButton } from "../components/";
 import { colors } from "../styles";
 
 const options = {
@@ -40,6 +40,11 @@ const Navigator = StackNavigator(
         header: ({ state, navigate }, defaultHeader) => ({
           ...defaultHeader,
           title: <Logo center />,
+          left: (
+            <NavbarButton onPress={() => navigate("Notifications")}>
+              <NavbarButton.Icon name="ios-notifications" />
+            </NavbarButton>
+          ),
           // right: (
           //   <NavbarButton onPress={() => navigate('SearchView')}>
           //     <NavbarButton.Icon name="ios-search" />
@@ -116,6 +121,15 @@ const Navigator = StackNavigator(
         header: (navigation, defaultHeader) => ({
           ...defaultHeader,
           title: "Buscar eventos".toUpperCase(),
+        }),
+      },
+    },
+    Notifications: {
+      screen: Notifications,
+      navigationOptions: {
+        header: (navigation, defaultHeader) => ({
+          ...defaultHeader,
+          title: "Notificaciones".toUpperCase(),
         }),
       },
     },

@@ -21,7 +21,7 @@ const ArcLead = styled(Arc.Lead)`
 `;
 
 const mapStateToProps = ({ nav, entities }) => {
-  const id = get(nav, ["routes", nav.index, "params", "delegationshipId"]);
+  const id = get(nav, ["routes", nav.index, "params", "_id"]);
   return {
     delegationship: id
       ? denormalize(id, schemas.delegationship, entities)

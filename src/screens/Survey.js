@@ -105,7 +105,7 @@ const MoreText = styled.Text`
 `;
 
 const mapStateToProps = ({ nav, entities, surveys }) => {
-  const id = get(nav, ["routes", nav.index, "params", "surveyId"]);
+  const id = get(nav, ["routes", nav.index, "params", "_id"]);
   return {
     survey: id ? denormalize(id, schemas.survey, entities) : null,
     selected: surveys.selected[id],

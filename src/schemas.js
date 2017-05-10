@@ -106,7 +106,17 @@ exports.activation = new schema.Entity(
   "activations",
   {
     benefit: exports.benefit,
-    // device: exports.device,
+  },
+  {
+    idAttribute: "_id",
+  }
+);
+
+// assert(exports.survey);
+exports.vote = new schema.Entity(
+  "votes",
+  {
+    survey: exports.survey,
   },
   {
     idAttribute: "_id",
@@ -125,6 +135,27 @@ exports.event = new schema.Entity(
     organizer: {
       initiative: exports.initiative,
       delegationship: exports.delegationship,
+    },
+  },
+  {
+    idAttribute: "_id",
+  }
+);
+
+// assert(exports.event);
+// assert(exports.benefit);
+// assert(exports.initiative);
+// assert(exports.delegationship);
+// assert(exports.survey);
+exports.notification = new schema.Entity(
+  "notifications",
+  {
+    action: {
+      event: exports.event,
+      benefit: exports.benefit,
+      initiative: exports.initiative,
+      delegationship: exports.delegationship,
+      survey: exports.survey,
     },
   },
   {

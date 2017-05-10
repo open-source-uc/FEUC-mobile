@@ -123,6 +123,14 @@ export default class Client {
     return response;
   }
 
+  async notifications(options) {
+    const response = await fetcher(
+      `${this.baseURL}/api/v1/notifications`,
+      options
+    );
+    return response;
+  }
+
   async surveys(options) {
     const response = await fetcher(`${this.baseURL}/api/v1/surveys`, options);
     return response;

@@ -12,7 +12,7 @@ import { DELEGATIONSHIP_FETCH_FULFILLED } from "./delegationships";
 import { SURVEY_FETCH_FULFILLED } from "./surveys";
 import { TAG_FETCH_FULFILLED } from "./tags";
 import { SESSION_REGISTER_FULFILLED } from "./session";
-import { NOTIFICATION_RECEIVED } from "./notifications";
+import { NOTIFICATIONS_FETCH_FULFILLED } from "./notifications";
 
 // Initial state
 const initialState = {
@@ -132,7 +132,7 @@ export default function reducer(state = initialState, action) {
         },
       };
     }
-    case NOTIFICATION_RECEIVED: {
+    case NOTIFICATIONS_FETCH_FULFILLED: {
       return {
         ...state,
         notifications: {

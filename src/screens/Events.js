@@ -74,7 +74,7 @@ export default class Events extends Component {
     const { navigation } = this.props;
 
     if (item && navigation) {
-      navigation.navigate("Event", { eventId: item._id, title: item.title });
+      navigation.navigate("Event", { _id: item._id, title: item.title });
     }
   };
 

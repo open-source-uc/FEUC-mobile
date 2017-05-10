@@ -17,6 +17,7 @@ export { default as ListViewRowAttendance } from "./ListViewRowAttendance";
 export { default as ListViewRowEvent } from "./ListViewRowEvent";
 export { default as ListViewRowInitiative } from "./ListViewRowInitiative";
 export { default as ListViewRowSurvey } from "./ListViewRowSurvey";
+export { default as ListViewRowNotification } from "./ListViewRowNotification";
 export {
   default as ListViewRowDelegationship,
 } from "./ListViewRowDelegationship";

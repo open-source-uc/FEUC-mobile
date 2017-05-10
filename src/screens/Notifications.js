@@ -3,16 +3,20 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { denormalize } from "normalizr";
 import styled from "styled-components/native";
+import get from "lodash/get";
 import noop from "lodash/noop";
 
 import {
   ListView,
-  ListViewRowInitiative,
+  ListViewRowNotification,
   Loading,
   ErrorBar,
 } from "../components/";
-import { fetchInitiatives } from "../redux/modules/initiatives";
 import * as schemas from "../schemas";
+import {
+  viewNotification,
+  fetchNotifications,
+} from "../redux/modules/notifications";
 import Themed from "../styles";
 
 const Container = styled.View`
@@ -21,35 +25,38 @@ const Container = styled.View`
 `;
 
 const mapStateToProps = state => ({
-  initiatives: state.initiatives,
+  notifications: state.notifications,
   entities: state.entities,
 });
 
 const mapDispatchToProps = {
-  fetchInitiatives,
+  viewNotification,
+  fetchNotifications,
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class Initiatives extends Component {
+export default class Notifications extends Component {
   static propTypes = {
-    initiatives: PropTypes.object,
+    notifications: PropTypes.object,
     entities: PropTypes.object, // eslint-disable-line
     navigation: PropTypes.object,
 
-    fetchInitiatives: PropTypes.func,
+    viewNotification: PropTypes.func,
+    fetchNotifications: PropTypes.func,
   };
 
   static defaultProps = {
-    initiatives: {},
+    notifications: {},
     entities: {},
     navigation: null,
 
-    fetchInitiatives: noop,
+    viewNotification: noop,
+    fetchNotifications: noop,
   };
 
-  static denormalize = ({ initiatives, entities }) => {
-    const schema = [schemas.initiative];
-    return denormalize(initiatives.result, schema, entities);
+  static denormalize = ({ notifications, entities }) => {
+    const schema = [schemas.notification];
+    return denormalize(notifications.result, schema, entities);
   };
 
   static DataSource = new ListView.DataSource({
@@ -63,11 +70,11 @@ export default class Initiatives extends Component {
   };
 
   componentDidMount = () => {
-    this.props.fetchInitiatives();
+    this.props.fetchNotifications();
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.entities && nextProps.initiatives) {
+    if (nextProps.entities && nextProps.notifications) {
       const items = this.constructor.denormalize(nextProps);
       this.setState({
         dataSource: this.constructor.DataSource.cloneWithRows(items),
@@ -76,19 +83,13 @@ export default class Initiatives extends Component {
   }
 
   handlePress = item => {
-    const { navigation } = this.props;
-
-    if (item && navigation) {
-      navigation.navigate("Initiative", {
-        _id: item._id,
-        title: item.name,
-      });
-    }
+    this.props.viewNotification(item);
   };
 
   renderRow = (item, section, row, highlight) => (
-    <ListViewRowInitiative
+    <ListViewRowNotification
       item={item}
+      seen={get(this.props.notifications, ["seen", item._id || item], false)}
       row={row}
       highlight={highlight}
       onPress={() => this.handlePress(item)}
@@ -98,7 +99,7 @@ export default class Initiatives extends Component {
   );
 
   render = () => {
-    const { error, refreshing } = this.props.initiatives;
+    const { error, refreshing } = this.props.notifications;
     const { dataSource } = this.state;
 
     return (
@@ -109,14 +110,12 @@ export default class Initiatives extends Component {
             dataSource={dataSource}
             renderRow={this.renderRow}
             refreshing={refreshing}
-            onRefresh={this.props.fetchInitiatives}
+            onRefresh={this.props.fetchNotifications}
             renderEmpty={() => (
               <Loading>
                 <Loading.Logo />
                 <Loading.Text>
-                  {refreshing
-                    ? "Cargando..."
-                    : "No hay comunidades para mostrar"}
+                  {refreshing ? "Cargando..." : "No hay notificaciones"}
                 </Loading.Text>
               </Loading>
             )}

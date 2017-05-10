@@ -76,7 +76,7 @@ export default class Surveys extends Component {
 
     if (item && navigation) {
       navigation.navigate("Survey", {
-        surveyId: item._id,
+        _id: item._id,
         title: "Encuesta",
       });
     }

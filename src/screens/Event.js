@@ -144,7 +144,7 @@ ActionText.defaultProps = {
 };
 
 const mapStateToProps = ({ nav, entities, events }) => {
-  const id = get(nav, ["routes", nav.index, "params", "eventId"]);
+  const id = get(nav, ["routes", nav.index, "params", "_id"]);
   return {
     event: id ? denormalize(id, schemas.event, entities) : null,
     isSaved: events.saved.includes(id),
