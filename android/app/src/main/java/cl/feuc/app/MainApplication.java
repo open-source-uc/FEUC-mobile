@@ -3,6 +3,7 @@ package cl.feuc.app;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.corbt.keepawake.KCKeepAwakePackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.horcrux.svg.SvgPackage;
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new KCKeepAwakePackage(),
             new LinearGradientPackage(),
             new VectorIconsPackage(),
             new SvgPackage(),

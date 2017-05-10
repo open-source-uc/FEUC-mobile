@@ -2284,9 +2284,9 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-generator-rn-toolbox@^2.1.4:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/generator-rn-toolbox/-/generator-rn-toolbox-2.1.4.tgz#ff5cf7e6e124fc0660d3c5e3b7e9e4c91ff770ce"
+generator-rn-toolbox@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/generator-rn-toolbox/-/generator-rn-toolbox-2.1.5.tgz#41bffa38c394290164895d64ddbbaa04b806864b"
   dependencies:
     bluebird "^3.5.0"
     color-js "^1.0.4"
@@ -2624,9 +2624,9 @@ hyphenate-style-name@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz#31160a36930adaf1fc04c6074f7eb41465d4ec4b"
 
-i18next@^8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-8.1.0.tgz#522ed2a6bedafa84ae106409ed520bc216a00bc1"
+i18next@^8.2.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-8.2.0.tgz#24212d87774d1243e0c48c575331e2a53346b38e"
 
 iconv-lite@0.4.11:
   version "0.4.11"
@@ -3012,11 +3012,11 @@ istanbul-api@^1.1.1:
     mkdirp "^0.5.1"
     once "^1.4.0"
 
-istanbul-lib-coverage@^1.0.0, istanbul-lib-coverage@^1.0.0-alpha.0, istanbul-lib-coverage@^1.0.1:
+istanbul-lib-coverage@^1.0.0, istanbul-lib-coverage@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/istanbul-lib-coverage/-/istanbul-lib-coverage-1.0.1.tgz#f263efb519c051c5f1f3343034fc40e7b43ff212"
 
-istanbul-lib-coverage@^1.1.0:
+istanbul-lib-coverage@^1.0.0-alpha.0, istanbul-lib-coverage@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/istanbul-lib-coverage/-/istanbul-lib-coverage-1.1.0.tgz#caca19decaef3525b5d6331d701f3f3b7ad48528"
 
@@ -4438,6 +4438,10 @@ react-native-drawer-layout@1.3.0:
   resolved "https://registry.yarnpkg.com/react-native-drawer-layout/-/react-native-drawer-layout-1.3.0.tgz#3f9942c4c57e18bfe947a1a9b624365c91914280"
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
+
+react-native-keep-awake@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-keep-awake/-/react-native-keep-awake-2.0.4.tgz#da58b3161f1360163445c53e8c1cf411068f9a75"
 
 react-native-linear-gradient@^2.0.0:
   version "2.0.0"

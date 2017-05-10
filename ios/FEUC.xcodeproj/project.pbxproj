@@ -79,6 +79,7 @@
 		EFC0194BFB7D4B40AC68A452 /* Muli-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5BAB9F1BEDCA4A4C885C2DDE /* Muli-SemiBoldItalic.ttf */; };
 		F18662FD00A94C5EB197DB9D /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A6980902760441A38950419C /* FontAwesome.ttf */; };
 		F7AD30136475409E8294136A /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B4FF45BA11C497DA0D40CA9 /* Roboto-Italic.ttf */; };
+		D5CE84694DD9457795798120 /* libKCKeepAwake.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C240F02F518A4CDEAE9AE5BE /* libKCKeepAwake.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -433,6 +434,8 @@
 		F985A00C61BE4C0C91398294 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../resources/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		FAD3C992DAEF4BA09721A1A9 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		FD1A4C62ED8A4741A72576D0 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../resources/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		4422D7B49DC94DB1BF4EA8F3 /* KCKeepAwake.xcodeproj */ = {isa = PBXFileReference; name = "KCKeepAwake.xcodeproj"; path = "../node_modules/react-native-keep-awake/ios/KCKeepAwake.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		C240F02F518A4CDEAE9AE5BE /* libKCKeepAwake.a */ = {isa = PBXFileReference; name = "libKCKeepAwake.a"; path = "libKCKeepAwake.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -467,6 +470,7 @@
 				2147BFE36648400FB5CCE454 /* libRNSVG.a in Frameworks */,
 				90BC830212894184B482357B /* libRNVectorIcons.a in Frameworks */,
 				1765BEC2E1224371A59D0C97 /* libBVLinearGradient.a in Frameworks */,
+				D5CE84694DD9457795798120 /* libKCKeepAwake.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -775,6 +779,7 @@
 				C34A5AE62A5C4B2EB5F97878 /* RNSVG.xcodeproj */,
 				6C262C07D18244D6A04FD3D3 /* RNVectorIcons.xcodeproj */,
 				EBB517F5FB444978B7672467 /* BVLinearGradient.xcodeproj */,
+				4422D7B49DC94DB1BF4EA8F3 /* KCKeepAwake.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1437,12 +1442,14 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
+					"$(SRCROOT)/../node_modules/react-native-keep-awake/ios",
 				);
 				INFOPLIST_FILE = FEUCTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1470,12 +1477,14 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
+					"$(SRCROOT)/../node_modules/react-native-keep-awake/ios",
 				);
 				INFOPLIST_FILE = FEUCTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1506,6 +1515,7 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
+					"$(SRCROOT)/../node_modules/react-native-keep-awake/ios",
 				);
 				INFOPLIST_FILE = FEUC/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -1539,6 +1549,7 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
+					"$(SRCROOT)/../node_modules/react-native-keep-awake/ios",
 				);
 				INFOPLIST_FILE = FEUC/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -1577,11 +1588,13 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
+					"$(SRCROOT)/../node_modules/react-native-keep-awake/ios",
 				);
 				INFOPLIST_FILE = "FEUC-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1619,11 +1632,13 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
+					"$(SRCROOT)/../node_modules/react-native-keep-awake/ios",
 				);
 				INFOPLIST_FILE = "FEUC-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1656,6 +1671,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.FEUC-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1680,6 +1696,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
