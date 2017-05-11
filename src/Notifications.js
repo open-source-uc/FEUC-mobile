@@ -132,8 +132,9 @@ export default class Notifications extends PureComponent {
   };
 
   render() {
-    // PushNotificationIOS.setApplicationIconBadgeNumber(this.state.unseen);
-    console.log("Count", this.state.unseen);
+    if (Platform.OS === "ios") {
+      PushNotificationIOS.setApplicationIconBadgeNumber(this.state.unseen);
+    }
     return this.props.children;
   }
 }
