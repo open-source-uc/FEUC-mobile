@@ -124,13 +124,13 @@ const AboutTitle = styled.Text`
   margin: 10 0 0 0;
 `;
 
-const AboutText = styled(RichText)`
-  font-family: ${props => props.theme.fonts.body};
-  color: ${props => props.theme.colors.F};
-  font-size: 12;
-  font-weight: 400;
-  line-height: 19;
-`;
+// const RichText = styled(RichText)`
+//   font-family: ${props => props.theme.fonts.body};
+//   color: ${props => props.theme.colors.F};
+//   font-size: 12;
+//   font-weight: 400;
+//   line-height: 19;
+// `;
 
 const ActionText = styled.Text`
   flex: 1;
@@ -352,11 +352,11 @@ export default class Event extends Component {
           </AboutTitle>
         </Row>
         <Row>
-          <AboutText>
+          <RichText>
             {get(event, "description.full.md") ||
               get(event, "description.brief") ||
               "Sin descripción."}
-          </AboutText>
+          </RichText>
         </Row>
         <Row>
           {event.tags &&

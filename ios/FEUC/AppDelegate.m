@@ -23,7 +23,9 @@
   /**
    * See: https://github.com/geektimecoil/react-native-onesignal
    */
-  self.oneSignal = [[RCTOneSignal alloc] initWithLaunchOptions:launchOptions appId:[ReactNativeConfig envFor:@"SIGNAL_APP_ID"]];
+  self.oneSignal = [[RCTOneSignal alloc] initWithLaunchOptions:launchOptions
+                                         appId:[ReactNativeConfig envFor:@"SIGNAL_APP_ID"]
+                                         settings:@{kOSSettingsKeyInFocusDisplayOption : @(OSNotificationDisplayTypeNotification), kOSSettingsKeyAutoPrompt : @YES}];
 
   /**
    * See: https://github.com/airbnb/react-native-maps/blob/master/docs/installation.md#option-1-cocoapods---same-as-the-included-airmapsexplorer-example

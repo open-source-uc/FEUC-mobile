@@ -1,38 +1,60 @@
 /* eslint class-methods-use-this: 0, no-console: 0 */
 
-import { Component } from "react";
+import { PureComponent } from "react";
+import { Platform, PushNotificationIOS } from "react-native";
 import PropTypes from "prop-types";
 import OneSignal from "react-native-onesignal";
 import DeviceInfo from "react-native-device-info";
 import { connect } from "react-redux";
+import { denormalize } from "normalizr";
 import noop from "lodash/noop";
-import get from "lodash/get";
 
-import { receiveNotification, setEnabled } from "./redux/modules/notifications";
+import { notificationOpen } from "./redux/modules/notifications";
 import { register } from "./redux/modules/session";
+import * as schemas from "./schemas";
 
-const mapStateToProps = null;
+const mapStateToProps = state => ({
+  notifications: state.notifications,
+  entities: state.entities,
+});
 
 const mapDispatchToProps = {
-  receiveNotification,
-  setEnabled,
+  notificationOpen,
   register,
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class Notifications extends Component {
+export default class Notifications extends PureComponent {
   static propTypes = {
+    notifications: PropTypes.object,
+    entities: PropTypes.object,
+
     children: PropTypes.node,
     register: PropTypes.func,
-    receiveNotification: PropTypes.func,
-    setEnabled: PropTypes.func,
+    notificationOpen: PropTypes.func,
   };
 
   static defaultProps = {
+    notifications: {},
+    entities: {},
+
     children: null,
     register: noop,
-    receiveNotification: noop,
-    setEnabled: noop,
+    notificationOpen: noop,
+  };
+
+  static denormalizeAndCount = ({ notifications, entities }) => {
+    const schema = [schemas.notification];
+    const array = denormalize(notifications.result, schema, entities);
+    return array.reduce(
+      (previous, current) =>
+        notifications.seen[current._id] ? previous : previous + 1,
+      0
+    );
+  };
+
+  state = {
+    unseen: this.constructor.denormalizeAndCount(this.props),
   };
 
   componentWillMount = () => {
@@ -44,6 +66,22 @@ export default class Notifications extends Component {
 
   componentDidMount() {
     this.register();
+
+    // See: https://github.com/geektimecoil/react-native-onesignal#set-in-app-focus-behavior
+    if (Platform.OS === "android") {
+      OneSignal.inFocusDisplaying(2);
+    } else {
+      // Done on AppDelegate.m
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.entities && nextProps.notifications) {
+      const unseen = this.constructor.denormalizeAndCount(nextProps);
+      this.setState({
+        unseen,
+      });
+    }
   }
 
   componentWillUnmount = () => {
@@ -53,21 +91,16 @@ export default class Notifications extends Component {
     OneSignal.removeEventListener("ids", this.register);
   };
 
+  // eslint-disable-next-line
   onReceived = notification => {
-    this.props.receiveNotification(notification);
+    // Nothing?
   };
 
-  onOpened(openResult) {
-    // console.log('Message: ', openResult.notification.payload.body);
-    // console.log('Data: ', openResult.notification.payload.additionalData);
-    // console.log('isActive: ', openResult.notification.isAppInFocus);
-    // console.log('openResult: ', openResult);
-    const id = get(openResult, "notification.payload.notificationID");
-    console.log("Open:", id);
-  }
+  onOpened = openResult => {
+    this.props.notificationOpen(openResult.notification);
+  };
 
   onRegistered(notifData) {
-    this.props.setEnabled(true);
     console.log(
       "Device had been registered for push notifications!",
       notifData
@@ -99,6 +132,8 @@ export default class Notifications extends Component {
   };
 
   render() {
+    // PushNotificationIOS.setApplicationIconBadgeNumber(this.state.unseen);
+    console.log("Count", this.state.unseen);
     return this.props.children;
   }
 }

@@ -13,6 +13,7 @@ import {
   Attendances,
   Survey,
   Notifications,
+  NotificationText,
 } from "../screens/";
 import { Logo, NavbarButton } from "../components/";
 import { colors } from "../styles";
@@ -130,6 +131,15 @@ const Navigator = StackNavigator(
         header: (navigation, defaultHeader) => ({
           ...defaultHeader,
           title: "Notificaciones".toUpperCase(),
+        }),
+      },
+    },
+    NotificationText: {
+      screen: NotificationText,
+      navigationOptions: {
+        header: (navigation, defaultHeader) => ({
+          ...defaultHeader,
+          // title: "Notificación".toUpperCase(),
         }),
       },
     },

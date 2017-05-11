@@ -16,7 +16,7 @@ const FooterRow = styled.View`
 `;
 
 function selectImage(item) {
-  let uri = get(item, "image.secure_url");
+  let uri = get(item, ["image", "secure_url"]);
   if (uri) return { uri };
 
   uri = get(item, [

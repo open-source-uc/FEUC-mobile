@@ -97,12 +97,12 @@ const Content = styled.View`
   padding: 18 18 36;
 `;
 
-const Body = styled(RichText)`
-  font-family: ${props => props.theme.fonts.body};
-  color: ${props => props.theme.colors.E};
-  font-size: 14;
-  font-weight: 400;
-`;
+// const Body = styled(RichText)`
+//   font-family: ${props => props.theme.fonts.body};
+//   color: ${props => props.theme.colors.E};
+//   font-size: 14;
+//   font-weight: 400;
+// `;
 
 export default class ArcView extends PureComponent {
   static Banner = Banner;
@@ -114,7 +114,7 @@ export default class ArcView extends PureComponent {
   static DropText = DropText;
   static DropTexts = DropTexts;
   static Content = Content;
-  static Body = Body;
+  static Body = RichText;
 
   static propTypes = {
     children: PropTypes.any,

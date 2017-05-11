@@ -7,7 +7,7 @@ import ListViewRow from "./ListViewRow";
 import { images } from "../assets/";
 
 function selectImage(item) {
-  const uri = get(item, "image.secure_url");
+  const uri = get(item, ["image", "secure_url"]);
   if (uri) return { uri };
 
   return images.default.benefit;

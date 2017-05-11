@@ -38,7 +38,7 @@ const mapDispatchToProps = {
 export default class Notifications extends Component {
   static propTypes = {
     notifications: PropTypes.object,
-    entities: PropTypes.object, // eslint-disable-line
+    entities: PropTypes.object,
     navigation: PropTypes.object,
 
     viewNotification: PropTypes.func,

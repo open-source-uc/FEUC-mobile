@@ -1,8 +1,3 @@
-import { normalize } from "normalizr";
-// import uniq from "lodash/uniq";
-
-import * as schemas from "../../schemas";
-
 // Actions
 export const NOTIFICATIONS_FETCH = "feuc/notifications/NOTIFICATIONS_FETCH";
 export const NOTIFICATIONS_FETCH_PENDING =
@@ -12,7 +7,7 @@ export const NOTIFICATIONS_FETCH_FULFILLED =
 export const NOTIFICATIONS_FETCH_REJECTED =
   "feuc/notifications/NOTIFICATIONS_FETCH_REJECTED";
 
-export const NOTIFICATION_RECEIVED = "feuc/notifications/NOTIFICATION_RECEIVED";
+export const NOTIFICATION_OPENED = "feuc/notifications/NOTIFICATION_OPENED";
 export const NOTIFICATION_REGISTER = "feuc/notifications/NOTIFICATION_REGISTER";
 export const NOTIFICATION_SEEN = "feuc/notifications/NOTIFICATION_SEEN";
 export const NOTIFICATION_SET_ENABLED =
@@ -64,12 +59,6 @@ export default function reducer(state = initialState, action) {
         },
       };
     }
-    // case NOTIFICATION_RECEIVED: {
-    //   return {
-    //     ...state,
-    //     result: uniq([...state.result, ...action.payload.result]),
-    //   };
-    // }
     default: {
       return state;
     }
@@ -93,13 +82,7 @@ export const viewNotification = (notification, seen = true) => ({
   payload: { notification, seen },
 });
 
-export const receiveNotification = data => {
-  const notifications = [].concat(data).map(notif => ({
-    _id: notif.payload.notificationID,
-    ...notif,
-  }));
-  return {
-    type: NOTIFICATION_RECEIVED,
-    payload: normalize(notifications, [schemas.notification]),
-  };
-};
+export const notificationOpen = notification => ({
+  type: NOTIFICATION_OPENED,
+  payload: notification,
+});

@@ -4,7 +4,7 @@ import Markdown from "react-native-simple-markdown";
 import styled from "styled-components/native";
 import has from "lodash/has";
 
-import { colors } from "../styles";
+import { colors, fonts } from "../styles";
 
 const MD = styled(Markdown)`
   margin: 0;
@@ -13,22 +13,34 @@ const MD = styled(Markdown)`
 const styles = {
   listItemBullet: {
     margin: 0,
+    marginRight: 5,
   },
   a: {
     color: colors.B,
+  },
+  list: {
+    marginTop: 6,
   },
   paragraph: {
     marginTop: 5,
     marginBottom: 5,
     textAlign: "justify",
   },
+  heading: {
+    marginTop: 6,
+    marginBottom: 10,
+  },
+  text: {
+    fontFamily: fonts.body,
+    color: colors.G,
+  },
 };
 
-const RichText = ({ children, style: text, ...props }) => {
+const RichText = ({ children, ...props }) => {
   if (has(children, "md")) {
-    return <MD styles={{ ...styles, text }} {...props}>{children.md}</MD>;
+    return <MD styles={{ ...styles }} {...props}>{children.md}</MD>;
   } else {
-    return <MD styles={{ ...styles, text }} {...props}>{children}</MD>;
+    return <MD styles={{ ...styles }} {...props}>{children}</MD>;
   }
 };
 

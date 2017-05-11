@@ -17,6 +17,7 @@ export { default as Event } from "./Event";
 export { default as Contact } from "./Contact";
 
 export { default as Notifications } from "./Notifications";
+export { default as NotificationText } from "./NotificationText";
 export { default as Initiative } from "./Initiative";
 export { default as Delegationship } from "./Delegationship";
 export { default as Benefit } from "./Benefit";

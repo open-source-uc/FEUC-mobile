@@ -9,7 +9,7 @@ export const images = {
   default: {
     initiative: require("./images/default-initiative.png"),
     benefit: require("./images/default-benefit.png"),
-    notification: require("./images/default-benefit.png"), // TODO image
+    notification: require("./images/default-notification.png"),
     attendance: require("./images/default-benefit.png"),
     card: require("./images/default-blur-card.jpg"),
   },
