@@ -1,3 +1,5 @@
+import * as analytics from "./meta/analytics";
+
 // Actions
 export const INITIATIVE_FETCH = "feuc/initiatives/INITIATIVE_FETCH";
 export const INITIATIVE_FETCH_PENDING =
@@ -49,4 +51,7 @@ export const fetchInitiatives = options => (dispatch, getState, { client }) =>
   dispatch({
     type: INITIATIVE_FETCH,
     payload: client.initiatives(options),
+    meta: {
+      analytics: analytics.fetchResource("Initiatives"),
+    },
   });

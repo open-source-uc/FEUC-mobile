@@ -1,3 +1,5 @@
+import * as analytics from "./meta/analytics";
+
 // Actions
 export const SESSION_REGISTER = "feuc/session/SESSION_REGISTER";
 export const SESSION_REGISTER_PENDING = "feuc/session/SESSION_REGISTER_PENDING";
@@ -31,4 +33,7 @@ export const register = (data, options) => (dispatch, getState, { client }) =>
   dispatch({
     type: SESSION_REGISTER,
     payload: client.register(data, options),
+    meta: {
+      analytics: analytics.userAction("App open"),
+    },
   });

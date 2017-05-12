@@ -1,3 +1,5 @@
+import * as analytics from "./meta/analytics";
+
 // Actions
 export const ABOUT_FETCH = "feuc/about/ABOUT_FETCH";
 export const ABOUT_FETCH_PENDING = "feuc/about/ABOUT_FETCH_PENDING";
@@ -44,4 +46,7 @@ export const fetchAbout = options => (dispatch, getState, { client }) =>
   dispatch({
     type: ABOUT_FETCH,
     payload: client.about(options),
+    meta: {
+      analytics: analytics.fetchResource("About"),
+    },
   });

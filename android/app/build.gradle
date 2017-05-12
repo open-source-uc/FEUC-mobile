@@ -145,6 +145,7 @@ repositories {
 }
 
 dependencies {
+    compile project(':react-native-google-analytics-bridge')
     compile project(':react-native-keep-awake')
     compile project(':react-native-linear-gradient')
     compile project(':react-native-vector-icons')

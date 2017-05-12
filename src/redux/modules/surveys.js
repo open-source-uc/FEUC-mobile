@@ -1,6 +1,8 @@
 import Bluebird from "bluebird";
 import get from "lodash/get";
 
+import * as analytics from "./meta/analytics";
+
 // Actions
 export const SURVEY_FETCH = "feuc/surveys/SURVEY_FETCH";
 export const SURVEY_FETCH_PENDING = "feuc/surveys/SURVEY_FETCH_PENDING";
@@ -104,6 +106,9 @@ export const fetchSurveys = options => (dispatch, getState, { client }) =>
   dispatch({
     type: SURVEY_FETCH,
     payload: client.surveys(options),
+    meta: {
+      analytics: analytics.fetchResource("Surveys"),
+    },
   });
 
 export const selectSurveyOption = (surveyId, vote) => (
@@ -111,15 +116,22 @@ export const selectSurveyOption = (surveyId, vote) => (
   getState,
   { client }
 ) => {
+  const token = getState().session.result;
   const promise = client.surveySelect(surveyId, vote, {
     headers: {
-      "X-FEUC-ID": getState().session.result,
+      "X-FEUC-ID": token,
     },
   });
 
   return dispatch({
     type: SURVEY_SELECTION,
-    meta: { surveyId },
+    meta: {
+      surveyId,
+      analytics: analytics.userAction(`Survey vote: ${surveyId}`, {
+        surveyId,
+        vote,
+      }),
+    },
     // Make always take from 1500 ms and up (UX)
     payload: Bluebird.all([promise, Bluebird.delay(1500)]).then(
       array => array[0]
