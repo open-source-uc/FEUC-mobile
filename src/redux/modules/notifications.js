@@ -19,7 +19,9 @@ export const NOTIFICATION_SET_ENABLED =
 const initialState = {
   result: [],
   enabled: true,
+  refreshing: false,
   seen: {},
+  error: null,
 };
 
 // Reducer
