@@ -9,16 +9,31 @@ import styled from "styled-components/native";
 import get from "lodash/get";
 import noop from "lodash/noop";
 
-import { Card, RefreshControl, ErrorBar } from "../components/";
+import { Card, RefreshControl, Loading, ErrorBar } from "../components/";
 import { fetchEvents } from "../redux/modules/events";
 import * as schemas from "../schemas";
 import Themed, { colors } from "../styles";
 import { images } from "../assets/";
 import { getDateProperties } from "../utils/events";
 
-const Container = styled.Image`
+const Container = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`;
+
+const Background = styled.Image`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`;
+
+const Controls = styled.View`
   background-color: ${props => props.theme.colors.D};
-  flex: 1;
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
@@ -56,6 +71,10 @@ VerticalScrollView.defaultProps = {
 };
 
 const HorizontalListView = styled.ListView`
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 `;
 
 HorizontalListView.defaultProps = {
@@ -197,7 +216,7 @@ export default class EventsToday extends Component {
     const { navigation } = this.props;
 
     if (item && navigation) {
-      navigation.navigate("Event", { eventId: item._id, title: item.title });
+      navigation.navigate("Event", { _id: item._id, title: item.title });
     }
   };
 
@@ -248,29 +267,43 @@ export default class EventsToday extends Component {
   render = () => {
     const { events: { error, refreshing, result }, entities } = this.props;
     const { index, dataSource } = this.state;
-
     const current = entities.events[result[index]];
     const uri =
       get(current, "image.secure_url") || get(current, "banner.secure_url");
 
     return (
       <Themed content="dark">
-        <Container
-          innerRef={background => {
-            this.background = background;
-          }}
-          source={uri ? { uri } : images.default.card}
-          onLoadEnd={() =>
-            this.setState({ viewRef: findNodeHandle(this.background) })}
-        >
-          <ErrorBar error={error} />
-          <Blurred viewRef={this.state.viewRef} />
-          {index > 0 && <Arrow name="ios-arrow-back" left />}
-          {index > 0 && <Nothing />}
-          {index <= get(result, "length", 0) && <Nothing />}
-          {index < get(result, "length", 0) - 1 &&
-            <Arrow name="ios-arrow-forward" right />}
+        <Container>
+          {current &&
+            <Background
+              innerRef={background => {
+                this.background = background;
+              }}
+              source={uri ? { uri } : images.default.card}
+              onLoadEnd={() =>
+                this.setState({ viewRef: findNodeHandle(this.background) })}
+            />}
+          {current && <Blurred viewRef={this.state.viewRef} />}
+          {current &&
+            <Controls>
+              <ErrorBar error={error} />
+              {index > 0 && <Arrow name="ios-arrow-back" left />}
+              {index > 0 && <Nothing />}
+              {index <= get(result, "length", 0) && <Nothing />}
+              {index < get(result, "length", 0) - 1 &&
+                <Arrow name="ios-arrow-forward" right />}
+            </Controls>}
           <VerticalScrollView
+            refreshing={refreshing}
+            onRefresh={this.props.fetchEvents}
+            renderEmpty={() => (
+              <Loading>
+                <Loading.Logo />
+                <Loading.Text>
+                  {refreshing ? "Cargando..." : "No eventos para mostrar aquí"}
+                </Loading.Text>
+              </Loading>
+            )}
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}

@@ -82,7 +82,7 @@ export default class Delegationships extends Component {
 
     if (item && navigation) {
       navigation.navigate("Delegationship", {
-        delegationshipId: item._id,
+        _id: item._id,
         title: item.name,
       });
     }

@@ -36,7 +36,7 @@ const ButtonText = styled(Button.Text)`
 `;
 
 const mapStateToProps = ({ nav, entities, benefits }) => {
-  const id = get(nav, ["routes", nav.index, "params", "benefitId"]);
+  const id = get(nav, ["routes", nav.index, "params", "_id"]);
   const activation = denormalize(benefits.saved, [schemas.activation], entities)
     .filter(Boolean)
     .find(act => get(act, "benefit._id") === id);
@@ -110,7 +110,7 @@ export default class Benefit extends Component {
       this.props.activateBenefit(benefit._id, { email });
     } else if (benefit && navigation) {
       navigation.navigate("BenefitActive", {
-        benefitId: benefit._id,
+        _id: benefit._id,
         raffle: benefit.benefit.raffle,
       });
     }

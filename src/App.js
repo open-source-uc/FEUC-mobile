@@ -5,6 +5,7 @@ import { BackAndroid } from "react-native";
 import PropTypes from "prop-types";
 import { Provider, connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
+import KeepAwake from "react-native-keep-awake";
 import noop from "lodash/noop";
 import get from "lodash/get";
 
@@ -26,7 +27,6 @@ const mapDispatchToProps = {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class App extends Component {
-  // eslint-disable-line
   static propTypes = {
     store: PropTypes.object.isRequired,
     hydratation: PropTypes.object.isRequired,
@@ -48,6 +48,9 @@ export default class App extends Component {
   };
 
   componentDidMount() {
+    if (process.env.NODE_ENV === "development") {
+      KeepAwake.activate();
+    }
     BackAndroid.addEventListener("backPress", this.handleBackButton);
   }
 

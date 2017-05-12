@@ -3,15 +3,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { denormalize } from "normalizr";
 import styled from "styled-components/native";
+import get from "lodash/get";
 import noop from "lodash/noop";
 
-import {
-  ListView,
-  ListViewRowInitiative,
-  Loading,
-  ErrorBar,
-} from "../components/";
-import { fetchInitiatives } from "../redux/modules/initiatives";
+import { ListView, ListViewRowSurvey, Loading, ErrorBar } from "../components/";
+import { fetchSurveys } from "../redux/modules/surveys";
 import * as schemas from "../schemas";
 import Themed from "../styles";
 
@@ -21,35 +17,35 @@ const Container = styled.View`
 `;
 
 const mapStateToProps = state => ({
-  initiatives: state.initiatives,
+  surveys: state.surveys,
   entities: state.entities,
 });
 
 const mapDispatchToProps = {
-  fetchInitiatives,
+  fetchSurveys,
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class Initiatives extends Component {
+export default class Surveys extends Component {
   static propTypes = {
-    initiatives: PropTypes.object,
-    entities: PropTypes.object, // eslint-disable-line
+    surveys: PropTypes.object,
+    entities: PropTypes.object,
     navigation: PropTypes.object,
 
-    fetchInitiatives: PropTypes.func,
+    fetchSurveys: PropTypes.func,
   };
 
   static defaultProps = {
-    initiatives: {},
+    surveys: {},
     entities: {},
     navigation: null,
 
-    fetchInitiatives: noop,
+    fetchSurveys: noop,
   };
 
-  static denormalize = ({ initiatives, entities }) => {
-    const schema = [schemas.initiative];
-    return denormalize(initiatives.result, schema, entities);
+  static denormalize = ({ surveys, entities }) => {
+    const schema = [schemas.survey];
+    return denormalize(surveys.result, schema, entities);
   };
 
   static DataSource = new ListView.DataSource({
@@ -63,11 +59,11 @@ export default class Initiatives extends Component {
   };
 
   componentDidMount = () => {
-    this.props.fetchInitiatives();
+    this.props.fetchSurveys();
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.entities && nextProps.initiatives) {
+    if (nextProps.entities && nextProps.surveys) {
       const items = this.constructor.denormalize(nextProps);
       this.setState({
         dataSource: this.constructor.DataSource.cloneWithRows(items),
@@ -79,16 +75,17 @@ export default class Initiatives extends Component {
     const { navigation } = this.props;
 
     if (item && navigation) {
-      navigation.navigate("Initiative", {
+      navigation.navigate("Survey", {
         _id: item._id,
-        title: item.name,
+        title: "Encuesta",
       });
     }
   };
 
   renderRow = (item, section, row, highlight) => (
-    <ListViewRowInitiative
+    <ListViewRowSurvey
       item={item}
+      selection={get(this.props.surveys, ["selected", item._id])}
       row={row}
       highlight={highlight}
       onPress={() => this.handlePress(item)}
@@ -98,7 +95,7 @@ export default class Initiatives extends Component {
   );
 
   render = () => {
-    const { error, refreshing } = this.props.initiatives;
+    const { error, refreshing } = this.props.surveys;
     const { dataSource } = this.state;
 
     return (
@@ -109,14 +106,12 @@ export default class Initiatives extends Component {
             dataSource={dataSource}
             renderRow={this.renderRow}
             refreshing={refreshing}
-            onRefresh={this.props.fetchInitiatives}
+            onRefresh={this.props.fetchSurveys}
             renderEmpty={() => (
               <Loading>
                 <Loading.Logo />
                 <Loading.Text>
-                  {refreshing
-                    ? "Cargando..."
-                    : "No hay comunidades para mostrar"}
+                  {refreshing ? "Cargando..." : "No hay encuestas para mostrar"}
                 </Loading.Text>
               </Loading>
             )}

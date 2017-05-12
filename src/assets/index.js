@@ -9,6 +9,7 @@ export const images = {
   default: {
     initiative: require("./images/default-initiative.png"),
     benefit: require("./images/default-benefit.png"),
+    notification: require("./images/default-notification.png"),
     attendance: require("./images/default-benefit.png"),
     card: require("./images/default-blur-card.jpg"),
   },
@@ -18,6 +19,7 @@ export const images = {
     benefit: require("./images/nav/benefit.png"),
     community: require("./images/nav/community.png"),
     events: require("./images/nav/events.png"),
+    survey: require("./images/nav/survey.png"),
     feuc: require("./images/nav/feuc.png"),
   },
 };

@@ -1,4 +1,5 @@
 const { schema } = require("normalizr");
+// const assert = require("assert"); // Ensure non-circular dependencies and undefined objects.
 
 exports.notification = new schema.Entity("notifications");
 
@@ -66,11 +67,16 @@ exports.device = new schema.Entity(
   }
 );
 
+// assert(exports.brand);
+// assert(exports.delegationship);
+// assert(exports.initiative);
 exports.benefit = new schema.Entity(
   "benefits",
   {
     responsable: {
       brand: exports.brand,
+      delegationship: exports.delegationship,
+      initiative: exports.initiative,
     },
   },
   {
@@ -78,17 +84,49 @@ exports.benefit = new schema.Entity(
   }
 );
 
-exports.activation = new schema.Entity(
-  "activations",
+// assert(exports.brand);
+// assert(exports.delegationship);
+// assert(exports.initiative);
+exports.survey = new schema.Entity(
+  "surveys",
   {
-    benefit: exports.benefit,
-    // device: exports.device,
+    responsable: {
+      brand: exports.brand,
+      delegationship: exports.delegationship,
+      initiative: exports.initiative,
+    },
   },
   {
     idAttribute: "_id",
   }
 );
 
+// assert(exports.benefit);
+exports.activation = new schema.Entity(
+  "activations",
+  {
+    benefit: exports.benefit,
+  },
+  {
+    idAttribute: "_id",
+  }
+);
+
+// assert(exports.survey);
+exports.vote = new schema.Entity(
+  "votes",
+  {
+    survey: exports.survey,
+  },
+  {
+    idAttribute: "_id",
+  }
+);
+
+// assert(exports.campus);
+// assert(exports.tag);
+// assert(exports.initiative);
+// assert(exports.delegationship);
 exports.event = new schema.Entity(
   "events",
   {
@@ -97,6 +135,27 @@ exports.event = new schema.Entity(
     organizer: {
       initiative: exports.initiative,
       delegationship: exports.delegationship,
+    },
+  },
+  {
+    idAttribute: "_id",
+  }
+);
+
+// assert(exports.event);
+// assert(exports.benefit);
+// assert(exports.initiative);
+// assert(exports.delegationship);
+// assert(exports.survey);
+exports.notification = new schema.Entity(
+  "notifications",
+  {
+    action: {
+      event: exports.event,
+      benefit: exports.benefit,
+      initiative: exports.initiative,
+      delegationship: exports.delegationship,
+      survey: exports.survey,
     },
   },
   {

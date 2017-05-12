@@ -122,4 +122,37 @@ export default class Client {
     );
     return response;
   }
+
+  async notifications(options) {
+    const response = await fetcher(
+      `${this.baseURL}/api/v1/notifications`,
+      options
+    );
+    return response;
+  }
+
+  async surveys(options) {
+    const response = await fetcher(`${this.baseURL}/api/v1/surveys`, options);
+    return response;
+  }
+
+  async survey(identifier, options) {
+    const response = await fetcher(
+      `${this.baseURL}/api/v1/surveys/${identifier}`,
+      options
+    );
+    return response;
+  }
+
+  async surveySelect(surveyId, vote, options) {
+    const response = await fetcher(
+      `${this.baseURL}/api/v1/surveys/${surveyId}/vote`,
+      {
+        method: "POST",
+        body: { vote },
+        ...options,
+      }
+    );
+    return response;
+  }
 }

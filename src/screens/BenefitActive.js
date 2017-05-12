@@ -150,7 +150,7 @@ const Restriction = styled.Text`
 `;
 
 const mapStateToProps = ({ nav, entities }) => {
-  const id = get(nav, ["routes", nav.index, "params", "benefitId"]);
+  const id = get(nav, ["routes", nav.index, "params", "_id"]);
   return {
     benefit: id ? denormalize(id, schemas.benefit, entities) : null,
   };

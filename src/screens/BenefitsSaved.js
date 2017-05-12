@@ -85,7 +85,7 @@ export default class BenefitsSaved extends Component {
     const expiredBy = isExpired(item);
     if (activation.valid || !expiredBy.overall) {
       navigation.navigate("Benefit", {
-        benefitId: item._id,
+        _id: item._id,
         title: item.title,
       });
     } else {

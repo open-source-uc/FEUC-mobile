@@ -11,9 +11,11 @@ import {
   BenefitActive,
   Delegationship,
   Attendances,
+  Survey,
+  Notifications,
+  NotificationText,
 } from "../screens/";
-import { Logo } from "../components/";
-// import { Logo, NavbarButton } from '../components/';
+import { Logo, NavbarButton } from "../components/";
 import { colors } from "../styles";
 
 const options = {
@@ -39,8 +41,14 @@ const Navigator = StackNavigator(
         header: ({ state, navigate }, defaultHeader) => ({
           ...defaultHeader,
           title: <Logo center />,
-          // right: (
-          //   <NavbarButton onPress={() => navigate('SearchView')}>
+          right: (
+            <NavbarButton onPress={() => navigate("Notifications")}>
+              <NavbarButton.NotificationCount />
+              <NavbarButton.Icon name="ios-notifications" />
+            </NavbarButton>
+          ),
+          // left: (
+          //   <NavbarButton onPress={() => navigate("SearchView")}>
           //     <NavbarButton.Icon name="ios-search" />
           //   </NavbarButton>
           // ),
@@ -57,6 +65,14 @@ const Navigator = StackNavigator(
     },
     Event: {
       screen: Event,
+      navigationOptions: {
+        header: (navigation, defaultHeader) => ({
+          ...defaultHeader,
+        }),
+      },
+    },
+    Survey: {
+      screen: Survey,
       navigationOptions: {
         header: (navigation, defaultHeader) => ({
           ...defaultHeader,
@@ -107,6 +123,24 @@ const Navigator = StackNavigator(
         header: (navigation, defaultHeader) => ({
           ...defaultHeader,
           title: "Buscar eventos".toUpperCase(),
+        }),
+      },
+    },
+    Notifications: {
+      screen: Notifications,
+      navigationOptions: {
+        header: (navigation, defaultHeader) => ({
+          ...defaultHeader,
+          title: "Notificaciones".toUpperCase(),
+        }),
+      },
+    },
+    NotificationText: {
+      screen: NotificationText,
+      navigationOptions: {
+        header: (navigation, defaultHeader) => ({
+          ...defaultHeader,
+          // title: "Notificación".toUpperCase(),
         }),
       },
     },
