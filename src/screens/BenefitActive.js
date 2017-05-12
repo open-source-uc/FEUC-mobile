@@ -131,16 +131,24 @@ const Title = styled.Text`
   font-family: ${props => props.theme.fonts.headers};
   font-weight: 700;
   font-size: 16;
-  margin-bottom: 8;
   padding: 0 18;
 `;
 
-Title.defaultProps = {
+const Description = styled.Text`
+  flex: 1;
+  color: ${props => props.theme.colors.F};
+  text-align: center;
+  font-family: ${props => props.theme.fonts.body};
+  font-weight: 400;
+  font-size: 12;
+`;
+
+Description.defaultProps = Title.defaultProps = {
   numberOfLines: 2,
 };
 
 const Restriction = styled.Text`
-  color: ${props => props.theme.colors.A};
+  color: ${props => (props.danger ? props.theme.colors.error : props.theme.colors.A)};
   text-align: center;
   font-family: ${props => props.theme.fonts.body};
   font-weight: 700;
@@ -244,6 +252,16 @@ export default class BenefitActive extends Component {
       uri: get(benefit, "banner.secure_url"),
     };
 
+    const cardUrl = get(benefit, "card.secure_url");
+    const cardSource = cardUrl
+      ? {
+          uri: cardUrl,
+        }
+      : bannerSource;
+
+    const description = get(benefit, ["description", "card"]);
+    const expired = ready && deadline && !isInTime;
+
     return (
       <Themed content="dark">
         <Container>
@@ -262,7 +280,7 @@ export default class BenefitActive extends Component {
           <Content>
             {benefit &&
               <Card>
-                <Cover source={bannerSource}>
+                <Cover source={cardSource}>
                   {benefit.benefit.expires &&
                   false && // TODO
                     <AbsoluteBookmark>
@@ -273,7 +291,11 @@ export default class BenefitActive extends Component {
                 <Bottom>
                   <Center>
                     <Circle>
-                      <Spinner type="Pulse" color={colors.B} size={35} />
+                      <Spinner
+                        type="Pulse"
+                        color={expired ? colors.error : colors.B}
+                        size={35}
+                      />
                     </Circle>
                   </Center>
                   <BrandTitle>
@@ -286,6 +308,7 @@ export default class BenefitActive extends Component {
                   <Title>
                     {benefit.title}
                   </Title>
+                  {description && <Description>{description}</Description>}
                   {!ready &&
                     <Restriction>
                       Cargando...
@@ -297,10 +320,8 @@ export default class BenefitActive extends Component {
                     <Restriction>
                       {`Valido por ${timeleft}`.toUpperCase()}
                     </Restriction>}
-                  {ready &&
-                    deadline &&
-                    !isInTime &&
-                    <Restriction>
+                  {expired &&
+                    <Restriction danger>
                       Expirado
                     </Restriction>}
                 </Bottom>
