@@ -30,12 +30,13 @@ Install dependencies:
 yarn install
 ```
 
-Create `.env` file for the following configuration variables:
+Create a `.env` file for the following configuration variables:
 
 ```sh
 FEUC_API_URL=https://feuc.lopezjuri.com
 SIGNAL_APP_ID=...
 GOOGLE_MAPS_API_KEY=...
+GOOGLE_ANALYTICS_ID=...
 ```
 
 > This file is ignored by default on git, but it's included on the builds and can be reversed engineered.

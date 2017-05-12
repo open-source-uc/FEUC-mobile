@@ -1,3 +1,5 @@
+import * as analytics from "./meta/analytics";
+
 // Actions
 export const NOTIFICATIONS_FETCH = "feuc/notifications/NOTIFICATIONS_FETCH";
 export const NOTIFICATIONS_FETCH_PENDING =
@@ -75,11 +77,17 @@ export const fetchNotifications = options => (dispatch, getState, { client }) =>
   dispatch({
     type: NOTIFICATIONS_FETCH,
     payload: client.notifications(options),
+    meta: {
+      analytics: analytics.fetchResource("Notifications"),
+    },
   });
 
 export const viewNotification = (notification, seen = true) => ({
   type: NOTIFICATION_SEEN,
   payload: { notification, seen },
+  meta: {
+    analytics: analytics.userAction(`Notification view: ${notification._id}`),
+  },
 });
 
 export const notificationOpen = notification => ({

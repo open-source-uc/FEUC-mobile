@@ -1,5 +1,7 @@
 import uniq from "lodash/uniq";
 
+import * as analytics from "./meta/analytics";
+
 // Actions
 export const TAG_FETCH = "feuc/tags/TAG_FETCH";
 export const TAG_FETCH_PENDING = "feuc/tags/TAG_FETCH_PENDING";
@@ -70,6 +72,9 @@ export const fetchTags = options => (dispatch, getState, { client }) =>
   dispatch({
     type: TAG_FETCH,
     payload: client.tags(options),
+    meta: {
+      analytics: analytics.fetchResource("Tags"),
+    },
   });
 
 export const selectTag = tagId => ({

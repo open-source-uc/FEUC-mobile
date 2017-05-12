@@ -1,6 +1,8 @@
 import Bluebird from "bluebird";
 import uniq from "lodash/uniq";
 
+import * as analytics from "./meta/analytics";
+
 // Actions
 export const BENEFITS_FETCH = "feuc/benefits/BENEFITS_FETCH";
 export const BENEFITS_FETCH_PENDING = "feuc/benefits/BENEFITS_FETCH_PENDING";
@@ -119,6 +121,9 @@ export const fetchBenefits = options => (dispatch, getState, { client }) =>
   dispatch({
     type: BENEFITS_FETCH,
     payload: client.benefits(options),
+    meta: {
+      analytics: analytics.fetchResource("Benefits"),
+    },
   });
 
 export const fetchBenefitsSaved = (ids, options) => (
@@ -134,6 +139,9 @@ export const fetchBenefitsSaved = (ids, options) => (
       },
       ...options,
     }),
+    meta: {
+      analytics: analytics.fetchResource("Benefits (saved)"),
+    },
   });
 
 export const activateBenefit = (benefitId, data) => (
@@ -141,15 +149,22 @@ export const activateBenefit = (benefitId, data) => (
   getState,
   { client }
 ) => {
+  const token = getState().session.result;
   const promise = client.benefitActivate(benefitId, data, {
     headers: {
-      "X-FEUC-ID": getState().session.result,
+      "X-FEUC-ID": token,
     },
   });
 
   return dispatch({
     type: BENEFIT_ACTIVATION,
-    meta: { benefitId },
+    meta: {
+      benefitId,
+      analytics: analytics.activateResource(`Benefit: ${benefitId}`, {
+        benefitId,
+        data,
+      }),
+    },
     // Make always take from 1500 ms and up (UX)
     payload: Bluebird.all([promise, Bluebird.delay(1500)]).then(
       array => array[0]

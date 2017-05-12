@@ -1,5 +1,7 @@
 import uniq from "lodash/uniq";
 
+import * as analytics from "./meta/analytics";
+
 // Actions
 export const EVENT_FETCH = "feuc/events/EVENT_FETCH";
 export const EVENT_FETCH_PENDING = "feuc/events/EVENT_FETCH_PENDING";
@@ -80,6 +82,9 @@ export const fetchEvents = options => (dispatch, getState, { client }) =>
   dispatch({
     type: EVENT_FETCH,
     payload: client.events(options),
+    meta: {
+      analytics: analytics.fetchResource("Events"),
+    },
   });
 
 export const fetchEventsSaved = options => (dispatch, getState, { client }) =>
@@ -91,14 +96,23 @@ export const fetchEventsSaved = options => (dispatch, getState, { client }) =>
       },
       ...options,
     }),
+    meta: {
+      analytics: analytics.fetchResource("Events (saved)"),
+    },
   });
 
 export const saveEvent = eventId => ({
   type: EVENT_SAVE,
   payload: eventId,
+  meta: {
+    analytics: analytics.userAction(`Save Event: ${eventId}`),
+  },
 });
 
 export const removeEvent = eventId => ({
   type: EVENT_REMOVE,
   payload: eventId,
+  meta: {
+    analytics: analytics.userAction(`Remove Event: ${eventId}`),
+  },
 });

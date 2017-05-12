@@ -1,3 +1,5 @@
+import * as analytics from "./meta/analytics";
+
 // Actions
 export const DELEGATIONSHIP_FETCH = "feuc/delegationships/DELEGATIONSHIP_FETCH";
 export const DELEGATIONSHIP_FETCH_PENDING =
@@ -53,4 +55,7 @@ export const fetchDelegationships = options => (
   dispatch({
     type: DELEGATIONSHIP_FETCH,
     payload: client.delegationships(options),
+    meta: {
+      analytics: analytics.fetchResource("Delegationships"),
+    },
   });

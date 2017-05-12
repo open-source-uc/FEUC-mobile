@@ -1,3 +1,5 @@
+import * as analytics from "./meta/analytics";
+
 // Actions
 export const ATTENDANCES_FETCH = "feuc/attendances/ATTENDANCES_FETCH";
 export const ATTENDANCES_FETCH_PENDING =
@@ -49,4 +51,7 @@ export const fetchAttendances = options => (dispatch, getState, { client }) =>
   dispatch({
     type: ATTENDANCES_FETCH,
     payload: client.attendances(options),
+    meta: {
+      analytics: analytics.fetchResource("Attendances"),
+    },
   });
