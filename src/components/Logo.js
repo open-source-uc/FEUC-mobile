@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import { Platform } from "react-native";
 import PropTypes from "prop-types";
 import styled from "styled-components/native";
 
@@ -9,8 +10,7 @@ const Container = styled.View`
   justify-content: center;
   flex-direction: row;
   align-items: center;
-  justify-content: ${props => (props.center ? "center" : "flex-start")};
-  padding-left: ${props => (props.center ? 0 : 18)};
+  padding-left: ${() => (Platform.OS === "ios" ? 0 : 24)};
 `;
 
 const Logo = styled.Image`

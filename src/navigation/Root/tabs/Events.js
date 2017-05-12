@@ -37,9 +37,9 @@ export default TabNavigator(
   {
     initialRouteName: "EventsToday",
     tabBarPosition: "top",
-    lazyLoad: true,
+    lazyLoad: false, // FIXME: android bug, first page does not loads
     swipeEnabled: false,
-    animationEnabled: true,
+    animationEnabled: false,
     order: ["EventsToday", "Events", "EventsSaved"],
     tabBarOptions: {
       showIcon: false,

@@ -17,11 +17,7 @@ import { images } from "../assets/";
 import { getDateProperties } from "../utils/events";
 
 const Container = styled.View`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  flex: 1;
 `;
 
 const Background = styled.Image`
@@ -30,10 +26,12 @@ const Background = styled.Image`
   left: 0;
   right: 0;
   bottom: 0;
+  background-color: ${props => props.theme.colors.background};
 `;
 
 const Controls = styled.View`
-  background-color: ${props => props.theme.colors.D};
+  flex: 1;
+  background-color: transparent;
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
@@ -42,14 +40,16 @@ const Controls = styled.View`
 const Blurred = styled(BlurView)`
   position: absolute;
   top: 0;
-  left: 0;
   right: 0;
+  left: 0;
   bottom: 0;
+  justify-content: center;
+  align-items: center;
 `;
 
 Blurred.defaultProps = {
   blurType: "light",
-  blurAmount: 20,
+  blurAmount: 30,
 };
 
 const VerticalScrollView = styled.ScrollView`
@@ -222,8 +222,8 @@ export default class EventsToday extends Component {
 
   handleScroll = event => {
     const { index } = this.state; // current
-    const { x } = event.nativeEvent.contentOffset;
-    const { width } = Dimensions.get("window");
+    const width = Dimensions.get("window").width;
+    const x = event.nativeEvent.contentOffset.x + 20;
 
     const page = Math.max(0, Math.floor(x / width));
     if (page !== index) {
@@ -264,7 +264,7 @@ export default class EventsToday extends Component {
     );
   };
 
-  render = () => {
+  render() {
     const { events: { error, refreshing, result }, entities } = this.props;
     const { index, dataSource } = this.state;
     const current = entities.events[result[index]];
@@ -282,8 +282,9 @@ export default class EventsToday extends Component {
               source={uri ? { uri } : images.default.card}
               onLoadEnd={() =>
                 this.setState({ viewRef: findNodeHandle(this.background) })}
-            />}
-          {current && <Blurred viewRef={this.state.viewRef} />}
+            >
+              <Blurred viewRef={this.state.viewRef} />
+            </Background>}
           {current &&
             <Controls>
               <ErrorBar error={error} />
@@ -323,5 +324,5 @@ export default class EventsToday extends Component {
         </Container>
       </Themed>
     );
-  };
+  }
 }
