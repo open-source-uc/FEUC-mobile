@@ -41,13 +41,14 @@ const Navigator = StackNavigator(
         header: ({ state, navigate }, defaultHeader) => ({
           ...defaultHeader,
           title: <Logo center />,
-          left: (
+          right: (
             <NavbarButton onPress={() => navigate("Notifications")}>
+              <NavbarButton.NotificationCount />
               <NavbarButton.Icon name="ios-notifications" />
             </NavbarButton>
           ),
-          // right: (
-          //   <NavbarButton onPress={() => navigate('SearchView')}>
+          // left: (
+          //   <NavbarButton onPress={() => navigate("SearchView")}>
           //     <NavbarButton.Icon name="ios-search" />
           //   </NavbarButton>
           // ),
