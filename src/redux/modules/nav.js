@@ -4,6 +4,7 @@ import get from "lodash/get";
 
 import Navigator from "../../navigation/Navigator";
 import { NOTIFICATION_OPENED, NOTIFICATION_SEEN } from "./notifications";
+import { BENEFIT_ACTIVATION_FULFILLED } from "./benefits";
 
 const MAPPING = {
   event: "Event",
@@ -54,6 +55,29 @@ export default function reducer(state, action) {
         routeName: "Notifications",
       });
       // TODO: If current route is 'Notifications', what would happen?
+      return Navigator.router.getStateForAction(navAction, state) || state;
+    }
+    case BENEFIT_ACTIVATION_FULFILLED: {
+      const benefitId = get(action.payload, [
+        "entities",
+        "activations",
+        action.payload.result,
+        "benefit",
+      ]);
+
+      const benefit =
+        benefitId && get(action.payload, ["entities", "benefits", benefitId]);
+      if (!benefit) {
+        return state;
+      }
+
+      const navAction = NavigationActions.navigate({
+        routeName: "BenefitActive",
+        params: {
+          _id: benefit._id,
+          raffle: benefit.benefit.raffle,
+        },
+      });
       return Navigator.router.getStateForAction(navAction, state) || state;
     }
     default: {

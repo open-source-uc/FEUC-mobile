@@ -60,7 +60,7 @@ Circle.defaultProps = {
 const Description = styled.Text`
   color: ${props => props.theme.colors.E};
   font-family: ${props => props.theme.fonts.headers};
-  font-weight: bold;
+  font-weight: ${props => (props.disabled ? "normal" : "bold")};
   font-size: 9;
   text-align: center;
   margin-top: 10;
@@ -73,12 +73,12 @@ const Icon = styled(Ionicons)`
   padding-top: 2;
 `;
 
-const Option = ({ selected, icon, color, text, ...props }) => (
-  <Touchable {...props}>
-    <Circle color={selected ? color : "white"}>
+const Option = ({ selected, selecting, icon, color, text, ...props }) => (
+  <Touchable disabled={selecting} {...props}>
+    <Circle color={selected ? color : "white"} disabled={selecting}>
       <Icon name={"ios-" + icon} selected={selected} />
     </Circle>
-    <Description>
+    <Description disabled={selecting}>
       {text && text.toUpperCase()}
     </Description>
   </Touchable>
@@ -86,6 +86,7 @@ const Option = ({ selected, icon, color, text, ...props }) => (
 
 Option.propTypes = {
   selected: PropTypes.bool,
+  selecting: PropTypes.bool,
   icon: PropTypes.string,
   color: PropTypes.string,
   text: PropTypes.string,
@@ -220,6 +221,7 @@ export default class Survey extends Component {
             {options.map((opt, i) => (
               <Option
                 key={i}
+                selecting={selecting}
                 {...opt}
                 onPress={() => this.handleOptionSelection(i + 1)}
               />
