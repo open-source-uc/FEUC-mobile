@@ -32,7 +32,7 @@ TabBarIcon.Community = props => (
   <TabBarIcon source={images.nav.community} {...props} />
 );
 
-TabBarIcon.About = props => <TabBarIcon source={images.nav.feuc} {...props} />;
+TabBarIcon.Maps = props => <TabBarIcon source={images.nav.maps} {...props} />;
 
 TabBarIcon.Benefits = props => (
   <TabBarIcon source={images.nav.benefit} {...props} />

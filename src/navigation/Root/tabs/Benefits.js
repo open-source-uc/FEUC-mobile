@@ -30,7 +30,7 @@ export default TabNavigator(
     tabBarPosition: "top",
     lazyLoad: true,
     swipeEnabled: false,
-    animationEnabled: true,
+    animationEnabled: false,
     order: ["Benefits", "BenefitsSaved"],
     tabBarOptions: {
       showIcon: false,

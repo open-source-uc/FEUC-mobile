@@ -7,7 +7,7 @@ import defaultsDeep from "lodash/defaultsDeep";
 
 import EventsTab from "./tabs/Events";
 import CommunityTab from "./tabs/Community";
-import AboutTab from "./tabs/About";
+import MapsTab from "./tabs/Maps";
 import BenefitsTab from "./tabs/Benefits";
 import SurveysTab from "./tabs/Surveys";
 
@@ -77,18 +77,18 @@ export default TabNavigator(
         }),
       },
     },
-    AboutTab: {
-      screen: AboutTab,
+    MapsTab: {
+      screen: MapsTab,
       navigationOptions: {
         tabBar: (navigation, defaultTabBar) => ({
           ...defaultTabBar,
-          label: "FEUC",
-          icon: props => <TabBarIcon.About {...props} />,
+          label: "Mapas",
+          icon: props => <TabBarIcon.Maps {...props} />,
         }),
         header: ({ state }, defaultHeader) => ({
           // FIXME: not working
           ...defaultHeader,
-          title: "FEUC",
+          title: "Mapas",
           visible: true,
         }),
       },
@@ -137,7 +137,7 @@ export default TabNavigator(
       "SurveysTab",
       "EventsTab",
       "BenefitsTab",
-      "AboutTab",
+      "MapsTab",
     ],
     tabBarOptions: defaultsDeep({}, options[Platform.OS], options.common),
   }

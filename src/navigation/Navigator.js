@@ -14,6 +14,7 @@ import {
   Survey,
   Notifications,
   NotificationText,
+  Campus,
 } from "../screens/";
 import { Logo, NavbarButton } from "../components/";
 import { colors } from "../styles";
@@ -123,6 +124,15 @@ const Navigator = StackNavigator(
         header: (navigation, defaultHeader) => ({
           ...defaultHeader,
           title: "Buscar eventos".toUpperCase(),
+        }),
+      },
+    },
+    Campus: {
+      screen: Campus,
+      navigationOptions: {
+        header: (navigation, defaultHeader) => ({
+          ...defaultHeader,
+          title: "Campuses".toUpperCase(),
         }),
       },
     },

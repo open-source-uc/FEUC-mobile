@@ -1,11 +1,20 @@
 import { TabNavigator } from "react-navigation";
 import { StyleSheet, Platform } from "react-native";
 
-import { Initiatives, Delegationships } from "../../../screens/";
+import { Initiatives, Delegationships, About } from "../../../screens/";
 import { colors, fonts } from "../../../styles";
 
 export default TabNavigator(
   {
+    About: {
+      screen: About,
+      navigationOptions: {
+        tabBar: (navigation, defaultTabBar) => ({
+          ...defaultTabBar,
+          label: "FEUC",
+        }),
+      },
+    },
     Initiatives: {
       screen: Initiatives,
       navigationOptions: {
@@ -26,12 +35,12 @@ export default TabNavigator(
     },
   },
   {
-    initialRouteName: "Initiatives",
+    initialRouteName: "About",
     tabBarPosition: "top",
     lazyLoad: true,
     swipeEnabled: false,
-    animationEnabled: true,
-    order: ["Initiatives", "Delegationships"],
+    animationEnabled: false,
+    order: ["About", "Initiatives", "Delegationships"],
     tabBarOptions: {
       showIcon: false,
       showLabel: true,

@@ -20,7 +20,7 @@ export const images = {
     community: require("./images/nav/community.png"),
     events: require("./images/nav/events.png"),
     survey: require("./images/nav/survey.png"),
-    feuc: require("./images/nav/feuc.png"),
+    maps: require("./images/nav/feuc.png"),
   },
 };
 

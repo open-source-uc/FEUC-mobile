@@ -12,6 +12,7 @@ import attendances from "./modules/attendances";
 import tags from "./modules/tags";
 import surveys from "./modules/surveys";
 import notifications from "./modules/notifications";
+import campuses from "./modules/campuses";
 import about from "./modules/about";
 
 const reducer = combineReducers({
@@ -27,6 +28,7 @@ const reducer = combineReducers({
   tags,
   surveys,
   notifications,
+  campuses,
   about,
 });
 
