@@ -9,7 +9,10 @@ import { connect } from "react-redux";
 import { denormalize } from "normalizr";
 import noop from "lodash/noop";
 
-import { notificationOpen } from "./redux/modules/notifications";
+import {
+  fetchNotifications,
+  notificationOpen,
+} from "./redux/modules/notifications";
 import { register } from "./redux/modules/session";
 import * as schemas from "./schemas";
 
@@ -19,8 +22,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  notificationOpen,
   register,
+  notificationOpen,
+  fetchNotifications,
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -32,6 +36,7 @@ export default class Notifications extends PureComponent {
     children: PropTypes.node,
     register: PropTypes.func,
     notificationOpen: PropTypes.func,
+    fetchNotifications: PropTypes.func,
   };
 
   static defaultProps = {
@@ -41,6 +46,7 @@ export default class Notifications extends PureComponent {
     children: null,
     register: noop,
     notificationOpen: noop,
+    fetchNotifications: noop,
   };
 
   static denormalizeAndCount = ({ notifications, entities }) => {
@@ -66,6 +72,9 @@ export default class Notifications extends PureComponent {
 
   componentDidMount() {
     this.register();
+
+    // Update notifications
+    this.props.fetchNotifications();
 
     // See: https://github.com/geektimecoil/react-native-onesignal#set-in-app-focus-behavior
     if (Platform.OS === "android") {
