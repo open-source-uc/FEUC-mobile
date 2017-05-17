@@ -185,7 +185,7 @@ export default class EventsToday extends Component {
 
   static denormalize = ({ events, entities }) => {
     const schema = [schemas.event];
-    return denormalize(events.result, schema, entities);
+    return denormalize(events.result, schema, entities).filter(Boolean);
   };
 
   static DataSource = new ListView.DataSource({
@@ -285,9 +285,9 @@ export default class EventsToday extends Component {
             >
               <Blurred viewRef={this.state.viewRef} />
             </Background>}
+          <ErrorBar error={error} />
           {current &&
             <Controls>
-              <ErrorBar error={error} />
               {index > 0 && <Arrow name="ios-arrow-back" left />}
               {index > 0 && <Nothing />}
               {index <= get(result, "length", 0) && <Nothing />}

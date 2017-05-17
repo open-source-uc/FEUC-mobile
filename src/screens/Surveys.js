@@ -45,7 +45,7 @@ export default class Surveys extends Component {
 
   static denormalize = ({ surveys, entities }) => {
     const schema = [schemas.survey];
-    return denormalize(surveys.result, schema, entities);
+    return denormalize(surveys.result, schema, entities).filter(Boolean);
   };
 
   static DataSource = new ListView.DataSource({

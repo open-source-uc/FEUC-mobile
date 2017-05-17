@@ -29,7 +29,7 @@ const mapStateToProps = state => ({
     state.benefits.saved,
     [schemas.activation],
     state.entities
-  ),
+  ).filter(Boolean),
 });
 
 const mapDispatchToProps = {

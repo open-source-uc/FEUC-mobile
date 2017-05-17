@@ -130,9 +130,9 @@ const Navigator = StackNavigator(
     Campus: {
       screen: Campus,
       navigationOptions: {
-        header: (navigation, defaultHeader) => ({
+        header: (navigation, { title, ...defaultHeader }) => ({
           ...defaultHeader,
-          title: "Campuses".toUpperCase(),
+          title: (title || "Campus").toUpperCase(),
         }),
       },
     },

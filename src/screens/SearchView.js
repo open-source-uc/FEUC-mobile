@@ -297,7 +297,11 @@ export default class SearchView extends Component {
     const campuses = Object.values(entities.campuses);
 
     const currentCampus = tags.campus && entities.campuses[tags.campus];
-    const currentTags = denormalize(tags.selected, [schemas.tag], entities);
+    const currentTags = denormalize(
+      tags.selected,
+      [schemas.tag],
+      entities
+    ).filter(Boolean);
 
     return (
       <Themed content="dark">

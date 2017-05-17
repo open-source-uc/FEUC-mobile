@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Platform } from "react-native";
+import { Image, Platform } from "react-native";
 import PropTypes from "prop-types";
 import styled from "styled-components/native";
 
@@ -10,14 +10,15 @@ const Container = styled.View`
   justify-content: center;
   flex-direction: row;
   align-items: center;
-  padding-left: ${() => (Platform.OS === "ios" ? 0 : 24)};
+  padding-left: ${Platform.OS === "ios" ? 0 : 24};
 `;
 
 const Logo = styled.Image`
-  height: 34;
-  width: 60;
+  height: 30;
+  width: 56;
   background-color: transparent;
   margin-bottom: 5;
+  resize-mode: ${Image.resizeMode.cover};
 `;
 
 export default class Loading extends PureComponent {

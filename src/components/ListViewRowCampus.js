@@ -22,7 +22,9 @@ const ListViewRowInitiative = ({ item, row, ...props }) => (
     <ListViewRow.Content>
       <ListViewRow.Title>{item.name}</ListViewRow.Title>
       <ListViewRow.Body>
-        {get(item, ["address"])}
+        {[get(item, ["location", "street1"]), get(item, ["location", "suburb"])]
+          .filter(Boolean)
+          .join(", ")}
       </ListViewRow.Body>
     </ListViewRow.Content>
     <ListViewRow.Disclosure />

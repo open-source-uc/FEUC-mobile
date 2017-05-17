@@ -48,11 +48,13 @@ class NotificationCount extends PureComponent {
     const { notifications, entities } = this.props;
     const schema = [schemas.notification];
     const array = denormalize(notifications.result, schema, entities);
-    const count = array.reduce(
-      (previous, current) =>
-        notifications.seen[current._id] ? previous : previous + 1,
-      0
-    );
+    const count = array
+      .filter(Boolean)
+      .reduce(
+        (previous, current) =>
+          notifications.seen[current._id] ? previous : previous + 1,
+        0
+      );
     return <Text>{count}</Text>;
   }
 }

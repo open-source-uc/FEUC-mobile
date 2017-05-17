@@ -30,9 +30,13 @@ const mapStateToProps = state => ({
     state.benefits.result,
     [schemas.benefit],
     state.entities
-  ),
+  ).filter(Boolean),
   activated: keyBy(
-    denormalize(state.benefits.saved, [schemas.activation], state.entities),
+    denormalize(
+      state.benefits.saved,
+      [schemas.activation],
+      state.entities
+    ).filter(Boolean),
     act => get(act, "benefit._id") // normalize by benefit._id
   ),
 });

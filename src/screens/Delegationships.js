@@ -50,7 +50,7 @@ export default class Delegationships extends Component {
   static denormalize = ({ delegationships, entities }) => {
     const schema = [schemas.delegationship];
     return denormalize(delegationships.result, schema, entities).filter(
-      item => !item.hidden
+      item => item && !item.hidden
     );
   };
 

@@ -44,7 +44,7 @@ export default class Events extends Component {
 
   static denormalize = ({ events, entities }) => {
     const schema = [schemas.event];
-    return denormalize(events.result, schema, entities);
+    return denormalize(events.result, schema, entities).filter(Boolean);
   };
 
   static DataSource = new ListView.DataSource({

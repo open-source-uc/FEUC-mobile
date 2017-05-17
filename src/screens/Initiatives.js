@@ -49,7 +49,7 @@ export default class Initiatives extends Component {
 
   static denormalize = ({ initiatives, entities }) => {
     const schema = [schemas.initiative];
-    return denormalize(initiatives.result, schema, entities);
+    return denormalize(initiatives.result, schema, entities).filter(Boolean);
   };
 
   static DataSource = new ListView.DataSource({

@@ -13,6 +13,7 @@ import { SURVEY_FETCH_FULFILLED } from "./surveys";
 import { TAG_FETCH_FULFILLED } from "./tags";
 import { SESSION_REGISTER_FULFILLED } from "./session";
 import { NOTIFICATIONS_FETCH_FULFILLED } from "./notifications";
+import { CAMPUSES_FETCH_FULFILLED } from "./campuses";
 
 // Initial state
 const initialState = {
@@ -94,6 +95,15 @@ export default function reducer(state = initialState, action) {
         surveys: {
           ...state.surveys,
           ...action.payload.entities.surveys,
+        },
+      };
+    }
+    case CAMPUSES_FETCH_FULFILLED: {
+      return {
+        ...state,
+        campuses: {
+          ...state.campuses,
+          ...action.payload.entities.campuses,
         },
       };
     }

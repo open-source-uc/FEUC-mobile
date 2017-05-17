@@ -44,6 +44,7 @@ export default class Campuses extends Component {
 
   static denormalize = ({ campuses, entities }) => {
     const schema = [schemas.campus];
+    // Filter null results
     return denormalize(campuses.result, schema, entities).filter(Boolean);
   };
 

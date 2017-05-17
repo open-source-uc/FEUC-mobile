@@ -54,7 +54,7 @@ export default class Attendances extends Component {
 
   static denormalize = ({ attendances, entities }) => {
     const schema = [schemas.attendance];
-    return denormalize(attendances.result, schema, entities);
+    return denormalize(attendances.result, schema, entities).filter(Boolean);
   };
 
   static DataSource = new ListView.DataSource({

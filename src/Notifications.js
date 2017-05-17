@@ -51,7 +51,9 @@ export default class Notifications extends PureComponent {
 
   static denormalizeAndCount = ({ notifications, entities }) => {
     const schema = [schemas.notification];
-    const array = denormalize(notifications.result, schema, entities);
+    const array = denormalize(notifications.result, schema, entities).filter(
+      Boolean
+    );
     return array.reduce(
       (previous, current) =>
         notifications.seen[current._id] ? previous : previous + 1,

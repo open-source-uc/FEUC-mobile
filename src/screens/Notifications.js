@@ -56,7 +56,7 @@ export default class Notifications extends Component {
 
   static denormalize = ({ notifications, entities }) => {
     const schema = [schemas.notification];
-    return denormalize(notifications.result, schema, entities);
+    return denormalize(notifications.result, schema, entities).filter(Boolean);
   };
 
   static DataSource = new ListView.DataSource({
