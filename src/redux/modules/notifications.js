@@ -75,14 +75,21 @@ export const setEnabled = isEnabled => ({
   payload: isEnabled,
 });
 
-export const fetchNotifications = options => (dispatch, getState, { client }) =>
+export const fetchNotifications = () => (dispatch, getState, { client }) => {
+  const token = getState().session.result;
+  const promise = client.notifications({
+    headers: {
+      "X-FEUC-ID": token,
+    },
+  });
   dispatch({
     type: NOTIFICATIONS_FETCH,
-    payload: client.notifications(options),
+    payload: promise,
     meta: {
       analytics: analytics.fetchResource("Notifications"),
     },
   });
+};
 
 export const viewNotification = (notification, seen = true) => ({
   type: NOTIFICATION_SEEN,
