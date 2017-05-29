@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Dimensions, InteractionManager } from "react-native";
 import PropTypes from "prop-types";
-import MapView from "react-native-maps";
+import Maps from "react-native-maps";
 import styled from "styled-components/native";
 
 import Loading from "./Loading";
@@ -12,7 +12,7 @@ const Container = styled.View`
   background-color: ${props => props.theme.colors.background};
 `;
 
-const StyledMap = styled(MapView)`
+const StyledMap = styled(Maps)`
   position: absolute;
   top: 0;
   right: 0;
@@ -20,7 +20,7 @@ const StyledMap = styled(MapView)`
   left: 0;
 `;
 
-export default class MapViewComponent extends Component {
+export default class MapView extends PureComponent {
   static propTypes = {
     children: PropTypes.node,
   };
@@ -40,7 +40,7 @@ export default class MapViewComponent extends Component {
   }
 
   render() {
-    const { children, ...props } = this.props;
+    const props = this.props;
     const { loading } = this.state;
 
     const { width, height } = Dimensions.get("window");
@@ -62,7 +62,6 @@ export default class MapViewComponent extends Component {
               provider={MapView.PROVIDER_GOOGLE}
               customMapStyle={mapStyle}
             />}
-        {Loading && children}
       </Container>
     );
   }

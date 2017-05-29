@@ -27,4 +27,4 @@ export { default as ErrorBar } from "./ErrorBar";
 export { default as Social } from "./Social";
 export { default as RefreshControl } from "./RefreshControl";
 export { default as NavbarButton } from "./NavbarButton";
-// export { default as MapView } from './MapView';
+export { default as MapView } from "./MapView";
