@@ -28,7 +28,9 @@ const ListViewRowAttendance = ({ item, row, ...props }) => {
         source={uri ? { uri } : images.default.attendance}
       />
       <ListViewRow.Content>
-        <ListViewRow.Title>{item.name}</ListViewRow.Title>
+        <ListViewRow.Title>
+          {item.name}
+        </ListViewRow.Title>
         <ListViewRow.Footer color="E">
           {get(item, "movement", "").toUpperCase()}
         </ListViewRow.Footer>

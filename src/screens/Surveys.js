@@ -82,7 +82,7 @@ export default class Surveys extends Component {
     }
   };
 
-  renderRow = (item, section, row, highlight) => (
+  renderRow = (item, section, row, highlight) =>
     <ListViewRowSurvey
       item={item}
       selection={get(this.props.surveys, ["selected", item._id])}
@@ -91,8 +91,7 @@ export default class Surveys extends Component {
       onPress={() => this.handlePress(item)}
       first={Number(row) === 0}
       last={this.state.dataSource.getRowCount() - 1 === Number(row)}
-    />
-  );
+    />;
 
   render = () => {
     const { error, refreshing } = this.props.surveys;
@@ -107,14 +106,13 @@ export default class Surveys extends Component {
             renderRow={this.renderRow}
             refreshing={refreshing}
             onRefresh={this.props.fetchSurveys}
-            renderEmpty={() => (
+            renderEmpty={() =>
               <Loading>
                 <Loading.Logo />
                 <Loading.Text>
                   {refreshing ? "Cargando..." : "No hay encuestas para mostrar"}
                 </Loading.Text>
-              </Loading>
-            )}
+              </Loading>}
           />
         </Container>
       </Themed>

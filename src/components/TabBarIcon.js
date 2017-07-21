@@ -24,22 +24,18 @@ TabBarIcon.defaultProps = {
   size: 22,
 };
 
-TabBarIcon.Events = props => (
-  <TabBarIcon source={images.nav.events} {...props} />
-);
+TabBarIcon.Events = props =>
+  <TabBarIcon source={images.nav.events} {...props} />;
 
-TabBarIcon.Community = props => (
-  <TabBarIcon source={images.nav.community} {...props} />
-);
+TabBarIcon.Community = props =>
+  <TabBarIcon source={images.nav.community} {...props} />;
 
 TabBarIcon.Maps = props => <TabBarIcon source={images.nav.maps} {...props} />;
 
-TabBarIcon.Benefits = props => (
-  <TabBarIcon source={images.nav.benefit} {...props} />
-);
+TabBarIcon.Benefits = props =>
+  <TabBarIcon source={images.nav.benefit} {...props} />;
 
-TabBarIcon.Surveys = props => (
-  <TabBarIcon source={images.nav.survey} {...props} />
-);
+TabBarIcon.Surveys = props =>
+  <TabBarIcon source={images.nav.survey} {...props} />;
 
 export default TabBarIcon;

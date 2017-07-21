@@ -77,7 +77,8 @@ const Cell = styled.View`
 `;
 
 const CellTouch = styled.TouchableOpacity`
-  background-color: ${props => (props.selected ? props.theme.colors.C : "transparent")};
+  background-color: ${props =>
+    props.selected ? props.theme.colors.C : "transparent"};
   flex: 1;
   flex-direction: column;
   justify-content: center;
@@ -85,12 +86,14 @@ const CellTouch = styled.TouchableOpacity`
 `;
 
 const CellIcon = styled(Ionicons)`
-  color: ${props => (props.selected ? props.theme.colors.Z : props.theme.colors.Y)};
+  color: ${props =>
+    props.selected ? props.theme.colors.Z : props.theme.colors.Y};
   font-size: 40;
 `;
 
 const CellText = styled.Text`
-  color: ${props => (props.selected ? props.theme.colors.Z : props.theme.colors.Y)};
+  color: ${props =>
+    props.selected ? props.theme.colors.Z : props.theme.colors.Y};
   font-family: ${props => props.theme.fonts.main};
   font-size: 13;
   font-weight: 400;
@@ -132,9 +135,7 @@ const Bottom = styled.View`
   shadow-radius: 0;
 `;
 
-const CampusScroll = styled.ScrollView`
-  margin: 15 0;
-`;
+const CampusScroll = styled.ScrollView`margin: 15 0;`;
 
 CampusScroll.defaultProps = {
   horizontal: true,
@@ -149,7 +150,8 @@ const CampusCircle = styled.TouchableOpacity`
   width: ${props => props.size};
   height: ${props => props.size};
   border-radius: ${props => props.size / 2};
-  background-color: ${props => (props.selected ? props.theme.colors.Z : "#00000077")};
+  background-color: ${props =>
+    props.selected ? props.theme.colors.Z : "#00000077"};
   justify-content: center;
   align-items: center;
   margin: 0 10;
@@ -161,14 +163,15 @@ CampusCircle.defaultProps = {
 
 const CampusCircleText = styled.Text`
   font-family: ${props => props.theme.fonts.main};
-  color: ${props => (props.selected ? props.theme.colors.C : props.theme.colors.G)};
+  color: ${props =>
+    props.selected ? props.theme.colors.C : props.theme.colors.G};
   font-weight: 200;
   font-size: 18;
 `;
 
 const CurrentCampus = styled.View`
   height: 36;
-  background-color: #3B9085;
+  background-color: #3b9085;
   justify-content: center;
   align-items: center;
   elevation: 4;
@@ -284,7 +287,9 @@ export default class SearchView extends Component {
           onPress={() => this.handleItemSelection(item)}
         >
           <CellIcon selected={selected} name={item.icon || "ios-bookmark"} />
-          <CellText selected={selected}>{item.name}</CellText>
+          <CellText selected={selected}>
+            {item.name}
+          </CellText>
         </CellTouch>
       </Cell>
     );
@@ -319,14 +324,14 @@ export default class SearchView extends Component {
             </SearchButton>
           </SearchBar>
           <SearchTags>
-            {currentTags.map(tag => (
+            {currentTags.map(tag =>
               <SearchTag
                 key={tag._id}
                 onPress={() => this.handleItemSelection(tag)}
               >
                 {(tag.name || tag.title).toUpperCase()}
               </SearchTag>
-            ))}
+            )}
           </SearchTags>
           <Title>Busca por categorías</Title>
           <Grid
@@ -334,7 +339,7 @@ export default class SearchView extends Component {
             renderRow={this.renderRow}
             refreshing={tags.refreshing}
             onRefresh={this.props.fetchTags}
-            renderEmpty={() => (
+            renderEmpty={() =>
               <Loading>
                 <Loading.Logo />
                 <Loading.Text>
@@ -342,13 +347,12 @@ export default class SearchView extends Component {
                     ? "Cargando..."
                     : "No hay etiquetas para mostrar."}
                 </Loading.Text>
-              </Loading>
-            )}
+              </Loading>}
           />
           <Bottom>
             <Title>Busca por campus</Title>
             <CampusScroll>
-              {campuses.map(campus => (
+              {campuses.map(campus =>
                 <CampusCircle
                   key={campus._id}
                   selected={currentCampus && campus._id === currentCampus._id}
@@ -361,7 +365,7 @@ export default class SearchView extends Component {
                       campus.name.split(" ").map(text => text[0]).join("")}
                   </CampusCircleText>
                 </CampusCircle>
-              ))}
+              )}
             </CampusScroll>
             <CurrentCampus>
               <CurrentCampusText>

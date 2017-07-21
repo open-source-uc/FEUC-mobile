@@ -88,7 +88,7 @@ export default class Attendances extends Component {
     }
   };
 
-  renderRow = (item, section, row, highlight) => (
+  renderRow = (item, section, row, highlight) =>
     <ListViewRowAttendance
       item={item}
       row={row}
@@ -96,8 +96,7 @@ export default class Attendances extends Component {
       onPress={() => this.handlePress(item)}
       first={Number(row) === 0}
       last={this.state.dataSource.getRowCount() - 1 === Number(row)}
-    />
-  );
+    />;
 
   render = () => {
     const { error, refreshing } = this.props.attendances;
@@ -112,14 +111,13 @@ export default class Attendances extends Component {
             renderRow={this.renderRow}
             refreshing={refreshing}
             onRefresh={this.props.fetchAttendances}
-            renderEmpty={() => (
+            renderEmpty={() =>
               <Loading>
                 <Loading.Logo />
                 <Loading.Text>
                   {refreshing ? "Cargando..." : "No hay items que mostrar."}
                 </Loading.Text>
-              </Loading>
-            )}
+              </Loading>}
           />
         </Container>
       </Themed>

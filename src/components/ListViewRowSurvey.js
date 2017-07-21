@@ -5,13 +5,15 @@ import get from "lodash/get";
 
 import ListViewRow from "./ListViewRow";
 
-const ListViewRowSurvey = ({ item, selection, row, ...props }) => (
+const ListViewRowSurvey = ({ item, selection, row, ...props }) =>
   <ListViewRow
     background={Platform.OS === "android" && row % 2 ? "X" : "Z"}
     {...props}
   >
     <ListViewRow.Content>
-      <ListViewRow.Title>{item.title}</ListViewRow.Title>
+      <ListViewRow.Title>
+        {item.title}
+      </ListViewRow.Title>
       <ListViewRow.Body>
         {get(item, "description.brief", "Sin descripción")}
       </ListViewRow.Body>
@@ -21,8 +23,7 @@ const ListViewRowSurvey = ({ item, selection, row, ...props }) => (
         </ListViewRow.Footer>}
     </ListViewRow.Content>
     <ListViewRow.Disclosure />
-  </ListViewRow>
-);
+  </ListViewRow>;
 
 ListViewRowSurvey.propTypes = {
   item: PropTypes.object.isRequired,

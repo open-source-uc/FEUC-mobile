@@ -13,21 +13,22 @@ function selectImage(item) {
   return images.default.benefit;
 }
 
-const ListViewRowInitiative = ({ item, row, ...props }) => (
+const ListViewRowInitiative = ({ item, row, ...props }) =>
   <ListViewRow
     background={Platform.OS === "android" && row % 2 ? "X" : "Z"}
     {...props}
   >
     <ListViewRow.Thumbnail circle shadow source={selectImage(item)} />
     <ListViewRow.Content>
-      <ListViewRow.Title>{item.name}</ListViewRow.Title>
+      <ListViewRow.Title>
+        {item.name}
+      </ListViewRow.Title>
       <ListViewRow.Body>
         {get(item, "description.brief", item.subtitle)}
       </ListViewRow.Body>
     </ListViewRow.Content>
     <ListViewRow.Disclosure />
-  </ListViewRow>
-);
+  </ListViewRow>;
 
 ListViewRowInitiative.propTypes = {
   item: PropTypes.object.isRequired,

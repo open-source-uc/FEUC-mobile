@@ -76,9 +76,7 @@ const AbsoluteEventDate = styled(EventDate)`
   bottom: 0;
 `;
 
-const ScrollView = styled.ScrollView`
-  flex: 1;
-`;
+const ScrollView = styled.ScrollView`flex: 1;`;
 
 const Content = styled.View`
   background-color: ${props => props.theme.colors.Z};
@@ -92,7 +90,8 @@ const Row = styled.View`
   align-items: stretch;
   padding-vertical: ${props => (props.vertical === "fit" ? 0 : 5)};
   padding-horizontal: ${props => (props.fluid ? 0 : 18)};
-  border-bottom-width: ${props => (props.separator ? StyleSheet.hairlineWidth : 0)};
+  border-bottom-width: ${props =>
+    props.separator ? StyleSheet.hairlineWidth : 0};
   border-bottom-color: ${props => props.theme.colors.E};
 `;
 
@@ -299,8 +298,12 @@ export default class Event extends Component {
       <Content>
         <Row>
           <View>
-            <Ttile>{event.title.toUpperCase()}</Ttile>
-            <SubTitle>{event.subtitle}</SubTitle>
+            <Ttile>
+              {event.title.toUpperCase()}
+            </Ttile>
+            <SubTitle>
+              {event.subtitle}
+            </SubTitle>
           </View>
         </Row>
         <Row fluid separator vertical="fit">
@@ -347,9 +350,7 @@ export default class Event extends Component {
           </Button>
         </Row>
         <Row>
-          <AboutTitle>
-            Sobre el evento
-          </AboutTitle>
+          <AboutTitle>Sobre el evento</AboutTitle>
         </Row>
         <Row>
           <RichText>
@@ -360,9 +361,11 @@ export default class Event extends Component {
         </Row>
         <Row>
           {event.tags &&
-            event.tags
-              .filter(Boolean)
-              .map(tag => <Tag key={tag._id}>{tag.name}</Tag>)}
+            event.tags.filter(Boolean).map(tag =>
+              <Tag key={tag._id}>
+                {tag.name}
+              </Tag>
+            )}
         </Row>
         <Row fluid fit direction="column">
           {get(event, "social", []).filter(Boolean).map(url => {

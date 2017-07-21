@@ -46,7 +46,9 @@ export default class ErrorBar extends PureComponent {
     return (
       error &&
       <Container {...props}>
-        <Text>{ErrorBar.errorToString(error)}</Text>
+        <Text>
+          {ErrorBar.errorToString(error)}
+        </Text>
         {children}
       </Container>
     );

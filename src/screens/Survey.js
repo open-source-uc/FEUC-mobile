@@ -68,12 +68,13 @@ const Description = styled.Text`
 `;
 
 const Icon = styled(Ionicons)`
-  color: ${props => (props.selected ? props.theme.colors.Z : props.theme.colors.E)};
+  color: ${props =>
+    props.selected ? props.theme.colors.Z : props.theme.colors.E};
   font-size: 24;
   padding-top: 2;
 `;
 
-const Option = ({ selected, selecting, icon, color, text, ...props }) => (
+const Option = ({ selected, selecting, icon, color, text, ...props }) =>
   <Touchable disabled={selecting} {...props}>
     <Circle color={selected ? color : "white"} disabled={selecting}>
       <Icon name={"ios-" + icon} selected={selected} />
@@ -81,8 +82,7 @@ const Option = ({ selected, selecting, icon, color, text, ...props }) => (
     <Description disabled={selecting}>
       {text && text.toUpperCase()}
     </Description>
-  </Touchable>
-);
+  </Touchable>;
 
 Option.propTypes = {
   selected: PropTypes.bool,
@@ -218,26 +218,22 @@ export default class Survey extends Component {
         </Arc.Lead>
         <Arc.Content>
           <Buttons>
-            {options.map((opt, i) => (
+            {options.map((opt, i) =>
               <Option
                 key={i}
                 selecting={selecting}
                 {...opt}
                 onPress={() => this.handleOptionSelection(i + 1)}
               />
-            ))}
+            )}
           </Buttons>
-          <AboutTitle>
-            Sobre la pregunta
-          </AboutTitle>
+          <AboutTitle>Sobre la pregunta</AboutTitle>
           <Arc.Body>
             {get(survey, "description.full.md") || survey.description.brief}
           </Arc.Body>
           {survey.url &&
             <More onPress={this.handleMorePress}>
-              <MoreText>
-                Ver más información
-              </MoreText>
+              <MoreText>Ver más información</MoreText>
             </More>}
         </Arc.Content>
       </Arc>

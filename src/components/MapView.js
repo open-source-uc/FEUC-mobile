@@ -49,8 +49,8 @@ export default class MapViewComponent extends Component {
     const coordinates = {
       latitude: -33.498395,
       longitude: -70.611303,
-      latitudeDelta: 0.010,
-      longitudeDelta: 0.010 * ratio,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01 * ratio,
     };
 
     return (

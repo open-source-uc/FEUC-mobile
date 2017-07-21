@@ -65,7 +65,10 @@ export default class Campus extends Component {
       <Themed content="dark">
         <Container>
           <ErrorBar error={error} />
-          {campus && <Text>{campus.name}</Text>}
+          {campus &&
+            <Text>
+              {campus.name}
+            </Text>}
         </Container>
       </Themed>
     );

@@ -25,9 +25,7 @@ const AboutTitle = styled.Text`
   margin-bottom: 6;
 `;
 
-const Bottom = styled.View`
-  height: 56;
-`;
+const Bottom = styled.View`height: 56;`;
 
 const ButtonText = styled(Button.Text)`
   text-align: center;
@@ -162,13 +160,13 @@ export default class Benefit extends Component {
                   </Arc.DropText>}
                 {benefit.benefit.expires &&
                   <Arc.DropText>
-                    {`Válido hasta ${moment(benefit.benefit.deadline).format("D/MM/YYY [a las] HH:mm")}`}
+                    {`Válido hasta ${moment(benefit.benefit.deadline).format(
+                      "D/MM/YYY [a las] HH:mm"
+                    )}`}
                   </Arc.DropText>}
               </Arc.DropTexts>
               <Arc.Content>
-                <AboutTitle>
-                  Sobre el descuento
-                </AboutTitle>
+                <AboutTitle>Sobre el descuento</AboutTitle>
                 <Arc.Body>
                   {get(benefit, "description.full.md") ||
                     benefit.description.brief}

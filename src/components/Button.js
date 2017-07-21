@@ -5,7 +5,8 @@ import styled from "styled-components/native";
 
 const Container = styled.TouchableOpacity`
   flex: 1;
-  background-color: ${props => props.theme.colors[props.color] || props.theme.colors.E};
+  background-color: ${props =>
+    props.theme.colors[props.color] || props.theme.colors.E};
   flex-direction: row;
   justify-content: center;
   align-items: center;

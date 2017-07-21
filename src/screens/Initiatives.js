@@ -86,7 +86,7 @@ export default class Initiatives extends Component {
     }
   };
 
-  renderRow = (item, section, row, highlight) => (
+  renderRow = (item, section, row, highlight) =>
     <ListViewRowInitiative
       item={item}
       row={row}
@@ -94,8 +94,7 @@ export default class Initiatives extends Component {
       onPress={() => this.handlePress(item)}
       first={Number(row) === 0}
       last={this.state.dataSource.getRowCount() - 1 === Number(row)}
-    />
-  );
+    />;
 
   render = () => {
     const { error, refreshing } = this.props.initiatives;
@@ -110,7 +109,7 @@ export default class Initiatives extends Component {
             renderRow={this.renderRow}
             refreshing={refreshing}
             onRefresh={this.props.fetchInitiatives}
-            renderEmpty={() => (
+            renderEmpty={() =>
               <Loading>
                 <Loading.Logo />
                 <Loading.Text>
@@ -118,8 +117,7 @@ export default class Initiatives extends Component {
                     ? "Cargando..."
                     : "No hay comunidades para mostrar"}
                 </Loading.Text>
-              </Loading>
-            )}
+              </Loading>}
           />
         </Container>
       </Themed>

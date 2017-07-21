@@ -35,13 +35,12 @@ const CoverImage = styled.Image`
   border-top-right-radius: 10;
 `;
 
-const Cover = ({ children, source, ...props }) => (
+const Cover = ({ children, source, ...props }) =>
   <Touchable {...props}>
     <CoverImage source={source}>
       {children}
     </CoverImage>
-  </Touchable>
-);
+  </Touchable>;
 
 Cover.propTypes = Image.propTypes;
 
@@ -51,9 +50,7 @@ const AbsoluteEventDate = styled(EventDate)`
   top: -4;
 `;
 
-const Bottom = styled.View`
-  flex: 4;
-`;
+const Bottom = styled.View`flex: 4;`;
 
 export default class Card extends PureComponent {
   static Cover = Cover;

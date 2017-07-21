@@ -134,7 +134,7 @@ export default class Benefits extends Component {
             renderRow={this.renderRow}
             refreshing={refreshing}
             onRefresh={this.props.fetchBenefits}
-            renderEmpty={() => (
+            renderEmpty={() =>
               <Loading>
                 <Loading.Logo />
                 <Loading.Text>
@@ -142,8 +142,7 @@ export default class Benefits extends Component {
                     ? "Cargando..."
                     : "Sin descuentos por el momento, vuelve pronto a revisar ;)"}
                 </Loading.Text>
-              </Loading>
-            )}
+              </Loading>}
           />
         </Container>
       </Themed>

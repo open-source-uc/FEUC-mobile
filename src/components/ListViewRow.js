@@ -122,13 +122,21 @@ export default class ListViewRow extends PureComponent {
     if (Platform.OS === "ios") {
       return (
         <ContainerIOS {...props}>
-          {isArray(children) ? <Children>{children}</Children> : children}
+          {isArray(children)
+            ? <Children>
+                {children}
+              </Children>
+            : children}
         </ContainerIOS>
       );
     } else {
       return (
         <ContainerAndroid {...props}>
-          {isArray(children) ? <Children>{children}</Children> : children}
+          {isArray(children)
+            ? <Children>
+                {children}
+              </Children>
+            : children}
         </ContainerAndroid>
       );
     }

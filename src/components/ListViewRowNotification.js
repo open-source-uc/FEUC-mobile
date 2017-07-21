@@ -19,11 +19,13 @@ function selectImage(item) {
   return images.default.notification;
 }
 
-const ListViewRowInitiative = ({ item, seen, ...props }) => (
+const ListViewRowInitiative = ({ item, seen, ...props }) =>
   <ListViewRow background={seen ? "Z" : "selected"} {...props}>
     <ListViewRow.Thumbnail circle shadow source={selectImage(item)} />
     <ListViewRow.Content>
-      <ListViewRow.Title>{item.title}</ListViewRow.Title>
+      <ListViewRow.Title>
+        {item.title}
+      </ListViewRow.Title>
       <ListViewRow.Body>
         {get(item, "description.brief", "Nueva notificación")}
       </ListViewRow.Body>
@@ -32,8 +34,7 @@ const ListViewRowInitiative = ({ item, seen, ...props }) => (
       </ListViewRow.Footer>
     </ListViewRow.Content>
     <ListViewRow.Disclosure />
-  </ListViewRow>
-);
+  </ListViewRow>;
 
 ListViewRowInitiative.propTypes = {
   item: PropTypes.object.isRequired,

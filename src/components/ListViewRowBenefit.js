@@ -53,7 +53,9 @@ const ListViewRowBenefit = ({ item, activation, row, ...props }) => {
             {restrictions.join("  |  ").toUpperCase()}
           </ListViewRow.Footer>
         </FooterRow>
-        <ListViewRow.Title>{item.title}</ListViewRow.Title>
+        <ListViewRow.Title>
+          {item.title}
+        </ListViewRow.Title>
         <ListViewRow.Body>
           {item.description.brief || "Sin descripción."}
         </ListViewRow.Body>

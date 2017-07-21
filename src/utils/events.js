@@ -13,9 +13,11 @@ export const getDateProperties = (event, simple = false) => {
     const isSameMonth = start.isSame(end, "month");
     const months = isSameMonth ? [start] : [start, end];
 
-    const range = isSameDay || simple
-      ? `${start.format("HH:mm")} - ${end.format("HH:mm")}`
-      : `${start.format("HH:mm")} (${end.diff(start, "days") + 1} días) - ${end.format("HH:mm")} hrs`;
+    const range =
+      isSameDay || simple
+        ? `${start.format("HH:mm")} - ${end.format("HH:mm")}`
+        : `${start.format("HH:mm")} (${end.diff(start, "days") +
+            1} días) - ${end.format("HH:mm")} hrs`;
 
     const rangeMonth = months
       .map(m => m.format("MMM"))

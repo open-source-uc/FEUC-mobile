@@ -16,9 +16,7 @@ import Themed, { colors } from "../styles";
 import { images } from "../assets/";
 import { getDateProperties } from "../utils/events";
 
-const Container = styled.View`
-  flex: 1;
-`;
+const Container = styled.View`flex: 1;`;
 
 const Background = styled.Image`
   position: absolute;
@@ -132,7 +130,8 @@ const Arrow = styled(Ionicons)`
 `;
 
 const Calendar = styled(Ionicons)`
-  color: ${props => (props.active ? props.theme.colors.B : props.theme.colors.F)};
+  color: ${props =>
+    props.active ? props.theme.colors.B : props.theme.colors.F};
   background-color: transparent;
   font-size: 17;
   text-align: center;
@@ -246,8 +245,12 @@ export default class EventsToday extends Component {
           </Card.Cover>
           <Card.Bottom>
             <CardContent>
-              <Title>{get(item, "title", "Sin título").toUpperCase()}</Title>
-              <Body>{get(item, "description.brief")}</Body>
+              <Title>
+                {get(item, "title", "Sin título").toUpperCase()}
+              </Title>
+              <Body>
+                {get(item, "description.brief")}
+              </Body>
               <Footer>
                 <When>
                   {date.range.toUpperCase()}
@@ -297,14 +300,13 @@ export default class EventsToday extends Component {
           <VerticalScrollView
             refreshing={refreshing}
             onRefresh={this.props.fetchEvents}
-            renderEmpty={() => (
+            renderEmpty={() =>
               <Loading>
                 <Loading.Logo />
                 <Loading.Text>
                   {refreshing ? "Cargando..." : "No eventos para mostrar aquí"}
                 </Loading.Text>
-              </Loading>
-            )}
+              </Loading>}
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}

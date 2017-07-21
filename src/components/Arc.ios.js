@@ -93,9 +93,7 @@ const DropText = styled.Text`
   margin: 0 3;
 `;
 
-const Content = styled.View`
-  padding: 18 18 36;
-`;
+const Content = styled.View`padding: 18 18 36;`;
 
 // const Body = styled(RichText)`
 //   font-family: ${props => props.theme.fonts.body};

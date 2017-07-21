@@ -112,9 +112,7 @@ export default class About extends Component {
               <Arc.ArcLayout>
                 <Arc.BrandImage shadow background="Z" source={logo} />
               </Arc.ArcLayout>
-              <Arc.BrandTitle>
-                Conócenos
-              </Arc.BrandTitle>
+              <Arc.BrandTitle>Conócenos</Arc.BrandTitle>
               <Arc.Title>
                 {content.title}
               </Arc.Title>
@@ -131,18 +129,16 @@ export default class About extends Component {
             {content &&
               get(content, "social", [])
                 .filter(Boolean)
-                .map(url => (
+                .map(url =>
                   <Social
                     key={url}
                     url={url}
                     onPress={this.handleSocialPress}
                   />
-                ))}
+                )}
           </Social.Bar>
           <Button onPress={this.handleAttendancePress}>
-            <ButtonText>
-              Revisa el libro de asistencias
-            </ButtonText>
+            <ButtonText>Revisa el libro de asistencias</ButtonText>
           </Button>
         </Container>
       </Themed>

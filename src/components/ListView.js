@@ -11,9 +11,7 @@ export const Separator = styled.View`
   height: 0;
 `;
 
-const Container = styled.View`
-  flex: 1;
-`;
+const Container = styled.View`flex: 1;`;
 
 const Back = styled.View`
   position: absolute;

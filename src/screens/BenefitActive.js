@@ -81,9 +81,7 @@ const AbsoluteBookmark = styled(Bookmark)`
   top: -4;
 `;
 
-const Bottom = styled.View`
-  flex: 7;
-`;
+const Bottom = styled.View`flex: 7;`;
 
 const Center = styled.View`
   position: absolute;
@@ -148,7 +146,8 @@ Description.defaultProps = Title.defaultProps = {
 };
 
 const Restriction = styled.Text`
-  color: ${props => (props.danger ? props.theme.colors.error : props.theme.colors.A)};
+  color: ${props =>
+    props.danger ? props.theme.colors.error : props.theme.colors.A};
   text-align: center;
   font-family: ${props => props.theme.fonts.body};
   font-weight: 700;
@@ -308,11 +307,11 @@ export default class BenefitActive extends Component {
                   <Title>
                     {benefit.title}
                   </Title>
-                  {description && <Description>{description}</Description>}
-                  {!ready &&
-                    <Restriction>
-                      Cargando...
-                    </Restriction>}
+                  {description &&
+                    <Description>
+                      {description}
+                    </Description>}
+                  {!ready && <Restriction>Cargando...</Restriction>}
                   {ready &&
                     deadline &&
                     isInTime &&
@@ -320,10 +319,7 @@ export default class BenefitActive extends Component {
                     <Restriction>
                       {`Valido por ${timeleft}`.toUpperCase()}
                     </Restriction>}
-                  {expired &&
-                    <Restriction danger>
-                      Expirado
-                    </Restriction>}
+                  {expired && <Restriction danger>Expirado</Restriction>}
                 </Bottom>
               </Card>}
           </Content>

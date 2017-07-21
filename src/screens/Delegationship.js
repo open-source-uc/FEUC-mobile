@@ -96,9 +96,7 @@ export default class Delegationship extends Component {
                   source={delegationshipSource}
                 />
               </Arc.ArcLayout>
-              <Arc.BrandTitle>
-                Vocalías
-              </Arc.BrandTitle>
+              <Arc.BrandTitle>Vocalías</Arc.BrandTitle>
               <Arc.Title>
                 {delegationship.name}
               </Arc.Title>
@@ -116,13 +114,13 @@ export default class Delegationship extends Component {
             {delegationship &&
               get(delegationship, "social", [])
                 .filter(Boolean)
-                .map(url => (
+                .map(url =>
                   <Social
                     key={url}
                     url={url}
                     onPress={this.handleSocialPress}
                   />
-                ))}
+                )}
           </Social.Bar>
         </Container>
       </Themed>

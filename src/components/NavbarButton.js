@@ -55,7 +55,11 @@ class NotificationCount extends PureComponent {
           notifications.seen[current._id] ? previous : previous + 1,
         0
       );
-    return <Text>{count}</Text>;
+    return (
+      <Text>
+        {count}
+      </Text>
+    );
   }
 }
 

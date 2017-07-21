@@ -38,9 +38,17 @@ const styles = {
 
 const RichText = ({ children, ...props }) => {
   if (has(children, "md")) {
-    return <MD styles={{ ...styles }} {...props}>{children.md}</MD>;
+    return (
+      <MD styles={{ ...styles }} {...props}>
+        {children.md}
+      </MD>
+    );
   } else {
-    return <MD styles={{ ...styles }} {...props}>{children}</MD>;
+    return (
+      <MD styles={{ ...styles }} {...props}>
+        {children}
+      </MD>
+    );
   }
 };
 

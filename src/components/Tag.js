@@ -34,7 +34,11 @@ export default class Tag extends PureComponent {
     const { children, ...props } = this.props;
     return (
       <Container {...props}>
-        {isString(children) ? <Name>{children.toUpperCase()}</Name> : children}
+        {isString(children)
+          ? <Name>
+              {children.toUpperCase()}
+            </Name>
+          : children}
       </Container>
     );
   }

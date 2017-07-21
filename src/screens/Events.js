@@ -78,7 +78,7 @@ export default class Events extends Component {
     }
   };
 
-  renderRow = (item, section, row, highlight) => (
+  renderRow = (item, section, row, highlight) =>
     <ListViewRowEvent
       item={item}
       row={row}
@@ -86,8 +86,7 @@ export default class Events extends Component {
       onPress={() => this.handlePress(item)}
       first={Number(row) === 0}
       last={this.state.dataSource.getRowCount() - 1 === Number(row)}
-    />
-  );
+    />;
 
   render = () => {
     const { error, refreshing } = this.props.events;
@@ -102,7 +101,7 @@ export default class Events extends Component {
             renderRow={this.renderRow}
             refreshing={refreshing}
             onRefresh={this.props.fetchEvents}
-            renderEmpty={() => (
+            renderEmpty={() =>
               <Loading>
                 <Loading.Logo />
                 <Loading.Text>
@@ -110,8 +109,7 @@ export default class Events extends Component {
                     ? "Cargando..."
                     : "No hay eventos para mostrar, vuelve pronto a revisar ;)"}
                 </Loading.Text>
-              </Loading>
-            )}
+              </Loading>}
           />
         </Container>
       </Themed>

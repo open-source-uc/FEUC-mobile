@@ -86,7 +86,7 @@ export default class Notifications extends Component {
     this.props.viewNotification(item);
   };
 
-  renderRow = (item, section, row, highlight) => (
+  renderRow = (item, section, row, highlight) =>
     <ListViewRowNotification
       item={item}
       seen={get(this.props.notifications, ["seen", item._id || item], false)}
@@ -95,8 +95,7 @@ export default class Notifications extends Component {
       onPress={() => this.handlePress(item)}
       first={Number(row) === 0}
       last={this.state.dataSource.getRowCount() - 1 === Number(row)}
-    />
-  );
+    />;
 
   render = () => {
     const { error, refreshing } = this.props.notifications;
@@ -111,14 +110,13 @@ export default class Notifications extends Component {
             renderRow={this.renderRow}
             refreshing={refreshing}
             onRefresh={this.props.fetchNotifications}
-            renderEmpty={() => (
+            renderEmpty={() =>
               <Loading>
                 <Loading.Logo />
                 <Loading.Text>
                   {refreshing ? "Cargando..." : "No hay notificaciones"}
                 </Loading.Text>
-              </Loading>
-            )}
+              </Loading>}
           />
         </Container>
       </Themed>

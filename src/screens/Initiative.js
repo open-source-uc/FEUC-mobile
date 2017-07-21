@@ -94,9 +94,7 @@ export default class Initiative extends Component {
                   source={initiativeSource}
                 />
               </Arc.ArcLayout>
-              <Arc.BrandTitle>
-                Iniciativa UC
-              </Arc.BrandTitle>
+              <Arc.BrandTitle>Iniciativa UC</Arc.BrandTitle>
               <Arc.Title>
                 {initiative.name}
               </Arc.Title>
@@ -115,13 +113,13 @@ export default class Initiative extends Component {
             {initiative &&
               get(initiative, "social", [])
                 .filter(Boolean)
-                .map(url => (
+                .map(url =>
                   <Social
                     key={url}
                     url={url}
                     onPress={this.handleSocialPress}
                   />
-                ))}
+                )}
           </Social.Bar>
         </Container>
       </Themed>

@@ -127,7 +127,7 @@ export default class BenefitsSaved extends Component {
             renderRow={this.renderRow}
             refreshing={refreshing}
             onRefresh={this.fetchBenefitsSaved}
-            renderEmpty={() => (
+            renderEmpty={() =>
               <Loading>
                 <Loading.Logo />
                 <Loading.Text>
@@ -135,8 +135,7 @@ export default class BenefitsSaved extends Component {
                     ? "Cargando..."
                     : "Sin descuentos por el momento, vuelve pronto a revisar ;)"}
                 </Loading.Text>
-              </Loading>
-            )}
+              </Loading>}
           />
         </Container>
       </Themed>

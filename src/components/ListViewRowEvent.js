@@ -34,7 +34,9 @@ const ListViewRowBenefit = ({ item, row, ...props }) => {
         </ListViewRow.Thumbnail.Main>
       </ListViewRow.Thumbnail>
       <ListViewRow.Content>
-        <ListViewRow.Title>{item.title}</ListViewRow.Title>
+        <ListViewRow.Title>
+          {item.title}
+        </ListViewRow.Title>
         <ListViewRow.Body>
           {get(item, "description.brief", item.subtitle)}
         </ListViewRow.Body>

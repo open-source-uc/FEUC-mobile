@@ -61,16 +61,19 @@ const View = styled.View`
   background-color: transparent;
 `;
 
-const Themed = ({ children, content, theme, ...props }) => (
+const Themed = ({ children, content, theme, ...props }) =>
   <Screen content={content} {...props}>
     <StatusBar
       barStyle={content === "dark" ? "light-content" : "dark-content"}
     />
     <ThemeProvider theme={{ colors, fonts }} {...theme}>
-      {isArray(children) ? <View>{children}</View> : children}
+      {isArray(children)
+        ? <View>
+            {children}
+          </View>
+        : children}
     </ThemeProvider>
-  </Screen>
-);
+  </Screen>;
 
 Themed.propTypes = {
   children: PropTypes.any,

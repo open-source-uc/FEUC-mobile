@@ -5,11 +5,13 @@ import { BlurView } from "react-native-blur";
 import styled from "styled-components/native";
 
 const ThumbnailContainer = styled.View`
-  background-color: ${props => props.theme.colors[props.background] || props.theme.colors.D};
+  background-color: ${props =>
+    props.theme.colors[props.background] || props.theme.colors.D};
   width: ${props => props.size};
   height: ${props => props.size};
   border-radius: ${props => (props.circle ? props.size / 2 : 0)};
-  shadow-color: ${props => (props.shadow ? props.theme.colors.G : "transparent")};
+  shadow-color: ${props =>
+    props.shadow ? props.theme.colors.G : "transparent"};
   shadow-offset: 1 1;
   shadow-opacity: ${props => (props.shadow ? 0.1 : 0)};
   shadow-radius: ${props => (props.shadow ? 1.0 : 0)};
