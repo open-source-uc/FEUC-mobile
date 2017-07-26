@@ -291,21 +291,11 @@ export default class Campus extends Component {
         }
       );
     } else {
-      const options = ["Abrir en Google Maps", "Cancelar"];
-      this.props.showActionSheetWithOptions(
-        { options, cancelButtonIndex: options.length - 1 },
-        index => {
-          try {
-            if (index === 0) {
-              return Linking.openURL(url.google);
-            } else {
-              // Close sheet.
-            }
-          } catch (err) {
-            alert("Hubo un problema abriendo la dirección."); // eslint-disable-line
-          }
-        }
-      );
+      try {
+        return Linking.openURL(url.google);
+      } catch (err) {
+        alert("Hubo un problema abriendo la dirección."); // eslint-disable-line
+      }
     }
   };
 
