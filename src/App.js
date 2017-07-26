@@ -5,6 +5,7 @@ import { BackAndroid } from "react-native";
 import PropTypes from "prop-types";
 import { Provider, connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import KeepAwake from "react-native-keep-awake";
 import noop from "lodash/noop";
 import get from "lodash/get";
@@ -72,7 +73,9 @@ export default class App extends Component {
         <Provider store={this.props.store}>
           <I18n>
             <Notifications>
-              <Navigator />
+              <ActionSheetProvider>
+                <Navigator />
+              </ActionSheetProvider>
             </Notifications>
           </I18n>
         </Provider>

@@ -65,7 +65,7 @@ export default class MyListView extends PureComponent {
         <StyledListView
           dataSource={dataSource}
           renderSeparator={(section, row) =>
-            ios && row < separators && <Separator key={row} />}
+            ios && row < separators && <Separator key={`${section}-${row}`} />}
           refreshControl={
             onRefresh
               ? <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

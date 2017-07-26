@@ -13,7 +13,7 @@ import { SURVEY_FETCH_FULFILLED } from "./surveys";
 import { TAG_FETCH_FULFILLED } from "./tags";
 import { SESSION_REGISTER_FULFILLED } from "./session";
 import { NOTIFICATIONS_FETCH_FULFILLED } from "./notifications";
-import { CAMPUSES_FETCH_FULFILLED } from "./campuses";
+import { CAMPUS_FETCH_FULFILLED, CAMPUSES_FETCH_FULFILLED } from "./campuses";
 
 // Initial state
 const initialState = {
@@ -27,6 +27,8 @@ const initialState = {
   surveys: {},
   tags: {},
   campuses: {},
+  categories: {},
+  places: {},
   notifications: {},
   devices: {},
 };
@@ -95,6 +97,23 @@ export default function reducer(state = initialState, action) {
         surveys: {
           ...state.surveys,
           ...action.payload.entities.surveys,
+        },
+      };
+    }
+    case CAMPUS_FETCH_FULFILLED: {
+      return {
+        ...state,
+        campuses: {
+          ...state.campuses,
+          ...action.payload.entities.campuses,
+        },
+        categories: {
+          ...state.categories,
+          ...action.payload.entities.categories,
+        },
+        places: {
+          ...state.places,
+          ...action.payload.entities.places,
         },
       };
     }

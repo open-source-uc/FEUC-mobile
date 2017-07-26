@@ -3,6 +3,7 @@ package cl.feuc.app;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.idehub.GoogleAnalyticsBridge.GoogleAnalyticsBridgePackage;
 import com.corbt.keepawake.KCKeepAwakePackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -33,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new MapsPackage(),
             new GoogleAnalyticsBridgePackage(),
             new KCKeepAwakePackage(),
             new LinearGradientPackage(),

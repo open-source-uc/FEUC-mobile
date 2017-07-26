@@ -136,6 +136,15 @@ export default class Client {
     return response;
   }
 
+  async campus(id, options) {
+    // This also fetches its places
+    const response = await fetcher(
+      `${this.baseURL}/api/v1/campuses/${id}`,
+      options
+    );
+    return response;
+  }
+
   async surveys(options) {
     const response = await fetcher(`${this.baseURL}/api/v1/surveys`, options);
     return response;

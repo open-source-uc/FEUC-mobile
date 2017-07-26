@@ -2,6 +2,12 @@
 # yarn lockfile v1
 
 
+"@expo/react-native-action-sheet@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@expo/react-native-action-sheet/-/react-native-action-sheet-1.0.0.tgz#0677d2c2e3130dc1ed9597cf72c10743b224e4f1"
+  dependencies:
+    hoist-non-react-statics "^1.2.0"
+
 abab@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.3.tgz#b81de5f7274ec4e756d797cd834f303642724e5d"
@@ -4557,6 +4563,10 @@ react-native-linear-gradient@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.0.0.tgz#7442c00e1fcd9fca329119dcbaf744d12bcd1b5a"
 
+react-native-maps@=0.15.2:
+  version "0.15.2"
+  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.15.2.tgz#4f63b9501b25d124f0ef1839529e54a6461c2c49"
+
 react-native-onesignal@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/react-native-onesignal/-/react-native-onesignal-3.0.3.tgz#6e9fd8588c40b07b22fae38202e662643e070ae2"
@@ -4574,9 +4584,9 @@ react-native-simple-markdown@^1.0.60-rc.3:
     lodash "^4.15.0"
     simple-markdown "git://github.com/CharlesMangwa/simple-markdown.git"
 
-react-native-spinkit@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-spinkit/-/react-native-spinkit-1.0.2.tgz#0d31b019556e038aa8e953038562550cb0ead8d2"
+react-native-spinkit@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-spinkit/-/react-native-spinkit-1.0.3.tgz#5e83e26a3598a94f45102ee15bd918efa673c76d"
 
 react-native-svg@4:
   version "4.6.1"
@@ -4589,9 +4599,9 @@ react-native-tab-view@^0.0.57:
   version "0.0.57"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.57.tgz#715e2ea4100fa50168e134df3947dd76ebd55743"
 
-react-native-vector-icons@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.1.1.tgz#9ac75bde77d9243346668c51dca7756775428087"
+react-native-vector-icons@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.2.0.tgz#0594b68debdd758dce4c565bf02e2d64d7004d82"
   dependencies:
     lodash "^4.0.0"
     prop-types "^15.5.8"

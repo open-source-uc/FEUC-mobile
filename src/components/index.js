@@ -17,6 +17,7 @@ export { default as ListViewRowAttendance } from "./ListViewRowAttendance";
 export { default as ListViewRowEvent } from "./ListViewRowEvent";
 export { default as ListViewRowInitiative } from "./ListViewRowInitiative";
 export { default as ListViewRowCampus } from "./ListViewRowCampus";
+export { default as ListViewRowPlace } from "./ListViewRowPlace";
 export { default as ListViewRowSurvey } from "./ListViewRowSurvey";
 export { default as ListViewRowNotification } from "./ListViewRowNotification";
 export {
@@ -27,4 +28,4 @@ export { default as ErrorBar } from "./ErrorBar";
 export { default as Social } from "./Social";
 export { default as RefreshControl } from "./RefreshControl";
 export { default as NavbarButton } from "./NavbarButton";
-// export { default as MapView } from './MapView';
+export { default as MapView } from "./MapView";
