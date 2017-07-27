@@ -394,7 +394,6 @@ export default class Campus extends Component {
             }
             renderRow={expanded ? this.renderEmpty : this.renderRow}
             refreshing={refreshing}
-            onRefresh={this.fetchData}
             style={{ paddingTop: 0 }}
             renderEmpty={() =>
               <Loading>
