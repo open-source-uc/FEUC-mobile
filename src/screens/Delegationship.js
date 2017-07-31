@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { denormalize } from "normalizr";
 import styled from "styled-components/native";
 import get from "lodash/get";
+import trimStart from "lodash/trimStart";
 
 import { Arc, ErrorBar, Social } from "../components/";
 import * as schemas from "../schemas";
@@ -91,8 +92,8 @@ export default class Delegationship extends Component {
               <Arc.ArcLayout>
                 <Arc.BrandImage
                   shadow
-                  background="Z"
-                  tint={delegationship.color}
+                  background={delegationship.color ? `#${trimStart(delegationship.color, "#")}` : undefined}
+                  tint="white"
                   source={delegationshipSource}
                 />
               </Arc.ArcLayout>

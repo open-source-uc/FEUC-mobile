@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, Platform } from "react-native";
 import PropTypes from "prop-types";
+import styled from "styled-components/native";
 import get from "lodash/get";
 import trimStart from "lodash/trimStart";
 
@@ -14,8 +15,8 @@ const ListViewRowDelegationship = ({ item, row, ...props }) =>
   >
     <ListViewRow.Thumbnail
       mode={Image.resizeMode.contain}
-      tint={`#${trimStart(item.color, "#")}`}
-      background="transparent"
+      tint="white"
+      background={item.color ? `#${trimStart(item.color, "#")}` : undefined}
       source={images.logo.transparent}
     />
     <ListViewRow.Content>

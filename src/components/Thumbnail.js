@@ -6,7 +6,9 @@ import styled from "styled-components/native";
 
 const ThumbnailContainer = styled.View`
   background-color: ${props =>
-    props.theme.colors[props.background] || props.theme.colors.D};
+    props.theme.colors[props.background] ||
+    props.background ||
+    props.theme.colors.D};
   width: ${props => props.size};
   height: ${props => props.size};
   border-radius: ${props => (props.circle ? props.size / 2 : 0)};
